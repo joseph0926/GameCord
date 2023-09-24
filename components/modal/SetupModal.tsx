@@ -48,7 +48,7 @@ const SetupServerModal = () => {
 
   return (
     <Dialog open>
-      <DialogContent className="overflow-y-scroll bg-white p-0 text-black">
+      <DialogContent className="overflow-scroll bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="mb-2 text-center text-3xl">Create Your Server</DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
