@@ -13,10 +13,13 @@ import FileUpload from '../ui/file-upload';
 import { createServer } from '@/lib/actions/server/mutateActions';
 import { Separator } from '../ui/separator';
 import { Label } from '../ui/label';
+import { useRouter } from 'next/navigation';
 
 const SetupServerModal = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const [inviteCode, setIviteCode] = useState('');
+  const [inviteCode, setInviteCode] = useState('');
+
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -88,13 +91,24 @@ const SetupServerModal = () => {
                 <Separator className="h-0.5 w-[40%] bg-zinc-500" />
               </div>
             </div>
-            <div className="px-6">
+            <div className="space-y-2 px-6">
               <Label className="text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70">초대 코드</Label>
-              <Input
-                value={inviteCode}
-                onChange={(e) => setIviteCode(e.target.value)}
-                className="border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
-              />
+              <div className="flex items-center space-x-4">
+                <Input
+                  value={inviteCode}
+                  onChange={(e) => setInviteCode(e.target.value)}
+                  className="border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+                <Button
+                  type="button"
+                  onClick={() => router.push(`/invite/${inviteCode.replace('http://localhost:3000/invite/', '')}`)}
+                  disabled={inviteCode === ''}
+                  variant="secondary"
+                  className="h-full w-[15%] py-2.5"
+                >
+                  입장
+                </Button>
+              </div>
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button disabled={isLoading} variant="primary">
