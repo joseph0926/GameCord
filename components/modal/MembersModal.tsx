@@ -65,7 +65,7 @@ const MembersModal = () => {
     <Dialog open={isMoadlOpen} onOpenChange={onClose}>
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
-          <DialogTitle className="text-center text-2xl">멤버 관리</DialogTitle>
+          <DialogTitle className="text-center text-2xl">Manage Members</DialogTitle>
           <DialogDescription className="text-center text-zinc-500">{server?.members?.length} 명</DialogDescription>
         </DialogHeader>
         <ScrollArea className="mt-8 max-h-[420px] px-6">
