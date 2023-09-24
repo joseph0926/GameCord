@@ -29,13 +29,13 @@ const ServerSearch = ({ data }: ServerSearchProps) => {
       >
         <Search className="h-4 w-4 text-zinc-500 dark:text-zinc-400" />
         <p className="text-sm font-semibold text-zinc-500 transition-all group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300">
-          Search
+          검색
         </p>
       </button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="search all channel and members" />
         <CommandList>
-          <CommandEmpty>Empty,,,</CommandEmpty>
+          <CommandEmpty>검색 결과가 없습니다,,,</CommandEmpty>
           {data.map(({ label, type, data }) => {
             if (!data || !data.length) return null;
             return (

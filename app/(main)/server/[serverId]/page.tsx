@@ -28,7 +28,7 @@ const ServerPage = async ({ params }: { params: { serverId: string } }) => {
     return null;
   }
 
-  return <div>ASDAs</div>;
+  return redirect(`/server/${params.serverId}/channel/${initialChannel?.id}`);
 };
 
 export default ServerPage;

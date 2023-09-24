@@ -32,6 +32,7 @@ const ServerChannel = ({ channel, server, role }: ServerChannelProps) => {
   const actionHandler = (e: React.MouseEvent, action: ModalType) => {
     e.stopPropagation();
     onOpen(action, { channel, server });
+    router.push(`/server/${params?.serverId}/channel/${channel.id}`);
   };
 
   return (
