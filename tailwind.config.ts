@@ -66,11 +66,11 @@ module.exports = {
           '100%': { 'background-position': '0% 50%' }
         },
         'text-gradient': {
-          '0%': { color: '#b91c1c' },
-          '25%': { color: '#450a0a' },
-          '50%': { color: '#1c1917' },
-          '75%': { color: '#450a0a' },
-          '100%': { color: '#b91c1c' }
+          '0%': { color: '#450a0a' },
+          '25%': { color: '#991b1b' },
+          '50%': { color: '#b91c1c' },
+          '75%': { color: '#991b1b' },
+          '100%': { color: '#450a0a' }
         }
       },
       animation: {
