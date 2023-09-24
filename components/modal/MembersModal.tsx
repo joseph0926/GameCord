@@ -61,6 +61,24 @@ const MembersModal = () => {
     }
   };
 
+  const benHandler = async (memberId: string) => {
+    try {
+      setLoadingId(memberId);
+      const url = qs.stringifyUrl({
+        url: `/member/${memberId}`,
+        query: {
+          serverId: server?.id
+        }
+      });
+      const res = await customAxios.delete(url);
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingId('');
+    }
+  };
+
   return (
     <Dialog open={isMoadlOpen} onOpenChange={onClose}>
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
@@ -109,7 +127,7 @@ const MembersModal = () => {
                         </DropdownMenuPortal>
                       </DropdownMenuSub>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => benHandler(mem?.id)}>
                         <Gavel className="mr-2 h-4 w-4" />벤
                       </DropdownMenuItem>
                     </DropdownMenuContent>
