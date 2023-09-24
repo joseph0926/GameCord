@@ -9,6 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { serverFormSchema } from '@/lib/validations/server';
 import { Button } from '../ui/button';
 import { useEffect, useState } from 'react';
+import FileUpload from '../ui/file-upload';
+import { createServer } from '@/lib/actions/server/mutateActions';
 
 const SetupServerModal = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -28,7 +30,7 @@ const SetupServerModal = () => {
   const isLoading = form.formState.isSubmitting;
 
   const submitHandler = async (values: z.infer<typeof serverFormSchema>) => {
-    console.log(values);
+    await createServer({ data: { ...values, path: `` } });
   };
 
   if (!isMounted) {
@@ -53,7 +55,9 @@ const SetupServerModal = () => {
                   name="imageUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormControl></FormControl>
+                      <FormControl>
+                        <FileUpload endpoint="serverImage" value={field.value} onChange={field.onChange} />
+                      </FormControl>
                     </FormItem>
                   )}
                 />
