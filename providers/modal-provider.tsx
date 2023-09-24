@@ -1,5 +1,6 @@
 'use client';
 
+import CreateServerModal from '@/components/modal/CreateServerModal';
 import { useEffect, useState } from 'react';
 
 export const ModalProvider = () => {
@@ -13,5 +14,9 @@ export const ModalProvider = () => {
     return null;
   }
 
-  return <></>;
+  return (
+    <>
+      <CreateServerModal />
+    </>
+  );
 };
