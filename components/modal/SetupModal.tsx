@@ -11,9 +11,12 @@ import { Button } from '../ui/button';
 import { useEffect, useState } from 'react';
 import FileUpload from '../ui/file-upload';
 import { createServer } from '@/lib/actions/server/mutateActions';
+import { Separator } from '../ui/separator';
+import { Label } from '../ui/label';
 
 const SetupServerModal = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const [inviteCode, setIviteCode] = useState('');
 
   useEffect(() => {
     setIsMounted(true);
@@ -78,6 +81,19 @@ const SetupServerModal = () => {
                     <FormMessage />
                   </FormItem>
                 )}
+              />
+              <div className="flex w-full items-center justify-between">
+                <Separator className="h-0.5 w-[40%] bg-zinc-500" />
+                <span className="text-zinc-500">또는</span>
+                <Separator className="h-0.5 w-[40%] bg-zinc-500" />
+              </div>
+            </div>
+            <div className="px-6">
+              <Label className="text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70">초대 코드</Label>
+              <Input
+                value={inviteCode}
+                onChange={(e) => setIviteCode(e.target.value)}
+                className="border-0 bg-zinc-300/50 text-black focus-visible:ring-0 focus-visible:ring-offset-0"
               />
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
