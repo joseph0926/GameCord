@@ -37,38 +37,38 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
             onClick={() => onOpen('invite', { server })}
             className="cursor-pointer px-3 py-2 text-sm text-indigo-600 dark:text-indigo-400"
           >
-            Ivite People
+            초대하기
             <UserPlus className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
         {isAdmin && (
           <DropdownMenuItem onClick={() => onOpen('editServer', { server })} className="cursor-pointer px-3 py-2 text-sm">
-            Server Settings
+            서버 설정
             <Settings className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
         {isAdmin && (
           <DropdownMenuItem onClick={() => onOpen('members', { server })} className="cursor-pointer px-3 py-2 text-sm">
-            Manage Members
+            멤버 관리
             <Users className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
         {isModerator && (
           <DropdownMenuItem onClick={() => onOpen('createChannel')} className="cursor-pointer px-3 py-2 text-sm">
-            Create Channel
+            채널 생성
             <PlusCircle className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
         {isModerator && <DropdownMenuSeparator />}
         {isAdmin && (
           <DropdownMenuItem className="cursor-pointer px-3 py-2 text-sm text-rose-500">
-            Delete Server
+            서버 삭제
             <Trash className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
         {!isAdmin && (
           <DropdownMenuItem className="cursor-pointer px-3 py-2 text-sm text-rose-500">
-            Leave Server
+            서버 나가기
             <LogOut className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
