@@ -14,10 +14,13 @@ import { createServer } from '@/lib/actions/server/mutateActions';
 import { Separator } from '../ui/separator';
 import { Label } from '../ui/label';
 import { useRouter } from 'next/navigation';
+import { useOrigin } from '@/hooks/useOrigin';
 
 const SetupServerModal = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [inviteCode, setInviteCode] = useState('');
+
+  const origin = useOrigin();
 
   const router = useRouter();
 
@@ -45,7 +48,7 @@ const SetupServerModal = () => {
 
   return (
     <Dialog open>
-      <DialogContent className="overflow-hidden bg-white p-0 text-black">
+      <DialogContent className="overflow-y-scroll bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
           <DialogTitle className="mb-2 text-center text-3xl">Create Your Server</DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
@@ -101,7 +104,7 @@ const SetupServerModal = () => {
                 />
                 <Button
                   type="button"
-                  onClick={() => router.push(`/invite/${inviteCode.replace('http://localhost:3000/invite/', '')}`)}
+                  onClick={() => router.push(`/invite/${inviteCode.replace(`${origin}/invite/`, '')}`)}
                   disabled={inviteCode === ''}
                   variant="secondary"
                   className="h-full w-[15%] py-2.5"
