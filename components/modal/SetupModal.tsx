@@ -39,9 +39,9 @@ const SetupServerModal = () => {
     <Dialog open>
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
-          <DialogTitle className="text-center text-2xl">Create Your Server</DialogTitle>
+          <DialogTitle className="mb-2 text-center text-3xl">Create Your Server</DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus temporibus ratione quaerat quam, soluta,
+            여행의 시작은 함께하는 대화로부터, TripCord에서 당신만의 서버를 생성하고 친구들과의 여행 계획을 시작하세요
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -78,7 +78,7 @@ const SetupServerModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button disabled={isLoading} variant="primary">
-                Create
+                생성
               </Button>
             </DialogFooter>
           </form>
