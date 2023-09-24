@@ -49,7 +49,7 @@ const InviteServerModal = () => {
     <Dialog open={isMoadlOpen} onOpenChange={onClose}>
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
         <DialogHeader className="px-6 pt-8">
-          <DialogTitle className="text-center text-2xl">초대하기</DialogTitle>
+          <DialogTitle className="text-center text-2xl">Invite Server</DialogTitle>
         </DialogHeader>
         <div className="p-6">
           <Label className="text-xs font-bold uppercase text-zinc-500 dark:text-secondary/70">초대 코드</Label>
