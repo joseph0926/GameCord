@@ -1,7 +1,7 @@
 'use server';
 
 import db from '@/lib/db';
-import { currentUser, redirectToSignIn } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 export const createUser = async () => {

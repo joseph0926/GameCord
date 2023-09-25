@@ -4,13 +4,12 @@ import ChatMessage from '@/components/chat/ChatMessage';
 import { fetchORCreateGroupMessages } from '@/lib/actions/chat/fetchORmutateGroupMessages';
 import { getCurrentUser } from '@/lib/actions/user/fetchActions';
 import db from '@/lib/db';
-import { redirectToSignIn } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 const MemberPage = async ({ params }: { params: { memberId: string; serverId: string } }) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirectToSignIn();
+    return redirect('/sign-in');
   }
 
   const currentMember = await db.member.findFirst({

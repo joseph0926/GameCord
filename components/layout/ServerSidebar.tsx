@@ -5,12 +5,13 @@ import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import NavigationItem from '@/components/layout/NavigationItem';
 import { ModeToggle } from '@/components/ui/mode-toggle';
-import { UserButton, redirectToSignIn } from '@clerk/nextjs';
+import { UserButton } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 
 const ServerSidebar = async () => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirectToSignIn();
+    return redirect('/sign-in');
   }
 
   const servers = await db.server.findMany({

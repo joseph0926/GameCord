@@ -1,6 +1,5 @@
 import { getCurrentUser } from '@/lib/actions/user/fetchActions';
 import db from '@/lib/db';
-import { redirectToSignIn } from '@clerk/nextjs';
 import { ChannelType } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import ServerHeader from '@/components/server/ServerHeader';
@@ -30,7 +29,7 @@ export const roleIconMap = {
 const SignleServerSidebar = async ({ serverId }: SignleServerSidebarProps) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirectToSignIn();
+    return redirect('/sign-in');
   }
 
   const server = await db.server.findUnique({
