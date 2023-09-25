@@ -1,12 +1,11 @@
 import { getCurrentUser } from '@/lib/actions/user/fetchActions';
 import db from '@/lib/db';
-import { redirectToSignIn } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 const InviteCodePage = async ({ params }: { params: { inviteCode: string } }) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirectToSignIn();
+    return redirect('/sign-in');
   }
   if (!params.inviteCode) {
     return redirect('/');
