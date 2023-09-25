@@ -3,13 +3,12 @@ import ChatInput from '@/components/chat/ChatInput';
 import ChatMessage from '@/components/chat/ChatMessage';
 import { getCurrentUser } from '@/lib/actions/user/fetchActions';
 import db from '@/lib/db';
-import { redirectToSignIn } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 const ChannelPage = async ({ params }: { params: { serverId: string; channelId: string } }) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirectToSignIn();
+    return redirect('/sign-in');
   }
 
   const channel = await db.channel.findUnique({

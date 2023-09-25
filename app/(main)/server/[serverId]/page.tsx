@@ -1,12 +1,11 @@
 import { getCurrentUser } from '@/lib/actions/user/fetchActions';
 import db from '@/lib/db';
-import { redirectToSignIn } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 const ServerPage = async ({ params }: { params: { serverId: string } }) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirectToSignIn();
+    return redirect('/sign-in');
   }
 
   const server = await db.server.findUnique({
