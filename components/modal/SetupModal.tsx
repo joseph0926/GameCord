@@ -15,10 +15,13 @@ import { Separator } from '../ui/separator';
 import { Label } from '../ui/label';
 import { useRouter } from 'next/navigation';
 import { useOrigin } from '@/hooks/useOrigin';
+import { useClerk } from '@clerk/nextjs';
 
 const SetupServerModal = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [inviteCode, setInviteCode] = useState('');
+
+  const { signOut } = useClerk();
 
   const origin = useOrigin();
 
@@ -114,9 +117,14 @@ const SetupServerModal = () => {
               </div>
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
-              <Button disabled={isLoading} variant="primary">
-                생성
-              </Button>
+              <div className="flex w-full items-center justify-between">
+                <Button type="button" disabled={isLoading} onClick={() => signOut()} variant="secondary">
+                  로그아웃
+                </Button>
+                <Button disabled={isLoading} variant="primary">
+                  생성
+                </Button>
+              </div>
             </DialogFooter>
           </form>
         </Form>
