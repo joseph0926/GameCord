@@ -5,12 +5,13 @@ import { customAxios } from '@/lib/customAxios';
 import qs from 'query-string';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus, Smile } from 'lucide-react';
+import { Plus, Send, Smile } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useModalStore } from '@/hooks/useModalStore';
+import { Button } from '@/components/ui/button';
 
 interface ChatInputProps {
   apiUrl: string;
@@ -54,14 +55,14 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="content"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <div className="relative p-4 pb-6">
+                <div className="relative py-4 pb-6 pl-4 pr-2">
                   <button
                     type="button"
                     onClick={() => {}}
@@ -75,9 +76,12 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     placeholder={`Message ${type === 'groupMessage' ? name : '#' + name}`}
                     {...field}
                   />
-                  <div className="absolute right-8 top-7">
+                  <div className="absolute right-16 top-7 md:right-20">
                     <Smile />
                   </div>
+                  <button type="submit" className="absolute right-8 top-7">
+                    <Send className="text-zinc-500 transition-all group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300" />
+                  </button>
                 </div>
               </FormControl>
             </FormItem>
