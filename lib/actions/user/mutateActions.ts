@@ -2,11 +2,12 @@
 
 import db from '@/lib/db';
 import { currentUser, redirectToSignIn } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 
 export const createUser = async () => {
   const clerkUser = await currentUser();
   if (!clerkUser) {
-    return redirectToSignIn();
+    return redirect('/sign-in');
   }
 
   const user = await db.user.findUnique({
