@@ -15,7 +15,7 @@ const MemberPage = async ({ params }: { params: { memberId: string; serverId: st
   const currentMember = await db.member.findFirst({
     where: {
       serverId: params.serverId,
-      userId: user.id
+      userId: user
     },
     include: {
       user: true
@@ -32,7 +32,7 @@ const MemberPage = async ({ params }: { params: { memberId: string; serverId: st
 
   const { memberOne, memberTwo } = groupMessage;
 
-  const otherMember = memberOne.userId === user.id ? memberTwo : memberOne;
+  const otherMember = memberOne.userId === user ? memberTwo : memberOne;
 
   return (
     <div className="flex h-full flex-col bg-white dark:bg-[#313338]">
@@ -45,15 +45,11 @@ const MemberPage = async ({ params }: { params: { memberId: string; serverId: st
         apiUrl="/api/direct-messages"
         paramKey="groupMessageId"
         paramValue={groupMessage.id}
-        socketUrl="/socket/direct-messages"
-        socketQuery={{
-          groupMessageId: groupMessage.id
-        }}
       />
       <ChatInput
         name={otherMember.user.name}
         type="groupMessage"
-        apiUrl="/socket/direct-messages"
+        apiUrl=""
         query={{
           groupMessageId: groupMessage.id
         }}

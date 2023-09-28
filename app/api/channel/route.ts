@@ -26,7 +26,7 @@ export const POST = async (req: Request) => {
         id: serverId,
         members: {
           some: {
-            userId: user.id,
+            userId: user,
             role: {
               in: [MemberRole.ADMIN, MemberRole.MODERATOR]
             }
@@ -36,7 +36,7 @@ export const POST = async (req: Request) => {
       data: {
         channels: {
           create: {
-            userId: user.id,
+            userId: user,
             name,
             type
           }

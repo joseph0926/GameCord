@@ -18,7 +18,7 @@ const SingleServerLayout = async ({ children, params }: SingleServerLayoutProps)
       id: params.serverId,
       members: {
         some: {
-          userId: user.id
+          userId: user
         }
       }
     }

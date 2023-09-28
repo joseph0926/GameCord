@@ -9,7 +9,7 @@ const ServerPage = async ({ params }: { params: { serverId: string } }) => {
   }
 
   const server = await db.server.findUnique({
-    where: { id: params.serverId, members: { some: { userId: user.id } } },
+    where: { id: params.serverId, members: { some: { userId: user } } },
     include: {
       channels: {
         where: {

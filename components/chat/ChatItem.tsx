@@ -30,8 +30,6 @@ interface ChatItemProps {
   deleted: boolean;
   currentMember: Member;
   isUpdated: boolean;
-  socketUrl: string;
-  socketQuery: Record<string, string>;
 }
 
 const roleIconMap = {
@@ -44,18 +42,7 @@ const formSchema = z.object({
   content: z.string().min(1)
 });
 
-const ChatItem = ({
-  id,
-  content,
-  member,
-  timestamp,
-  fileUrl,
-  deleted,
-  currentMember,
-  isUpdated,
-  socketUrl,
-  socketQuery
-}: ChatItemProps) => {
+const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMember, isUpdated }: ChatItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = useModalStore();
   const params = useParams();
@@ -91,19 +78,7 @@ const ChatItem = ({
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const url = qs.stringifyUrl({
-        url: `${socketUrl}/${id}`,
-        query: socketQuery
-      });
-
-      await customAxios.patch(url, values);
-
-      form.reset();
-      setIsEditing(false);
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(values);
   };
 
   useEffect(() => {

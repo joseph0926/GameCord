@@ -19,7 +19,7 @@ const ChannelPage = async ({ params }: { params: { serverId: string; channelId: 
   const member = await db.member.findFirst({
     where: {
       serverId: params.serverId,
-      userId: user.id
+      userId: user
     }
   });
   if (!channel || !member) {
@@ -34,17 +34,12 @@ const ChannelPage = async ({ params }: { params: { serverId: string; channelId: 
         name={channel.name}
         type="channel"
         apiUrl="/api/messages"
-        socketUrl="/socket/messages"
-        socketQuery={{
-          channelId: channel.id,
-          serverId: channel.serverId
-        }}
         paramKey="channelId"
         paramValue={channel.id}
         chatId={channel.id}
       />
       <ChatInput
-        apiUrl="/socket/messages"
+        apiUrl=""
         name={channel.name}
         type="channel"
         query={{

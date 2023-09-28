@@ -5,7 +5,6 @@ import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import NavigationItem from '@/components/layout/NavigationItem';
 import { ModeToggle } from '@/components/ui/mode-toggle';
-import { UserButton } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 const ServerSidebar = async () => {
@@ -18,7 +17,7 @@ const ServerSidebar = async () => {
     where: {
       members: {
         some: {
-          userId: user.id
+          userId: user
         }
       }
     }
@@ -37,14 +36,6 @@ const ServerSidebar = async () => {
       </ScrollArea>
       <div className="mt-auto flex flex-col items-center gap-y-4 pb-3">
         <ModeToggle />
-        <UserButton
-          afterSignOutUrl="/"
-          appearance={{
-            elements: {
-              avatarBox: 'h-[48px] w-[48px]'
-            }
-          }}
-        />
       </div>
     </div>
   );
