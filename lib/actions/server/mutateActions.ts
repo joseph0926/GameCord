@@ -22,15 +22,15 @@ export const createServer = async ({ data }: { data: CreateServerProps }) => {
 
   const server = await db.server.create({
     data: {
-      userId: user.id,
+      userId: user,
       name,
       imageUrl,
       inviteCode: uuidv4(),
       channels: {
-        create: [{ name: 'general', userId: user.id }]
+        create: [{ name: 'general', userId: user }]
       },
       members: {
-        create: [{ userId: user.id, role: MemberRole.ADMIN }]
+        create: [{ userId: user, role: MemberRole.ADMIN }]
       }
     }
   });

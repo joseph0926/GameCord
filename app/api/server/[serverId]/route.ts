@@ -24,7 +24,7 @@ export const DELETE = async (req: Request, { params }: { params: { serverId: str
     const server = await db.server.delete({
       where: {
         id: params.serverId,
-        userId: user.id
+        userId: user
       }
     });
 
@@ -47,7 +47,7 @@ export const PATCH = async (req: Request, { params }: { params: { serverId: stri
     const server = await db.server.update({
       where: {
         id: params.serverId,
-        userId: user.id
+        userId: user
       },
       data: {
         name,

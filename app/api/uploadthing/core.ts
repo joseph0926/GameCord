@@ -1,12 +1,9 @@
-import { auth } from '@clerk/nextjs';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 
 const f = createUploadthing();
 
 const authHandler = () => {
-  const { userId } = auth();
-  if (!userId) throw new Error('Unauthorized');
-  return { userId };
+  return {};
 };
 
 export const ourFileRouter = {

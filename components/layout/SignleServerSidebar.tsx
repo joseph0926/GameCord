@@ -56,13 +56,13 @@ const SignleServerSidebar = async ({ serverId }: SignleServerSidebarProps) => {
   const textChannels = server?.channels.filter((ch) => ch.type === ChannelType.TEXT);
   const audioChannels = server?.channels.filter((ch) => ch.type === ChannelType.AUDIO);
 
-  const members = server?.members.filter((mem) => mem.userId !== user.id);
+  const members = server?.members.filter((mem) => mem.userId !== user);
 
   if (!server) {
     return redirect('/');
   }
 
-  const role = server.members.find((mem) => mem.userId === user.id)?.role;
+  const role = server.members.find((mem) => mem.userId === user)?.role;
 
   return (
     <div className="flex h-full w-full flex-col bg-[#f2f3f5] text-primary dark:bg-[#2b2d31]">

@@ -10,7 +10,7 @@ const SetupPage = async () => {
     where: {
       members: {
         some: {
-          userId: user.id
+          userId: user
         }
       }
     }
