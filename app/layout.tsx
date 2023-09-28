@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import { ModalProvider } from '@/providers/modal-provider';
 import CustomReactQueryProvider from '@/providers/custom-react-query-provider';
 import { ToasterProvider } from '@/providers/toaster-provider';
+import { AuthProvider } from '@/providers/auth-provider';
 
 const font = Ubuntu({ subsets: ['cyrillic'], weight: '400' });
 
@@ -19,11 +20,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" suppressHydrationWarning>
       <body className={cn(font.className, 'overflow-x-hidden bg-white dark:bg-[#313338]')}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="tripcord-theme">
-          <ModalProvider />
-          <CustomReactQueryProvider>
-            <ToasterProvider />
-            {children}
-          </CustomReactQueryProvider>
+          <AuthProvider>
+            <ModalProvider />
+            <CustomReactQueryProvider>
+              <ToasterProvider />
+              {children}
+            </CustomReactQueryProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

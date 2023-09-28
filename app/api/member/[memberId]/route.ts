@@ -22,7 +22,7 @@ export const PATCH = async (req: Request, { params }: { params: { memberId: stri
     const server = await db.server.update({
       where: {
         id: serverId,
-        userId: user
+        userId: user.id
       },
       data: {
         members: {
@@ -30,7 +30,7 @@ export const PATCH = async (req: Request, { params }: { params: { memberId: stri
             where: {
               id: params.memberId,
               userId: {
-                not: user
+                not: user.id
               }
             },
             data: {
@@ -77,14 +77,14 @@ export const DELETE = async (req: Request, { params }: { params: { memberId: str
     const server = await db.server.update({
       where: {
         id: serverId,
-        userId: user
+        userId: user.id
       },
       data: {
         members: {
           deleteMany: {
             id: params.memberId,
             userId: {
-              not: user
+              not: user.id
             }
           }
         }

@@ -101,7 +101,7 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
     <div className="group relative flex w-full items-center p-4 transition hover:bg-black/5">
       <div className="group flex w-full items-start gap-x-2">
         <div onClick={onMemberClick} className="cursor-pointer transition hover:drop-shadow-md">
-          <UserAvatar src={member.user.imageUrl} />
+          <UserAvatar src={member.user.imageUrl!} />
         </div>
         <div className="flex w-full flex-col">
           <div className="flex items-center gap-x-2">

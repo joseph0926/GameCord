@@ -19,7 +19,7 @@ export const PATCH = async (req: Request, { params }: { params: { serverId: stri
     const server = await db.server.update({
       where: {
         id: params.serverId,
-        userId: user
+        userId: user.id
       },
       data: {
         inviteCode: uuidv4()

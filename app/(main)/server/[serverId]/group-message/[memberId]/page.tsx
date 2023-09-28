@@ -9,13 +9,13 @@ import { redirect } from 'next/navigation';
 const MemberPage = async ({ params }: { params: { memberId: string; serverId: string } }) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirect('/sign-in');
+    return redirect('/');
   }
 
   const currentMember = await db.member.findFirst({
     where: {
       serverId: params.serverId,
-      userId: user
+      userId: user.id
     },
     include: {
       user: true
@@ -32,11 +32,11 @@ const MemberPage = async ({ params }: { params: { memberId: string; serverId: st
 
   const { memberOne, memberTwo } = groupMessage;
 
-  const otherMember = memberOne.userId === user ? memberTwo : memberOne;
+  const otherMember = memberOne.userId === user.id ? memberTwo : memberOne;
 
   return (
     <div className="flex h-full flex-col bg-white dark:bg-[#313338]">
-      <ChatHeader imageUrl={otherMember.user.imageUrl} name={otherMember.user.name} serverId={params.serverId} type="groupMessage" />
+      <ChatHeader imageUrl={otherMember.user.imageUrl!} name={otherMember.user.name} serverId={params.serverId} type="groupMessage" />
       <ChatMessage
         member={currentMember}
         name={otherMember.user.name}
