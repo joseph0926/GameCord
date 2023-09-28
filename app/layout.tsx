@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { ModalProvider } from '@/providers/modal-provider';
 import CustomReactQueryProvider from '@/providers/custom-react-query-provider';
+import { ToasterProvider } from '@/providers/toaster-provider';
 
 const font = Ubuntu({ subsets: ['cyrillic'], weight: '400' });
 
@@ -19,7 +20,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={cn(font.className, 'overflow-x-hidden bg-white dark:bg-[#313338]')}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="tripcord-theme">
           <ModalProvider />
-          <CustomReactQueryProvider>{children}</CustomReactQueryProvider>
+          <CustomReactQueryProvider>
+            <ToasterProvider />
+            {children}
+          </CustomReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>
