@@ -6,18 +6,19 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import NavigationItem from '@/components/layout/NavigationItem';
 import { ModeToggle } from '@/components/ui/mode-toggle';
 import { redirect } from 'next/navigation';
+import { SignoutButton } from './SignoutButton';
 
 const ServerSidebar = async () => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirect('/sign-in');
+    return redirect('/');
   }
 
   const servers = await db.server.findMany({
     where: {
       members: {
         some: {
-          userId: user
+          userId: user.id
         }
       }
     }
@@ -36,6 +37,7 @@ const ServerSidebar = async () => {
       </ScrollArea>
       <div className="mt-auto flex flex-col items-center gap-y-4 pb-3">
         <ModeToggle />
+        <SignoutButton />
       </div>
     </div>
   );

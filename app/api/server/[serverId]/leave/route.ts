@@ -16,18 +16,18 @@ export const PATCH = async (req: Request, { params }: { params: { serverId: stri
       where: {
         id: params.serverId,
         userId: {
-          not: user
+          not: user.id
         },
         members: {
           some: {
-            userId: user
+            userId: user.id
           }
         }
       },
       data: {
         members: {
           deleteMany: {
-            userId: user
+            userId: user.id
           }
         }
       }

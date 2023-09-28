@@ -5,14 +5,14 @@ import { redirect } from 'next/navigation';
 const InviteCodePage = async ({ params }: { params: { inviteCode: string } }) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirect('/sign-in');
+    return redirect('/');
   }
   if (!params.inviteCode) {
     return redirect('/');
   }
 
   const existingServer = await db.server.findFirst({
-    where: { inviteCode: params.inviteCode, members: { some: { userId: user } } }
+    where: { inviteCode: params.inviteCode, members: { some: { userId: user.id } } }
   });
   if (existingServer) {
     return redirect(`/server/${existingServer.id}`);
@@ -24,7 +24,7 @@ const InviteCodePage = async ({ params }: { params: { inviteCode: string } }) =>
     },
     data: {
       members: {
-        create: [{ userId: user }]
+        create: [{ userId: user.id }]
       }
     }
   });

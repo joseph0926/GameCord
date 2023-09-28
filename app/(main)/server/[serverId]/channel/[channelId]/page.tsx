@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation';
 const ChannelPage = async ({ params }: { params: { serverId: string; channelId: string } }) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirect('/sign-in');
+    return redirect('/');
   }
 
   const channel = await db.channel.findUnique({
@@ -19,7 +19,7 @@ const ChannelPage = async ({ params }: { params: { serverId: string; channelId: 
   const member = await db.member.findFirst({
     where: {
       serverId: params.serverId,
-      userId: user
+      userId: user.id
     }
   });
   if (!channel || !member) {

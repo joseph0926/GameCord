@@ -5,11 +5,11 @@ import { redirect } from 'next/navigation';
 const ServerPage = async ({ params }: { params: { serverId: string } }) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirect('/sign-in');
+    return redirect('/');
   }
 
   const server = await db.server.findUnique({
-    where: { id: params.serverId, members: { some: { userId: user } } },
+    where: { id: params.serverId, members: { some: { userId: user.id } } },
     include: {
       channels: {
         where: {

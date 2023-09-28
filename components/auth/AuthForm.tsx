@@ -2,7 +2,7 @@
 
 import { authFormSchema } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form';
@@ -12,13 +12,23 @@ import { Separator } from '../ui/separator';
 import AuthSocialButton from './AuthSocialButton';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 type AuthType = 'signin' | 'signup';
 
 const AuthForm = () => {
+  const session = useSession();
+  const router = useRouter();
+
   const [isSignInLoading, setIsSignInLoading] = useState(false);
   const [authType, setAuthType] = useState<AuthType>('signin');
+
+  useEffect(() => {
+    if (session?.status === 'authenticated') {
+      router.push('/setup');
+    }
+  }, [session?.status]);
 
   const authToggle = useCallback(() => {
     if (authType === 'signin') {
@@ -57,11 +67,12 @@ const AuthForm = () => {
         redirect: false
       })
         .then((cb) => {
-          if (cb?.error) {
-            toast.error('로그인에 실패하였습니다.');
-          }
           if (cb?.ok && !cb?.error) {
             toast.success('로그인 성공');
+          }
+          if (cb?.error) {
+            console.log(cb.error);
+            toast.error('로그인에 실패하였습니다.');
           }
         })
         .finally(() => {

@@ -10,7 +10,7 @@ type SingleServerLayoutProps = React.PropsWithChildren<{
 const SingleServerLayout = async ({ children, params }: SingleServerLayoutProps) => {
   const user = await getCurrentUser();
   if (!user) {
-    return redirect('/sign-in');
+    return redirect('/');
   }
 
   const server = await db.server.findUnique({
@@ -18,7 +18,7 @@ const SingleServerLayout = async ({ children, params }: SingleServerLayoutProps)
       id: params.serverId,
       members: {
         some: {
-          userId: user
+          userId: user.id
         }
       }
     }
