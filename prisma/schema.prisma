@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -15,10 +15,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId   String @unique
-  email    String @db.Text
+  email    String  @unique
   name     String
-  imageUrl String @db.Text
+  password String
+  imageUrl String?
 
   servers  Server[]
   members  Member[]
@@ -31,7 +31,7 @@ model Server {
   updatedAt DateTime @updatedAt
 
   name       String
-  imageUrl   String @db.Text
+  imageUrl   String
   inviteCode String @unique
 
   userId String
@@ -100,8 +100,8 @@ model Message {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  content String  @db.Text
-  fileUrl String? @db.Text
+  content String
+  fileUrl String?
   deleted Boolean @default(false)
 
   memberId  String
@@ -134,8 +134,8 @@ model DirectMessage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  content String  @db.Text
-  fileUrl String? @db.Text
+  content String
+  fileUrl String?
   deleted Boolean @default(false)
 
   memberId       String
