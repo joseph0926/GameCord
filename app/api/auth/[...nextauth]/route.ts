@@ -6,6 +6,8 @@ import NaverProvider from 'next-auth/providers/naver';
 import KaKaoProvider from 'next-auth/providers/kakao';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import db from '@/lib/db';
+import { redis } from '@/lib/redis';
+import { User } from '@prisma/client';
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db),
@@ -51,6 +53,37 @@ export const authOptions: AuthOptions = {
       }
     })
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.sub = user.id;
+        await redis.set(`user:${user.id}`, JSON.stringify(user), {
+          ex: 1000
+        });
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      const cachedUserString: string | null = await redis.get(`user:${token.sub}`);
+      const cachedUser: User | null = cachedUserString ? JSON.parse(cachedUserString) : null;
+      if (cachedUser) {
+        session.user = { ...session.user, ...cachedUser };
+        return session;
+      }
+
+      const dbUser = await db.user.findUnique({
+        where: {
+          id: token.sub
+        }
+      });
+      if (dbUser) {
+        await redis.set(`user:${token.sub}`, JSON.stringify(dbUser), { ex: 1000 });
+        session.user = { ...session.user, ...dbUser };
+      }
+
+      return session;
+    }
+  },
   debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: 'jwt'
