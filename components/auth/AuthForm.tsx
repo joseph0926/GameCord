@@ -13,7 +13,8 @@ import AuthSocialButton from './AuthSocialButton';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
+import { signupAction } from '@/lib/actions/user';
 
 type AuthType = 'signin' | 'signup';
 
@@ -51,24 +52,26 @@ const AuthForm = () => {
 
   const submitHandler = async (values: z.infer<typeof authFormSchema>) => {
     if (authType === 'signup') {
-      await axios
-        .post('/api/signup', values)
-        .catch(() => toast.error('회원가입에 실패하였습니다.'))
-        .finally(() => {
-          form.reset();
-          toast.success('회원가입 완료');
-        });
+      try {
+        await signupAction(values);
+        form.reset();
+        toast.success('회원가입에 성공하셨습니다.');
+      } catch (error) {
+        console.log(error);
+        toast.error(`${error}`);
+      }
     }
 
     if (authType === 'signin') {
       setIsSignInLoading(true);
       signIn('credentials', {
         ...values,
-        redirect: false
+        redirect: true
       })
         .then((cb) => {
           if (cb?.ok && !cb?.error) {
             toast.success('로그인 성공');
+            redirect('/');
           }
           if (cb?.error) {
             console.log(cb.error);

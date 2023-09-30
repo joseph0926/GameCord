@@ -5,7 +5,3 @@ export default withAuth({
     signIn: '/'
   }
 });
-
-export const config = {
-  matcher: ['/setup/:path*', '/server/:path*', '/invite/:path*']
-};
