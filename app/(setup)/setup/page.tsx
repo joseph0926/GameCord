@@ -1,26 +1,10 @@
 import SetupServerModal from '@/components/modal/SetupModal';
-import { getCurrentUser } from '@/lib/actions/user/fetchActions';
+import { getCurrentUser } from '@/lib/actions/user';
 import db from '@/lib/db';
 import { redirect } from 'next/navigation';
 
 const SetupPage = async () => {
-  const user = await getCurrentUser();
-  if (!user) {
-    redirect('/');
-  }
-
-  const server = await db.server.findFirst({
-    where: {
-      members: {
-        some: {
-          userId: user.id
-        }
-      }
-    }
-  });
-  if (server) {
-    return redirect(`/server/${server.id}`);
-  }
+  await getCurrentUser();
 
   return <SetupServerModal />;
 };

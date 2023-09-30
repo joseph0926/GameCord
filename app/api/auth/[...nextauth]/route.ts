@@ -64,10 +64,11 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      const cachedUserString: string | null = await redis.get(`user:${token.sub}`);
-      const cachedUser: User | null = cachedUserString ? JSON.parse(cachedUserString) : null;
+      const cachedUser: User | null = await redis.get(`user:${token.sub}`);
       if (cachedUser) {
         session.user = { ...session.user, ...cachedUser };
+        console.log('cached');
+
         return session;
       }
 
@@ -77,6 +78,8 @@ export const authOptions: AuthOptions = {
         }
       });
       if (dbUser) {
+        console.log('db');
+
         await redis.set(`user:${token.sub}`, JSON.stringify(dbUser), { ex: 1000 });
         session.user = { ...session.user, ...dbUser };
       }

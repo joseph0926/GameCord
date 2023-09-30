@@ -1,7 +1,6 @@
 'use server';
 
 import db from '@/lib/db';
-import { getCurrentUser } from '../user/fetchActions';
 import { v4 as uuidv4 } from 'uuid';
 import { MemberRole } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
@@ -13,29 +12,29 @@ type CreateServerProps = {
 };
 
 export const createServer = async ({ data }: { data: CreateServerProps }) => {
-  const user = await getCurrentUser();
+  const user = null;
   if (!user) {
     return null;
   }
 
   const { name, imageUrl, path } = data;
 
-  const server = await db.server.create({
-    data: {
-      userId: user.id,
-      name,
-      imageUrl,
-      inviteCode: uuidv4(),
-      channels: {
-        create: [{ name: 'general', userId: user.id }]
-      },
-      members: {
-        create: [{ userId: user.id, role: MemberRole.ADMIN }]
-      }
-    }
-  });
+  // const server = await db.server.create({
+  //   data: {
+  //     userId: user.id,
+  //     name,
+  //     imageUrl,
+  //     inviteCode: uuidv4(),
+  //     channels: {
+  //       create: [{ name: 'general', userId: user.id }]
+  //     },
+  //     members: {
+  //       create: [{ userId: user.id, role: MemberRole.ADMIN }]
+  //     }
+  //   }
+  // });
 
   revalidatePath(path);
 
-  return server;
+  return null;
 };
