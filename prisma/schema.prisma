@@ -30,9 +30,11 @@ model Server {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name       String
-  imageUrl   String
-  inviteCode String @unique
+  name         String
+  serverAvatar String
+  imageUrl     String
+  thema        String
+  inviteCode   String @unique
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
@@ -61,11 +63,11 @@ model Member {
   serverId String
   server   Server @relation(fields: [serverId], references: [id])
 
-  messages       Message[]
+  groupMessages  GroupMessage[]
   directMessages DirectMessage[]
 
-  groupMessagesInitiated GroupMessage[] @relation("MemberOne")
-  groupMessagesReceived  GroupMessage[] @relation("MemberTwo")
+  personalMessagesInitiated PersonalMessage[] @relation("MemberOne")
+  personalMessagesReceived  PersonalMessage[] @relation("MemberTwo")
 
   @@index([userId])
   @@index([serverId])
@@ -84,7 +86,7 @@ model Channel {
   name String
   type ChannelType @default(TEXT)
 
-  messages Message[]
+  groupMessages GroupMessage[]
 
   userId   String
   user     User   @relation(fields: [userId], references: [id])
@@ -95,7 +97,7 @@ model Channel {
   @@index([serverId])
 }
 
-model Message {
+model GroupMessage {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -113,7 +115,7 @@ model Message {
   @@index([channelId])
 }
 
-model GroupMessage {
+model PersonalMessage {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -138,11 +140,11 @@ model DirectMessage {
   fileUrl String?
   deleted Boolean @default(false)
 
-  memberId       String
-  member         Member       @relation(fields: [memberId], references: [id], onDelete: Cascade)
-  groupMessageId String
-  groupMessage   GroupMessage @relation(fields: [groupMessageId], references: [id], onDelete: Cascade)
+  memberId          String
+  member            Member          @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  personalMessageId String
+  personalMessage   PersonalMessage @relation(fields: [personalMessageId], references: [id], onDelete: Cascade)
 
   @@index([memberId])
-  @@index([groupMessageId])
+  @@index([personalMessageId])
 }
