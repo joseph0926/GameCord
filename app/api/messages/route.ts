@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Message } from '@prisma/client';
 
 import db from '@/lib/db';
-import { getCurrentUser } from '@/lib/actions/user/fetchActions';
+import { getCurrentUser } from '@/lib/actions/user';
 
 const MESSAGES_BATCH = 10;
 

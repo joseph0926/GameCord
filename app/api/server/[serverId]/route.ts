@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import db from '@/lib/db';
-import { getCurrentUser } from '@/lib/actions/user/fetchActions';
+import { getCurrentUser } from '@/lib/actions/user';
 
 export const DELETE = async (req: Request, { params }: { params: { serverId: string } }) => {
   try {
