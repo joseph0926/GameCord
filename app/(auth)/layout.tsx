@@ -1,4 +1,4 @@
-import Gradient from '@/components/home/Gradient';
+import Gradient from '@/components/auth/Gradient';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (

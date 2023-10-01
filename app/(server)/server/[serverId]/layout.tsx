@@ -1,5 +1,5 @@
 import SignleServerSidebar from '@/components/layout/SignleServerSidebar';
-import { getCurrentUser } from '@/lib/actions/user/fetchActions';
+import { getCurrentUser } from '@/lib/actions/user';
 import db from '@/lib/db';
 import { redirect } from 'next/navigation';
 

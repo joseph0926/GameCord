@@ -1,7 +1,7 @@
 import ChatHeader from '@/components/chat/ChatHeader';
 import ChatInput from '@/components/chat/ChatInput';
 import ChatMessage from '@/components/chat/ChatMessage';
-import { getCurrentUser } from '@/lib/actions/user/fetchActions';
+import { getCurrentUser } from '@/lib/actions/user';
 import db from '@/lib/db';
 import { redirect } from 'next/navigation';
 
