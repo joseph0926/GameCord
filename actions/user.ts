@@ -6,39 +6,44 @@ import { auth, currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 export const createUser = async () => {
-  const user = await currentUser();
-  if (!user) {
-    return redirect('/sign-in');
-  }
-
-  const cachedUser = (await fetchRedis('get', `user:${user.id}`)) as string;
-  if (cachedUser && cachedUser !== 'null') {
-    return cachedUser;
-  }
-
-  const profile = await db.profile.findUnique({
-    where: {
-      userId: user.id
+  try {
+    const user = await currentUser();
+    if (!user || !user.id || user.id === '') {
+      return redirect('/sign-in');
     }
-  });
-  if (profile) {
-    return profile;
-  }
 
-  const email = user.emailAddresses[0].emailAddress;
-
-  const newProfile = await db.profile.create({
-    data: {
-      userId: user.id,
-      name: email.slice(0, email.indexOf('@')),
-      imageUrl: user.imageUrl,
-      email
+    const cachedUser = (await fetchRedis('get', `user:${user.id}`)) as string;
+    if (cachedUser && cachedUser !== 'null' && cachedUser !== '') {
+      return cachedUser;
     }
-  });
 
-  await redis.set(`user:${user.id}`, newProfile, { ex: 86400 });
+    const profile = await db.profile.findUnique({
+      where: {
+        userId: user.id
+      }
+    });
+    if (profile) {
+      return profile;
+    }
 
-  return newProfile;
+    const email = user.emailAddresses[0].emailAddress;
+
+    const newProfile = await db.profile.create({
+      data: {
+        userId: user.id,
+        name: email.slice(0, email.indexOf('@')),
+        imageUrl: user.imageUrl,
+        email
+      }
+    });
+
+    await redis.set(`user:${user.id}`, newProfile, { ex: 86400 });
+
+    return newProfile;
+  } catch (error) {
+    console.log(error);
+    redirect('/sign-in');
+  }
 };
 
 export const getCurrentUser = async () => {

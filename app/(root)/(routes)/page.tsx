@@ -1,8 +1,6 @@
 import { getCurrentUser } from '@/actions/user';
-import { Button } from '@/components/ui/button';
 import { db } from '@/lib/db';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 
 const MainPage = async () => {
   const profile = await getCurrentUser();
@@ -36,7 +34,7 @@ const MainPage = async () => {
         }
       });
     } catch (error) {
-      console.log(error);
+      console.log('[TEST_SERVER_ERROR]: ', error);
     }
   };
 
