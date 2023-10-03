@@ -12,7 +12,7 @@ export const createUser = async () => {
   }
 
   const cachedUser = (await fetchRedis('get', `user:${user.id}`)) as string;
-  if (cachedUser) {
+  if (cachedUser && cachedUser !== 'null') {
     return cachedUser;
   }
 
