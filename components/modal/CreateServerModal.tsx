@@ -7,11 +7,11 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { serverFormSchema } from '@/lib/validations/server';
-import { Button } from '../ui/button';
-import FileUpload from '../ui/file-upload';
-import { createServer } from '@/lib/actions/server/mutateActions';
+import { Button } from '@/components/ui/button';
+import FileUpload from '@/components/ui/file-upload';
+import { createServer } from '@/actions/server';
 import { useOrigin } from '@/hooks/useOrigin';
-import { useModalStore } from '@/hooks/useModalStore';
+import { useModalStore } from '@/hooks/useModal';
 
 const CreateServerModal = () => {
   const origin = useOrigin();
