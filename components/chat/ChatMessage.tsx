@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useRef, ElementRef } from 'react';
+import { Fragment, useRef, ElementRef, useEffect } from 'react';
 import { format } from 'date-fns';
 import { Member, Message, Profile } from '@prisma/client';
 import { Loader2, ServerCrash } from 'lucide-react';
@@ -10,6 +10,8 @@ import { useChatScroll } from '@/hooks/use-chat-scroll';
 
 import ChatWelcome from '@/components/chat/ChatWelcome';
 import ChatItem from '@/components/chat/ChatItem';
+import { useQueryClient } from '@tanstack/react-query';
+import { pusherClient, toPusherKey } from '@/lib/pusher';
 
 const DATE_FORMAT = 'd MMM yyyy, HH:mm';
 
@@ -52,6 +54,27 @@ export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQu
     shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
     count: data?.pages?.[0]?.items?.length ?? 0
   });
+
+  const queryClient = useQueryClient();
+  console.log(data);
+
+  useEffect(() => {
+    const channel = pusherClient.subscribe(toPusherKey(`chat:${socketQuery.channelId}`));
+    console.log(channel);
+
+    channel.bind('new-message', (newMessage: Message) => {
+      queryClient.setQueryData([queryKey], (old: any) => {
+        old.pages[0].items.unshift(newMessage);
+        return old;
+      });
+      queryClient.invalidateQueries([queryKey]);
+    });
+
+    return () => {
+      channel.unbind('new-message');
+      pusherClient.unsubscribe(toPusherKey(`chat:${socketQuery.channelId}`));
+    };
+  }, [chatId, queryClient, socketQuery.channelId]);
 
   if (status === 'loading') {
     return (

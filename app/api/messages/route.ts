@@ -1,5 +1,6 @@
 import { getCurrentUser } from '@/actions/user';
 import { db } from '@/lib/db';
+import { pusherServer, toPusherKey } from '@/lib/pusher';
 import { fetchRedis, redis } from '@/lib/redis';
 import { Message } from '@prisma/client';
 import { NextResponse } from 'next/server';
@@ -24,48 +25,56 @@ export async function GET(req: Request) {
 
     let messages: Message[] = [];
 
-    if (cursor) {
-      messages = await db.message.findMany({
-        take: MESSAGES_BATCH,
-        skip: 1,
-        cursor: {
-          id: cursor
-        },
-        where: {
-          channelId
-        },
-        include: {
-          member: {
-            include: {
-              profile: true
-            }
-          }
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      });
+    const cacheKey = `channel:${channelId}:messages`;
+    const cachedMessages = await fetchRedis('get', cacheKey);
+
+    if (cachedMessages && !cursor) {
+      messages = JSON.parse(cachedMessages);
     } else {
-      messages = await db.message.findMany({
-        take: MESSAGES_BATCH,
-        where: {
-          channelId
-        },
-        include: {
-          member: {
-            include: {
-              profile: true
+      if (cursor) {
+        messages = await db.message.findMany({
+          take: MESSAGES_BATCH,
+          skip: 1,
+          cursor: {
+            id: cursor
+          },
+          where: {
+            channelId
+          },
+          include: {
+            member: {
+              include: {
+                profile: true
+              }
             }
+          },
+          orderBy: {
+            createdAt: 'desc'
           }
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      });
+        });
+      } else {
+        messages = await db.message.findMany({
+          take: MESSAGES_BATCH,
+          where: {
+            channelId
+          },
+          include: {
+            member: {
+              include: {
+                profile: true
+              }
+            }
+          },
+          orderBy: {
+            createdAt: 'desc'
+          }
+        });
+      }
+
+      await redis.set(cacheKey, JSON.stringify(messages), { ex: 86400 });
     }
 
     let nextCursor = null;
-
     if (messages.length === MESSAGES_BATCH) {
       nextCursor = messages[MESSAGES_BATCH - 1].id;
     }
@@ -147,10 +156,23 @@ export const POST = async (req: Request) => {
       }
     });
 
-    const timestamp = Date.now();
+    const cacheKey = `channel:${channelId}:messages`;
 
-    const channelKey = `chat:${channelId}:messages`;
-    await redis.zadd(channelKey, { score: timestamp, member: JSON.stringify(message) });
+    let cachedMessages: string | null = await fetchRedis('get', cacheKey);
+    let messages: Message[] = cachedMessages ? JSON.parse(cachedMessages) : [];
+    messages.unshift(message);
+    await redis.set(cacheKey, JSON.stringify(messages), { ex: 86400 });
+
+    const pusherChannel = toPusherKey(`chat:${channelId}`);
+    console.log(pusherChannel);
+
+    const pusherEvent = 'new-message';
+    await pusherServer
+      .trigger(pusherChannel, pusherEvent, {
+        message
+      })
+      .then(() => console.log('Message sent to pusher!'))
+      .catch((error) => console.log('Pusher error:', error));
 
     return NextResponse.json({ message });
   } catch (error) {
