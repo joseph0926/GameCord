@@ -36,7 +36,7 @@ export const createUser = async () => {
     }
   });
 
-  await redis.set(`user:${user.id}`, newProfile, { ex: 1 * 24 * 3600 });
+  await redis.set(`user:${user.id}`, newProfile, { ex: 86400 });
 
   return newProfile;
 };
@@ -48,7 +48,7 @@ export const getCurrentUser = async () => {
   }
 
   const cachedUser = await fetchRedis('get', `user:${userId}`);
-  if (cachedUser) {
+  if (cachedUser && cachedUser !== 'null') {
     console.log('cachedUser');
     return JSON.parse(cachedUser);
   }
@@ -57,9 +57,9 @@ export const getCurrentUser = async () => {
     where: { userId }
   });
 
-  if (!cachedUser) {
+  if (!cachedUser || cachedUser === 'null' || cachedUser === '') {
     console.log('dbUser');
-    await redis.set(`user:${userId}`, profile, { ex: 1 * 24 * 3600 });
+    await redis.set(`user:${userId}`, profile, { ex: 86400 });
   }
 
   return profile;

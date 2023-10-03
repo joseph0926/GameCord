@@ -1,6 +1,7 @@
 'use client';
 
 import CreateServerModal from '@/components/modal/CreateServerModal';
+import MyServerListModal from '@/components/modal/MyServerListModal';
 import { useEffect, useState } from 'react';
 
 export const ModalProvider = () => {
@@ -17,6 +18,7 @@ export const ModalProvider = () => {
   return (
     <>
       <CreateServerModal />
+      <MyServerListModal />
     </>
   );
 };

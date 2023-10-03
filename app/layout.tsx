@@ -5,6 +5,7 @@ import { Ubuntu } from 'next/font/google';
 import { ThemeProvider } from '@/providers/ThemeProvider';
 import { cn } from '@/lib/utils';
 import { ModalProvider } from '@/providers/ModalProvider';
+import ToastProvider from '@/providers/ToastProvider';
 
 const font = Ubuntu({ subsets: ['cyrillic'], weight: '400' });
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="ko" suppressHydrationWarning>
         <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="trip-cord-theme">
+            <ToastProvider />
             <ModalProvider />
             {children}
           </ThemeProvider>
