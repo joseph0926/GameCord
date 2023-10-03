@@ -30,7 +30,13 @@ const CreateServerModal = () => {
   const isLoading = form.formState.isSubmitting;
 
   const submitHandler = async (values: z.infer<typeof serverFormSchema>) => {
-    await createServer({ data: { ...values, path: `${origin}/server` } });
+    try {
+      await createServer({ data: { ...values, path: `${origin}/server` } });
+      form.reset();
+      onClose();
+    } catch (error) {
+      console.log('[CREATE_SERVER_ERROR]: ', error);
+    }
   };
 
   const closeHandler = () => {
