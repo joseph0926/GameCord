@@ -9,7 +9,7 @@ type ModalData = {
   channelType?: ChannelType;
 };
 
-type ModalStoreProps = {
+type ModalProps = {
   type: ModalType | null;
   data: ModalData;
   isOpen: boolean;
@@ -17,7 +17,7 @@ type ModalStoreProps = {
   onClose: () => void;
 };
 
-export const useModalStore = create<ModalStoreProps>((set) => ({
+export const useModal = create<ModalProps>((set) => ({
   type: null,
   isOpen: false,
   data: {},

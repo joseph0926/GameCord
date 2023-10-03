@@ -11,11 +11,11 @@ import { Button } from '@/components/ui/button';
 import FileUpload from '@/components/ui/file-upload';
 import { createServer } from '@/actions/server';
 import { useOrigin } from '@/hooks/useOrigin';
-import { useModalStore } from '@/hooks/useModal';
+import { useModal } from '@/hooks/useModal';
 
 const CreateServerModal = () => {
   const origin = useOrigin();
-  const { isOpen, onClose, type } = useModalStore();
+  const { isOpen, onClose, type } = useModal();
 
   const isMoadlOpen = isOpen && type === 'createServer';
 

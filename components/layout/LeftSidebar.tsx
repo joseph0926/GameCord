@@ -6,10 +6,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '../ui/button';
 import { SignedOut, useAuth } from '@clerk/nextjs';
+import { useModal } from '@/hooks/useModal';
 
 const LeftSidebar = () => {
   const { userId } = useAuth();
   const pathname = usePathname();
+  const { onOpen } = useModal();
 
   return (
     <section className="background-light900_dark200 light-border custom-scrollbar shadow-light-300 sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 dark:shadow-none max-sm:hidden lg:w-[266px]">
@@ -23,6 +25,21 @@ const LeftSidebar = () => {
               return null;
             }
           }
+          if (item.route === '/server') {
+            return (
+              <div
+                key={item.route}
+                onClick={() => onOpen('createServer')}
+                className={`${
+                  isActive ? 'primary-gradient cursor-pointer rounded-lg text-light-900' : 'text-dark300_light900'
+                }  flex cursor-pointer items-center justify-start gap-4 bg-transparent p-4`}
+              >
+                <Image src={item.imgURL} alt={item.label} width={20} height={20} className={`${isActive ? '' : 'invert-colors'}`} />
+                <p className={`${isActive ? 'base-bold' : 'base-medium'} max-lg:hidden`}>{item.label}</p>
+              </div>
+            );
+          }
+
           return (
             <Link
               href={item.route}
