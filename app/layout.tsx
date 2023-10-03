@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/providers/ThemeProvider';
 import { cn } from '@/lib/utils';
 import { ModalProvider } from '@/providers/ModalProvider';
 import ToastProvider from '@/providers/ToastProvider';
+import CustomReactQueryProvider from '@/providers/CustomReactQueryProvider';
 
 const font = Ubuntu({ subsets: ['cyrillic'], weight: '400' });
 
@@ -22,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="trip-cord-theme">
             <ToastProvider />
             <ModalProvider />
-            {children}
+            <CustomReactQueryProvider>{children}</CustomReactQueryProvider>
           </ThemeProvider>
         </body>
       </html>
