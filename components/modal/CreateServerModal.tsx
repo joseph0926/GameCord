@@ -12,8 +12,11 @@ import FileUpload from '@/components/ui/file-upload';
 import { createServer } from '@/actions/server';
 import { useOrigin } from '@/hooks/useOrigin';
 import { useModal } from '@/hooks/useModal';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const CreateServerModal = () => {
+  const router = useRouter();
   const origin = useOrigin();
   const { isOpen, onClose, type } = useModal();
 
@@ -31,11 +34,13 @@ const CreateServerModal = () => {
 
   const submitHandler = async (values: z.infer<typeof serverFormSchema>) => {
     try {
-      await createServer({ data: { ...values, path: `${origin}/server` } });
+      const server = await createServer({ data: { ...values, path: `${origin}/server` } });
       form.reset();
       onClose();
+      router.push(`/server/${server?.id}`);
     } catch (error) {
       console.log('[CREATE_SERVER_ERROR]: ', error);
+      toast.error('서버 생성에 실패하였습니다. 잠시 후 다시 시도해주세요.');
     }
   };
 

@@ -3,14 +3,16 @@
 import { sidebarLinks } from '@/constants';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import { SignedOut, useAuth } from '@clerk/nextjs';
 import { useModal } from '@/hooks/useModal';
+import { Server } from '@prisma/client';
 
-const LeftSidebar = () => {
+const LeftSidebar = ({ myServers }: { myServers: Server[] }) => {
   const { userId } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
   const { onOpen } = useModal();
 
   return (
@@ -25,11 +27,22 @@ const LeftSidebar = () => {
               return null;
             }
           }
+
           if (item.route === '/server') {
             return (
               <div
                 key={item.route}
-                onClick={() => onOpen('createServer')}
+                onClick={() => {
+                  if (!userId) {
+                    router.push('/sign-in');
+                  }
+                  if (userId && myServers.length === 0) {
+                    onOpen('createServer');
+                  }
+                  if (userId && myServers.length !== 0) {
+                    onOpen('serverList', { myServers });
+                  }
+                }}
                 className={`${
                   isActive ? 'primary-gradient cursor-pointer rounded-lg text-light-900' : 'text-dark300_light900'
                 }  flex cursor-pointer items-center justify-start gap-4 bg-transparent p-4`}
