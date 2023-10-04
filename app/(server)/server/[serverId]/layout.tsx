@@ -23,6 +23,7 @@ const SingleServerLayout = async ({ children, params }: SingleServerLayoutProps)
       }
     }
   });
+
   if (!server) {
     return redirect('/');
   }
