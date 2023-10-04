@@ -46,8 +46,6 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
       if (!res.ok) {
         throw new Error(await res.json());
       }
-
-      const { message } = await res.json();
       form.reset();
       router.refresh();
     } catch (error) {

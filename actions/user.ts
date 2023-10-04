@@ -62,12 +62,10 @@ export const getCurrentUser = async () => {
     return profile;
   }
   if (cachedUser && cachedUser !== 'null') {
-    console.log('cachedUser');
     return JSON.parse(cachedUser);
   }
 
   if (!cachedUser || cachedUser === 'null' || cachedUser === '') {
-    console.log('dbUser');
     await redis.set(`user:${userId}`, profile, { ex: 86400 });
   }
 
