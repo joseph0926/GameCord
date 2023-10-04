@@ -60,7 +60,7 @@ const MainMobileNavbar = () => {
         <Link href="/" className="flex items-center gap-3">
           <Image src="/images/logo.png" width={23} height={23} alt="DevFlow" />
           <p className="h2-bold text-dark100_light900 font-spaceGrotesk">
-            Trip<span className="text-primary-500">Cord</span>
+            Game<span className="text-primary-500">Cord</span>
           </p>
         </Link>
         <div>

@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ClerkProvider>
       <html lang="ko" suppressHydrationWarning>
         <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="trip-cord-theme">
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="game-cord-theme">
             <ToastProvider />
             <ModalProvider />
             <CustomReactQueryProvider>{children}</CustomReactQueryProvider>
