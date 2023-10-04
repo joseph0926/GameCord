@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 const MainPage = async () => {
   const profile = await getCurrentUser();
 
-  if (!profile.id) {
+  if (!profile?.id) {
     return null;
   }
 
