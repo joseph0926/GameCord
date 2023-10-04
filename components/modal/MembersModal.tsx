@@ -67,6 +67,34 @@ const MembersModal = () => {
     }
   };
 
+  const onKick = async (memberId: string) => {
+    try {
+      setLoadingId(memberId);
+      const url = qs.stringifyUrl({
+        url: `/api/member/${memberId}`,
+        query: {
+          serverId: server?.id
+        }
+      });
+
+      const res = await fetch(url, {
+        method: 'delete',
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+
+      const serverData = await res.json();
+
+      router.refresh();
+      onOpen('members', { server: serverData });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingId('');
+    }
+  };
+
   return (
     <Dialog open={isMoadlOpen} onOpenChange={onClose}>
       <DialogContent className="overflow-hidden bg-white p-0 text-black">
@@ -115,7 +143,7 @@ const MembersModal = () => {
                         </DropdownMenuPortal>
                       </DropdownMenuSub>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onKick(mem.id)}>
                         <Gavel className="mr-2 h-4 w-4" />
                         Kick
                       </DropdownMenuItem>
