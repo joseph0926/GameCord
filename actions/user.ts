@@ -52,15 +52,19 @@ export const getCurrentUser = async () => {
     return null;
   }
 
+  const profile = await db.profile.findUnique({
+    where: { userId }
+  });
+
   const cachedUser = await fetchRedis('get', `user:${userId}`);
+  if (JSON.parse(cachedUser)?.id !== profile?.id) {
+    await redis.set(`user:${userId}`, profile, { ex: 86400 });
+    return profile;
+  }
   if (cachedUser && cachedUser !== 'null') {
     console.log('cachedUser');
     return JSON.parse(cachedUser);
   }
-
-  const profile = await db.profile.findUnique({
-    where: { userId }
-  });
 
   if (!cachedUser || cachedUser === 'null' || cachedUser === '') {
     console.log('dbUser');

@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/actions/user';
 import { db } from '@/lib/db';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 const MainPage = async () => {
   const profile = await getCurrentUser();
@@ -19,20 +20,19 @@ const MainPage = async () => {
       }
     }
   });
-  if (existingMember) {
-    return null;
-  }
 
-  await db.server.update({
-    where: {
-      id: '4a80a75b-84b7-4f8a-a9fc-706b44d79bdf'
-    },
-    data: {
-      members: {
-        create: [{ profileId: profile.id }]
+  if (!existingMember) {
+    await db.server.update({
+      where: {
+        id: '4a80a75b-84b7-4f8a-a9fc-706b44d79bdf'
+      },
+      data: {
+        members: {
+          create: [{ profileId: profile.id }]
+        }
       }
-    }
-  });
+    });
+  }
 
   return (
     <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center gap-4">

@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation';
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   const profile = await getCurrentUser();
   const clerkUser = await currentUser();
+
   if (clerkUser?.id && (!profile || profile === 'null')) {
     return redirect('/new-user');
   }

@@ -56,11 +56,9 @@ export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQu
   });
 
   const queryClient = useQueryClient();
-  console.log(data);
 
   useEffect(() => {
     const channel = pusherClient.subscribe(toPusherKey(`chat:${socketQuery.channelId}`));
-    console.log(channel);
 
     channel.bind('new-message', (newMessage: Message) => {
       queryClient.setQueryData([queryKey], (old: any) => {
