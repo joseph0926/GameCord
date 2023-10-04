@@ -95,6 +95,7 @@ export const POST = async (req: Request) => {
     const { content, fileUrl } = await req.json();
     const serverId = new URL(req.url).searchParams.get('serverId');
     const channelId = new URL(req.url).searchParams.get('channelId');
+
     if (!profile) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
@@ -125,56 +126,65 @@ export const POST = async (req: Request) => {
       return new NextResponse('Server not found', { status: 400 });
     }
 
-    const channel = await db.channel.findFirst({
-      where: {
-        id: channelId as string,
-        serverId: serverId as string
-      }
-    });
-    if (!channel) {
-      return new NextResponse('Channel not found', { status: 400 });
-    }
-
     const member = server.members.find((mem) => mem.profileId === profile.id);
     if (!member) {
       return new NextResponse('Member not found', { status: 400 });
     }
 
-    const message = await db.message.create({
-      data: {
-        content,
-        fileUrl,
-        channelId: channelId as string,
-        memberId: member.id
-      },
-      include: {
-        member: {
-          include: {
-            profile: true
-          }
+    const createdAt = new Date().toISOString();
+    const updatedAt = createdAt;
+
+    const newMessage = {
+      content,
+      fileUrl,
+      channelId,
+      createdAt,
+      updatedAt,
+      member: {
+        id: member.id,
+        role: member.role,
+        profile: {
+          imageUrl: profile.imageUrl
         }
       }
-    });
+    };
 
     const cacheKey = `channel:${channelId}:messages`;
 
     let cachedMessages: string | null = await fetchRedis('get', cacheKey);
-    let messages: Message[] = cachedMessages ? JSON.parse(cachedMessages) : [];
-    messages.unshift(message);
+    let messages = cachedMessages ? JSON.parse(cachedMessages) : [];
+    messages.unshift(newMessage);
     await redis.set(cacheKey, JSON.stringify(messages), { ex: 86400 });
 
     const pusherChannel = toPusherKey(`chat:${channelId}`);
-    console.log(pusherChannel);
 
     const pusherEvent = 'new-message';
     await pusherServer
       .trigger(pusherChannel, pusherEvent, {
-        message
+        message: newMessage
       })
-      .then(() => console.log('Message sent to pusher!'))
       .catch((error) => console.log('Pusher error:', error));
 
-    return NextResponse.json({ message });
+    const saveMessageToDB = async (messageData: any) => {
+      try {
+        await db.message.create({
+          data: {
+            content: messageData.content,
+            fileUrl: messageData.fileUrl,
+            channelId: channelId,
+            memberId: member.id,
+            createdAt: new Date(messageData.createdAt),
+            updatedAt: new Date(messageData.updatedAt)
+          }
+        });
+      } catch (error) {
+        console.error('Failed to save message to DB:', error);
+      }
+    };
+
+    saveMessageToDB(newMessage);
+
+    return NextResponse.json({ message: 'success' });
   } catch (error) {
     console.log('[POST_MESSAGE_ERROR]: ', error);
     return new NextResponse('Server Error', { status: 500 });
