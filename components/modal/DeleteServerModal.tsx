@@ -20,7 +20,7 @@ export const DeleteServerModal = () => {
     try {
       setIsLoading(true);
 
-      await fetch(`/api/servers/${server?.id}`, {
+      await fetch(`/api/server/${server?.id}`, {
         method: 'DELETE',
         headers: {
           'Content-type': 'application/json'

@@ -20,7 +20,7 @@ export const LeaveServerModal = () => {
     try {
       setIsLoading(true);
 
-      await fetch(`/api/servers/${server?.id}/leave`, {
+      await fetch(`/api/server/${server?.id}/leave`, {
         method: 'PATCH',
         headers: {
           'Content-type': 'application/json'
