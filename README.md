@@ -1,28 +1,21 @@
-# Trip-Cord
-![logo](https://github.com/joseph0926/TripCord/assets/100750188/a8fa4a5f-3f10-4885-b3ac-4f3608e3c59a)
+# Game-Cord
 
+![logo](https://github.com/joseph0926/TripCord/assets/100750188/a8fa4a5f-3f10-4885-b3ac-4f3608e3c59a)
 
 ## 프로젝트 소개
 
 - NextJs v13.5의 서버 컴포넌트를 적극 활용한 웹 애플리케이션
 - Shadcn-ui, Clerk등 최신 기술들을 활용
 
-TripCord에서 친구들과의 여행 일정 계획부터 대화까지, 모든 것을 정해보세요!
+GameCord에서 게임에 대한 평가와 리뷰를 남기고, 자유롭게 소통해보세요. 또한 모더들을 위한 커뮤니티까지 준비되어있습니다!
 
 ### 배포 링크
 
-[TripCord](https://trip-cord.vercel.app/)
-
-
 ### 프로젝트 데모
-
-
 
 ### ERD
 
 ![prisma-erd](https://github.com/joseph0926/TripCord/assets/100750188/1fc17eec-2072-48bd-8213-de500c2d6e91)
-
-
 
 ## 주요 기능
 
@@ -38,7 +31,7 @@ TripCord에서 친구들과의 여행 일정 계획부터 대화까지, 모든 �
 - UI 컴포넌트 및 디자인: Tailwind 기반의 shadcn-ui
 
 - 상태 관리: Zustand
-- 데이터 페칭: React Query 
+- 데이터 페칭: React Query
 
 - ORM: Prisma
 - 데이터 검증: Zod
@@ -46,7 +39,6 @@ TripCord에서 친구들과의 여행 일정 계획부터 대화까지, 모든 �
 - 인증: Clerk
 - Redis: @upstash/redis
 - 실시간 기능: Pusher, Pusher-js
-
 
 ## 팀원
 
