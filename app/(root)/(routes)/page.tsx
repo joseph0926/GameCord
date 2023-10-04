@@ -29,7 +29,7 @@ const MainPage = async () => {
         },
         data: {
           members: {
-            create: [{ profileId }]
+            create: [{ profileId: profile.id }]
           }
         }
       });
