@@ -11,7 +11,12 @@ GameCord에서 게임에 대한 평가와 리뷰를 남기고, 자유롭게 소�
 
 ### 배포 링크
 
+[GameCord](https://game-cord-six.vercel.app/)
+
 ### 프로젝트 데모
+
+![GameCord-Chat](https://github.com/joseph0926/GameCord/assets/100750188/342f584a-9cb2-4413-8983-fa1947170ab4)
+
 
 ### ERD
 
