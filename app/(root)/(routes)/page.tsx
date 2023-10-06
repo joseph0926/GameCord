@@ -39,36 +39,6 @@ const DUMMY_QUE = [
 ];
 
 const MainPage = async () => {
-  const profile = await getCurrentUser();
-
-  if (!profile?.id) {
-    return null;
-  }
-
-  const existingMember = await db.server.findFirst({
-    where: {
-      id: '6a0e84c0-7a2a-43c5-9666-5747b894543e',
-      members: {
-        some: {
-          profileId: profile.id
-        }
-      }
-    }
-  });
-
-  if (!existingMember) {
-    await db.server.update({
-      where: {
-        id: '6a0e84c0-7a2a-43c5-9666-5747b894543e'
-      },
-      data: {
-        members: {
-          create: [{ profileId: profile.id }]
-        }
-      }
-    });
-  }
-
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-col sm:items-center">
@@ -82,7 +52,7 @@ const MainPage = async () => {
           route="/"
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
-          placeholder="search for questions"
+          placeholder="search,,," 
           otherClassName="flex-1"
         />
         <Filter filters={HomePageFilters} otherClassName="min-h-[56px] sm:min-w-[170px]" containerClassName="hidden max-md:flex" />
