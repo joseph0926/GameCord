@@ -11,7 +11,7 @@ export const UserFilters = [
   { name: 'Top Contributors', value: 'top_contributors' }
 ];
 
-export const QuestionFilters = [
+export const PostFilters = [
   { name: 'Most Recent', value: 'most_recent' },
   { name: 'Oldest', value: 'oldest' },
   { name: 'Most Voted', value: 'most_voted' },
@@ -34,7 +34,7 @@ export const HomePageFilters = [
 ];
 
 export const GlobalSearchFilters = [
-  { name: 'Question', value: 'question' },
+  { name: 'Post', value: 'post' },
   { name: 'Answer', value: 'answer' },
   { name: 'User', value: 'user' },
   { name: 'Tag', value: 'tag' }

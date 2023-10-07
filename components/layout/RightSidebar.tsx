@@ -2,11 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import RenderTag from '@/components/home/RenderTag';
-// import { getHotQuestions } from '@/lib/actions/question.action';
+// import { getHotPosts } from '@/lib/actions/post.action';
 // import { getTopPopularTags } from '@/lib/actions/tag.actions';
 
 const RightSidebar = async () => {
-  // const hotQuestions = await getHotQuestions();
+  // const hotPosts = await getHotPosts();
   // const popularTags = await getTopPopularTags();
 
   return (
@@ -14,13 +14,13 @@ const RightSidebar = async () => {
       <div>
         <h3 className="h3-bold text-dark200_light900">인기글 Top10</h3>
         <div className="mt-7 flex w-full flex-col gap-[30px]">
-          {/* {hotQuestions.map((question) => (
+          {/* {hotPosts.map((post) => (
             <Link
-              href={`/question/${question._id}`}
-              key={question._id}
+              href={`/post/${post._id}`}
+              key={post._id}
               className='flex cursor-pointer items-center justify-between gap-7'
             >
-              <p className="body-medium text-dark500_light700">{question.title}</p>
+              <p className="body-medium text-dark500_light700">{post.title}</p>
               <Image 
                 src="/assets/icons/chevron-right.svg"
                 alt="chevron right"
@@ -40,7 +40,7 @@ const RightSidebar = async () => {
                 key={tag._id}
                 _id={tag._id}
                 name={tag.name}
-                totalQuestions={tag.numberOfQuestions}
+                totalPosts={tag.numberOfPosts}
                 showCount
               />
             ))} */}

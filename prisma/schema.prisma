@@ -18,19 +18,27 @@ enum ChannelType {
   AUDIO
 }
 
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
+}
+
 model Profile {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId   String @unique
-  email    String
-  name     String
-  imageUrl String
+  profileId String @unique
+  email     String
+  name      String
+  imageUrl  String
 
   servers  Server[]
   members  Member[]
   channels Channel[]
+  posts    Post[]
+  comments Comment[]
+  votes    Vote[]
 }
 
 model Server {
@@ -144,110 +152,60 @@ model DirectMessage {
   @@index([conversationId])
 }
 
-// model Forum {
-//   id        String   @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+model Post {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//   name   String
-//   userId String
+  title   String
+  content String
+  views   Int    @default(0)
 
-//   billboards Billboard[] @relation("ForumToBillboard")
-//   categories Category[]  @relation("ForumToCategory")
-//   games      Game[]      @relation("ForumToGame")
-// }
+  votes    Vote[]
+  authorId String
+  author   Profile @relation(fields: [authorId], references: [id])
 
-// model Billboard {
-//   id        String   @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+  tags     Tag[]
+  comments Comment[]
+}
 
-//   label      String
-//   imageUrl   String
-//   categories Category[]
+model Tag {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//   forumId String
-//   forum   Forum  @relation("ForumToBillboard", fields: [forumId], references: [id])
+  name        String
+  description String
 
-//   @@index([forumId])
-// }
+  postId String
+  post   Post   @relation(fields: [postId], references: [id])
+}
 
-// model Game {
-//   id        String   @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+model Comment {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//   name                 String
-//   rate                 Decimal
-//   description          String
-//   releaseDate          DateTime
-//   developer            String
-//   publisher            String
-//   platform             String
-//   genre                String
-//   communityDescription String
-//   communityRules       String
-//   membersCount         Int      @default(0)
-//   trailerUrl           String
-//   websiteUrl           String
-//   tags                 String[]
-//   status               String
-//   ageRating            String
-//   images               Image[]
-//   Server               Server[]
-//   reviews              Review[]
+  content String
+  votes   Vote[]
 
-//   forumId    String
-//   forum      Forum    @relation("ForumToGame", fields: [forumId], references: [id])
-//   categoryId String
-//   category   Category @relation("CategoryToGame", fields: [categoryId], references: [id])
-// }
+  authorId String
+  author   Profile @relation(fields: [authorId], references: [id])
+  postId   String
+  post     Post    @relation(fields: [postId], references: [id])
+}
 
-// model Review {
-//   id        String   @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+model Vote {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//   content   String
-//   score     Decimal
-//   upVotes   Int     @default(0)
-//   downVotes Int     @default(0)
+  type VoteType
 
-//   gameId    String
-//   game      Game    @relation(fields: [gameId], references: [id])
-//   profileId String
-//   profile   Profile @relation(fields: [profileId], references: [id])
-
-//   @@index([gameId])
-//   @@index([profileId])
-// }
-
-// model Category {
-//   id        String   @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   name String
-
-//   forumId     String
-//   forum       Forum     @relation("ForumToCategory", fields: [forumId], references: [id])
-//   billboardId String
-//   billboard   Billboard @relation(fields: [billboardId], references: [id])
-//   games       Game[]    @relation("CategoryToGame")
-
-//   @@index([forumId])
-//   @@index([billboardId])
-// }
-
-// model Image {
-//   id        String   @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   url String
-
-//   gameId String
-//   game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
-
-//   @@index([gameId])
-// }
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id])
+  postId    String?
+  post      Post?    @relation(fields: [postId], references: [id])
+  commentId String?
+  comment   Comment? @relation(fields: [commentId], references: [id])
+}
