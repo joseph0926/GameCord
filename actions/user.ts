@@ -19,7 +19,7 @@ export const createUser = async () => {
 
     const profile = await db.profile.findUnique({
       where: {
-        userId: user.id
+        profileId: user.id
       }
     });
     if (profile) {
@@ -30,7 +30,7 @@ export const createUser = async () => {
 
     const newProfile = await db.profile.create({
       data: {
-        userId: user.id,
+        profileId: user.id,
         name: email.slice(0, email.indexOf('@')),
         imageUrl: user.imageUrl,
         email
@@ -53,7 +53,7 @@ export const getCurrentUser = async () => {
   }
 
   const profile = await db.profile.findUnique({
-    where: { userId }
+    where: { profileId: userId }
   });
 
   const cachedUser = await fetchRedis('get', `user:${userId}`);
