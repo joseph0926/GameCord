@@ -26,6 +26,9 @@ export const createUser = async () => {
         profileId: user.id
       }
     });
+    console.log(profile);
+    console.log(user);
+
     if (profile) {
       return profile;
     }
@@ -40,6 +43,7 @@ export const createUser = async () => {
         email
       }
     });
+    console.log(newProfile);
 
     await redis.set(`user:${user.id}`, newProfile, { ex: 86400 });
 
