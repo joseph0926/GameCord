@@ -39,6 +39,7 @@ model Profile {
   posts    Post[]
   comments Comment[]
   votes    Vote[]
+  games    Game[]
 }
 
 model Server {
@@ -52,6 +53,8 @@ model Server {
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  gameId    String
+  game      Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   members  Member[]
   channels Channel[]
@@ -164,6 +167,8 @@ model Post {
   votes    Vote[]
   authorId String
   author   Profile @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  gameId   String
+  game     Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   tags     Tag[]
   comments Comment[]
@@ -208,4 +213,25 @@ model Vote {
   post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   commentId String?
   comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+}
+
+model Game {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String
+  description String
+  publisher   String
+  releaseDate DateTime
+  imageUrl    String
+  category    String
+  jjal        String?
+  link        String
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  posts   Post[]
+  servers Server[]
 }

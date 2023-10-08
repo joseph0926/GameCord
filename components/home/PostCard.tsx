@@ -13,11 +13,17 @@ type PostCardProps = {
     id: string;
     name: string;
   }[];
-  author: Profile;
+  author: {
+    id: string;
+    profileId: string;
+    imageUrl: string;
+    name: string;
+  };
   comments: Array<object>;
   upvotes: number;
   views: number;
   createdAt: Date;
+  profileId: string;
 };
 
 const PostCard = ({ id, title, tags, author, comments, upvotes, views, createdAt }: PostCardProps) => {
@@ -38,10 +44,19 @@ const PostCard = ({ id, title, tags, author, comments, upvotes, views, createdAt
       </div>
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl="/assets/icons/clock.svg"
-          alt="clock icon"
-          value={` posted ${getTimestamp(createdAt)}`}
-          title=" Posted"
+          imgUrl={author.imageUrl}
+          alt="user"
+          value={author.name}
+          title={` - asked ${getTimestamp(createdAt)}`}
+          href={`/profile/${author.id}`}
+          isAuthor
+          textStyles="body-medium text-dark400_light700"
+        />
+        <Metric
+          imgUrl="/assets/icons/like.svg"
+          alt="Upvotes"
+          value={formatAndDivideNumber(upvotes)}
+          title=" Votes"
           textStyles="small-medium text-dark400_light800"
         />
         <Metric

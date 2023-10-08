@@ -9,20 +9,19 @@ import { SignedOut, useAuth } from '@clerk/nextjs';
 import { useModal } from '@/hooks/useModal';
 import { Server } from '@prisma/client';
 
-const LeftSidebar = ({ myServers }: { myServers: Server[] }) => {
-  const { userId } = useAuth();
+const LeftSidebar = ({ myServers, profileId }: { myServers: Server[]; profileId: string }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { onOpen } = useModal();
 
   return (
-    <section className="background-light900_dark200 light-border custom-scrollbar shadow-light-300 sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 dark:shadow-none max-sm:hidden lg:w-[266px]">
+    <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
       <div className="flex flex-1 flex-col gap-6">
         {sidebarLinks.map((item) => {
           const isActive = (pathname?.includes(item.route) && item.route.length > 1) || pathname === item.route;
           if (item.route === '/profile') {
-            if (userId) {
-              item.route = `${item.route}/${userId}`;
+            if (profileId) {
+              item.route = `${item.route}/${profileId}`;
             } else {
               return null;
             }
@@ -33,13 +32,13 @@ const LeftSidebar = ({ myServers }: { myServers: Server[] }) => {
               <div
                 key={item.route}
                 onClick={() => {
-                  if (!userId) {
+                  if (!profileId) {
                     router.push('/sign-in');
                   }
-                  if (userId && myServers.length === 0) {
+                  if (profileId && myServers.length === 0) {
                     onOpen('createServer');
                   }
-                  if (userId && myServers.length !== 0) {
+                  if (profileId && myServers.length !== 0) {
                     onOpen('serverList', { myServers });
                   }
                 }}
