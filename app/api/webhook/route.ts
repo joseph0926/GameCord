@@ -51,11 +51,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === 'user.created') {
-    const newProfile = await createUser();
-
-    if (newProfile && newProfile !== '' && newProfile !== 'null') {
-      redirect('/');
-    }
+    await createUser();
   }
   if (eventType === 'user.updated') {
     const { id, username, image_url } = evt.data;
