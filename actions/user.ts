@@ -3,26 +3,29 @@
 import { db } from '@/lib/db';
 import { redis, fetchRedis } from '@/lib/redis';
 import { auth, currentUser } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
+
+type CreateUserProps = {
+  clerkId: string;
+  email: string;
+  imageUrl: string;
+  name: string;
+};
 
 type UpdateUserProps = {
+  clerkId: string;
   updateData: {
     name: string;
     imageUrl: string;
   };
-  // path: string;
 };
 
-export const createUser = async () => {
+export const createUser = async (data: CreateUserProps) => {
   try {
-    const user = await currentUser();
-    if (!user) {
-      throw null;
-    }
+    const { clerkId, email, name, imageUrl } = data;
 
     const profile = await db.profile.findUnique({
       where: {
-        profileId: user.id
+        profileId: clerkId
       }
     });
 
@@ -30,23 +33,21 @@ export const createUser = async () => {
       return profile;
     }
 
-    const email = user.emailAddresses[0].emailAddress;
-
     const newProfile = await db.profile.create({
       data: {
-        profileId: user.id,
-        name: user.username!,
-        imageUrl: user.imageUrl,
+        profileId: clerkId,
+        name,
+        imageUrl,
         email
       }
     });
 
-    await redis.set(`user:${user.id}`, newProfile, { ex: 86400 });
+    await redis.set(`user:${clerkId}`, newProfile, { ex: 86400 });
 
     return newProfile;
   } catch (error) {
     console.log(error);
-    redirect('/sign-in');
+    return error;
   }
 };
 
@@ -78,24 +79,19 @@ export const getCurrentUser = async () => {
 
 export const updateUser = async (data: UpdateUserProps) => {
   try {
-    const user = await currentUser();
-    if (!user) {
-      throw null;
-    }
-
-    const { updateData } = data;
+    const { clerkId, updateData } = data;
 
     const profile = await db.profile.update({
       where: {
-        profileId: user.id
+        profileId: clerkId
       },
       data: updateData
     });
 
-    await redis.set(`user:${user.id}`, profile, { ex: 86400 });
+    await redis.set(`user:${clerkId}`, profile, { ex: 86400 });
   } catch (error) {
     console.log(error);
-    throw error;
+    return error;
   }
 };
 
@@ -115,6 +111,6 @@ export const deleteUser = async () => {
     await redis.set(`user:${user.id}`, null, { ex: 86400 });
   } catch (error) {
     console.log(error);
-    throw error;
+    return error;
   }
 };
