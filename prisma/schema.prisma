@@ -51,7 +51,7 @@ model Server {
   inviteCode String @unique
 
   profileId String
-  profile   Profile @relation(fields: [profileId], references: [id])
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   members  Member[]
   channels Channel[]
@@ -67,9 +67,9 @@ model Member {
   role MemberRole @default(GUEST)
 
   profileId String
-  profile   Profile @relation(fields: [profileId], references: [id])
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   serverId  String
-  server    Server  @relation(fields: [serverId], references: [id])
+  server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   messages       Message[]
   directMessages DirectMessage[]
@@ -92,9 +92,9 @@ model Channel {
   messages Message[]
 
   profileId String
-  profile   Profile @relation(fields: [profileId], references: [id])
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   serverId  String
-  server    Server  @relation(fields: [serverId], references: [id])
+  server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   @@index([profileId])
   @@index([serverId])
@@ -163,7 +163,7 @@ model Post {
 
   votes    Vote[]
   authorId String
-  author   Profile @relation(fields: [authorId], references: [id])
+  author   Profile @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   tags     Tag[]
   comments Comment[]
@@ -178,7 +178,7 @@ model Tag {
   description String
 
   postId String
-  post   Post   @relation(fields: [postId], references: [id])
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
@@ -190,9 +190,9 @@ model Comment {
   votes   Vote[]
 
   authorId String
-  author   Profile @relation(fields: [authorId], references: [id])
+  author   Profile @relation(fields: [authorId], references: [id], onDelete: Cascade)
   postId   String
-  post     Post    @relation(fields: [postId], references: [id])
+  post     Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Vote {
@@ -203,9 +203,9 @@ model Vote {
   type VoteType
 
   profileId String
-  profile   Profile  @relation(fields: [profileId], references: [id])
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
   postId    String?
-  post      Post?    @relation(fields: [postId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   commentId String?
-  comment   Comment? @relation(fields: [commentId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
 }
