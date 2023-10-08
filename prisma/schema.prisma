@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  TOP
+  MID
+  BOT
+}
+
 enum MemberRole {
   ADMIN
   MANAGER
@@ -28,10 +34,11 @@ model Profile {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  profileId String @unique
+  profileId String   @unique
   email     String
   name      String
   imageUrl  String
+  role      UserRole @default(BOT)
 
   servers  Server[]
   members  Member[]
