@@ -11,7 +11,7 @@ type UpdateUserProps = {
     name: string;
     imageUrl: string;
   };
-  path: string;
+  // path: string;
 };
 
 export const createUser = async () => {
@@ -87,7 +87,7 @@ export const updateUser = async (data: UpdateUserProps) => {
       return redirect('/sign-in');
     }
 
-    const { updateData, path } = data;
+    const { updateData } = data;
 
     const profile = await db.profile.update({
       where: {
@@ -98,7 +98,7 @@ export const updateUser = async (data: UpdateUserProps) => {
 
     await redis.set(`user:${user.id}`, profile, { ex: 86400 });
 
-    revalidatePath(path);
+    // revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;

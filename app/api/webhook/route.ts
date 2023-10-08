@@ -60,8 +60,7 @@ export async function POST(req: Request) {
       updateData: {
         name: username!,
         imageUrl: image_url
-      },
-      path: `/profile/${id}`
+      }
     });
   }
   if (eventType === 'user.deleted') {
