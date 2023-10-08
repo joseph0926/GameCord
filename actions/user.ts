@@ -3,7 +3,6 @@
 import { db } from '@/lib/db';
 import { redis, fetchRedis } from '@/lib/redis';
 import { auth, currentUser } from '@clerk/nextjs';
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 type UpdateUserProps = {
@@ -17,8 +16,8 @@ type UpdateUserProps = {
 export const createUser = async () => {
   try {
     const user = await currentUser();
-    if (!user || !user.id || user.id === '') {
-      return redirect('/sign-in');
+    if (!user) {
+      throw null;
     }
 
     const profile = await db.profile.findUnique({
@@ -26,8 +25,6 @@ export const createUser = async () => {
         profileId: user.id
       }
     });
-    console.log(profile);
-    console.log(user);
 
     if (profile) {
       return profile;
@@ -43,7 +40,6 @@ export const createUser = async () => {
         email
       }
     });
-    console.log(newProfile);
 
     await redis.set(`user:${user.id}`, newProfile, { ex: 86400 });
 
@@ -83,8 +79,8 @@ export const getCurrentUser = async () => {
 export const updateUser = async (data: UpdateUserProps) => {
   try {
     const user = await currentUser();
-    if (!user || !user.id || user.id === '') {
-      return redirect('/sign-in');
+    if (!user) {
+      throw null;
     }
 
     const { updateData } = data;
@@ -97,8 +93,6 @@ export const updateUser = async (data: UpdateUserProps) => {
     });
 
     await redis.set(`user:${user.id}`, profile, { ex: 86400 });
-
-    // revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
@@ -108,8 +102,8 @@ export const updateUser = async (data: UpdateUserProps) => {
 export const deleteUser = async () => {
   try {
     const user = await currentUser();
-    if (!user || !user.id || user.id === '') {
-      return redirect('/sign-in');
+    if (!user) {
+      throw null;
     }
 
     await db.profile.delete({
