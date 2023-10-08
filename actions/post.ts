@@ -12,6 +12,7 @@ export type CreatePostProps = {
   content: string;
   tagNames: string[];
   path: string;
+  gameId: string;
 };
 
 export type GetUserPostsProps = {
@@ -28,13 +29,14 @@ export async function createPost(data: CreatePostProps) {
   try {
     const profile = await getCurrentUser();
 
-    const { title, content, tagNames, path } = data;
+    const { title, content, tagNames, gameId, path } = data;
 
     const post = await db.post.create({
       data: {
         title,
         content,
-        authorId: profile.id
+        authorId: profile.id,
+        gameId
       }
     });
 

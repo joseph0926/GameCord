@@ -13,10 +13,12 @@ import { Button } from '@/components/ui/button';
 import { createPost } from '@/actions/post';
 import { usePathname, useRouter } from 'next/navigation';
 import { postSchema } from '@/lib/validations/post';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Game } from '@prisma/client';
 
 const type: any = 'create';
 
-const PostFrom = () => {
+const PostFrom = ({ games }: { games: Game[] | null }) => {
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -69,7 +71,8 @@ const PostFrom = () => {
         title: values.title,
         content: values.content,
         tagNames: values.tags,
-        path: pathname!
+        path: pathname!,
+        gameId: values.gameId
       });
       router.push('/');
     } catch (error) {
@@ -82,6 +85,30 @@ const PostFrom = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="flex w-full flex-col gap-10">
+        <FormField
+          control={form.control}
+          name="gameId"
+          render={({ field }) => (
+            <FormItem className="flex-1">
+              <FormLabel>Game</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent placeholder="select game,,," className="bg-white dark:bg-black">
+                  {games &&
+                    games.map((game) => (
+                      <SelectItem key={game.id} value={game.id}>
+                        {game.title}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="title"

@@ -3,6 +3,7 @@
 import { db } from '@/lib/db';
 import { redis, fetchRedis } from '@/lib/redis';
 import { auth, currentUser } from '@clerk/nextjs';
+import { UserRole } from '@prisma/client';
 
 type CreateUserProps = {
   clerkId: string;
@@ -28,6 +29,16 @@ export const createUser = async (data: CreateUserProps) => {
         profileId: clerkId
       }
     });
+    if (profile?.email === 'rkekqmf0926@gmail.com') {
+      await db.profile.update({
+        where: {
+          id: profile.id
+        },
+        data: {
+          role: UserRole.TOP
+        }
+      });
+    }
 
     if (profile) {
       return profile;
@@ -38,7 +49,8 @@ export const createUser = async (data: CreateUserProps) => {
         profileId: clerkId,
         name,
         imageUrl,
-        email
+        email,
+        role: email === 'rkekqmf0926@gmail.com' ? UserRole.TOP : UserRole.BOT
       }
     });
 

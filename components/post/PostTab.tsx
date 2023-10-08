@@ -2,6 +2,7 @@ import React from 'react';
 import Pagination from '@/components/layout/Pagination';
 import { getUserPosts } from '@/actions/post';
 import PostCard from '@/components/home/PostCard';
+import NoResults from '../home/NoResults';
 
 type PostTabProps = {
   searchParams: { [key: string]: string | undefined };
@@ -17,6 +18,14 @@ const PostTab = async ({ searchParams, profileId, clerkId }: PostTabProps) => {
 
   return (
     <>
+      {result.posts.length === 0 && (
+        <NoResults
+          title="작성된 글 0개"
+          description="작성하신 게시글이 존재하지 않습니다."
+          href="/create-post"
+          linkTitle="게시글 작성하러가기"
+        />
+      )}
       {result.posts.map((post) => (
         <PostCard
           key={post.id}

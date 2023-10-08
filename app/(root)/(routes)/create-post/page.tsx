@@ -1,3 +1,4 @@
+import { getGames } from '@/actions/game';
 import { getCurrentUser } from '@/actions/user';
 import PostFrom from '@/components/post/PostForm';
 import { redirect } from 'next/navigation';
@@ -9,12 +10,14 @@ const Page = async () => {
     redirect('/sign-in');
   }
 
+  const games = await getGames();
+
   return (
     <div>
       <h1 className="h1-bold text-dark100_light900">Ask a post</h1>
 
       <div className="mt-9">
-        <PostFrom />
+        <PostFrom games={games} />
       </div>
     </div>
   );
