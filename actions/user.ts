@@ -21,11 +21,6 @@ export const createUser = async () => {
       return redirect('/sign-in');
     }
 
-    const cachedUser = (await fetchRedis('get', `user:${user.id}`)) as string;
-    if (cachedUser && cachedUser !== 'null' && cachedUser !== '') {
-      return cachedUser;
-    }
-
     const profile = await db.profile.findUnique({
       where: {
         profileId: user.id
