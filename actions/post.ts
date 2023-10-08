@@ -14,6 +14,12 @@ export type CreatePostProps = {
   path: string;
 };
 
+export type GetUserPostsProps = {
+  profileId: string;
+  page?: number;
+  pageSize?: number;
+};
+
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from './user';
@@ -84,6 +90,46 @@ export async function getPosts(data: GetPostsProps) {
     });
 
     return { posts };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserPosts(data: GetUserPostsProps) {
+  try {
+    const { profileId, page = 1, pageSize = 10 } = data;
+
+    const skipAmount = (page - 1) * pageSize;
+
+    const userPosts = await db.post.findMany({
+      where: {
+        authorId: profileId
+      },
+      orderBy: [{ views: 'desc' }, { updatedAt: 'desc' }],
+      skip: skipAmount,
+      take: pageSize,
+      include: {
+        tags: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        author: {
+          select: {
+            id: true,
+            profileId: true,
+            name: true,
+            imageUrl: true
+          }
+        }
+      }
+    });
+
+    const isNextPosts = userPosts.length > skipAmount + userPosts.length;
+
+    return { posts: userPosts, isNextPosts };
   } catch (error) {
     console.log(error);
     throw error;
