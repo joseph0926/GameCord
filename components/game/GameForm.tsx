@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -16,8 +16,16 @@ import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
+import { createGame } from '@/actions/game';
+import { useRouter } from 'next/navigation';
+import { useOrigin } from '@/hooks/useOrigin';
 
 const GameForm = () => {
+  const router = useRouter();
+  const origin = useOrigin();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof gameSchema>>({
     resolver: zodResolver(gameSchema),
     defaultValues: {
@@ -28,12 +36,22 @@ const GameForm = () => {
       jjal: '',
       link: '',
       publisher: '',
-      releaseDate: Date.now()
+      releaseDate: new Date(),
+      path: `${origin}/`
     }
   });
 
-  const submitHandler = (values: z.infer<typeof gameSchema>) => {
-    console.log(values);
+  const submitHandler = async (values: z.infer<typeof gameSchema>) => {
+    setIsLoading(true);
+
+    try {
+      await createGame(values);
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -155,7 +173,7 @@ const GameForm = () => {
             )}
           />
         </div>
-        <Button type="submit" className="primary-gradient mt-6 w-full !text-light-900">
+        <Button type="submit" disabled={isLoading} className="primary-gradient mt-6 w-full !text-light-900">
           Create Game
         </Button>
       </form>

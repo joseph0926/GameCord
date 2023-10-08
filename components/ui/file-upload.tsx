@@ -28,7 +28,8 @@ const FileUpload = ({ onChange, value, endpoint, isGame = false }: FileUploadPro
         </button>
       </div>
     );
-  } else {
+  }
+  if (isGame && value && fileType !== 'pdf') {
     return (
       <div className="relative h-[150px]">
         <Image src={value} alt="img" width={80} height={80} className="h-full w-full" />

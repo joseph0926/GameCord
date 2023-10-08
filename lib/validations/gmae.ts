@@ -8,5 +8,6 @@ export const gameSchema = z.object({
   publisher: z.string().min(1),
   imageUrl: z.string().min(1),
   jjal: z.string(),
-  releaseDate: z.any()
+  releaseDate: z.date(),
+  path: z.string()
 });
