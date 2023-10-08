@@ -1,11 +1,21 @@
-import { getCurrentUser } from '@/actions/user';
+import { createUser, getCurrentUser } from '@/actions/user';
 import LeftSidebar from '@/components/layout/LeftSidebar';
 import MainNavbar from '@/components/layout/MainNavbar';
 import RightSidebar from '@/components/layout/RightSidebar';
 import { db } from '@/lib/db';
+import { currentUser } from '@clerk/nextjs';
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
+  const clerkUser = await currentUser();
   const profile = await getCurrentUser();
+  if (clerkUser && clerkUser.id && !profile) {
+    await createUser({
+      clerkId: clerkUser.id,
+      email: clerkUser.emailAddresses[0].emailAddress,
+      name: clerkUser.username!,
+      imageUrl: clerkUser.imageUrl
+    });
+  }
 
   const myServers = profile
     ? await db.server.findMany({

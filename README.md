@@ -17,7 +17,6 @@ GameCord에서 게임에 대한 평가와 리뷰를 남기고, 자유롭게 소�
 
 ![GameCord-Chat](https://github.com/joseph0926/GameCord/assets/100750188/342f584a-9cb2-4413-8983-fa1947170ab4)
 
-
 ### ERD
 
 ![prisma-erd](https://github.com/joseph0926/TripCord/assets/100750188/1fc17eec-2072-48bd-8213-de500c2d6e91)
@@ -65,8 +64,8 @@ UPSTASH_REDIS_TOKEN=
 UPSTASH_REDIS_URL=
 UPLOADTHING_APP_ID=
 UPLOADTHING_SECRET=
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/new-user
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/new-user
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 CLERK_SECRET_KEY=
