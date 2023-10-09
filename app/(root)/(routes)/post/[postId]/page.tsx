@@ -1,6 +1,9 @@
 import { getPost } from '@/actions/post';
+import { getCurrentUser } from '@/actions/user';
 import Metric from '@/components/home/Metric';
 import RenderTag from '@/components/home/RenderTag';
+import CommentForm from '@/components/post/CommentForm';
+import Comments from '@/components/post/Comments';
 import ParseHTML from '@/components/post/ParseHTML';
 import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
 import Image from 'next/image';
@@ -49,7 +52,7 @@ const PostPage = async ({ params, searchParams }: { params: { postId: string }; 
           imgUrl="/assets/icons/message.svg"
           alt="message"
           value={formatAndDivideNumber(post.comments.length)}
-          title=" Answers"
+          title=" Comments"
           textStyles="small-medium text-dark400_light800"
         />
         <Metric
@@ -68,19 +71,8 @@ const PostPage = async ({ params, searchParams }: { params: { postId: string }; 
           <RenderTag key={tag.id} id={tag.id} name={tag.name} showCount={false} />
         ))}
       </div>
-      {/* 
-      <AllAnswers 
-        questionId={result.id}
-        userId={mongoUser.id}
-        totalAnswers={result.answers.length}
-        page={searchParams?.page}
-        filter={searchParams?.filter}
-      /> */}
-      {/* <Answer 
-        question={result.content}
-        questionId={JSON.stringify(result.id)}
-        authorId={JSON.stringify(mongoUser.id)}
-      /> */}
+      <Comments postId={post.id} totalComments={post.comments.length} page={searchParams?.page} filter={searchParams?.filter} />
+      <CommentForm postId={post.id} authorId={post.authorId} />
     </>
   );
 };

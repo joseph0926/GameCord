@@ -1,5 +1,6 @@
 import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
+import '../styles/prism.css';
 import type { Metadata } from 'next';
 import { Ubuntu } from 'next/font/google';
 import { ThemeProvider } from '@/providers/ThemeProvider';
