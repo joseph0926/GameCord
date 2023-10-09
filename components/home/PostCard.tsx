@@ -47,7 +47,7 @@ const PostCard = ({ id, title, tags, author, comments, upvotes, views, createdAt
           imgUrl={author.imageUrl}
           alt="user"
           value={author.name}
-          title={` - asked ${getTimestamp(createdAt)}`}
+          title={` - posted ${getTimestamp(createdAt)}`}
           href={`/profile/${author.id}`}
           isAuthor
           textStyles="body-medium text-dark400_light700"
