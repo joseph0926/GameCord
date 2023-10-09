@@ -7,16 +7,6 @@ export const sidebarLinks: SidebarLink[] = [
     label: 'Home'
   },
   {
-    imgURL: '/images/users.svg',
-    route: '/community',
-    label: 'Community'
-  },
-  {
-    imgURL: '/images/star.svg',
-    route: '/collection',
-    label: 'Collections'
-  },
-  {
     imgURL: '/images/user.svg',
     route: '/profile',
     label: 'Profile'
