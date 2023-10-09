@@ -5,11 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
-import { SignedOut, useAuth } from '@clerk/nextjs';
+import { SignedOut } from '@clerk/nextjs';
 import { useModal } from '@/hooks/useModal';
-import { Server } from '@prisma/client';
+import { Game, Server } from '@prisma/client';
 
-const LeftSidebar = ({ myServers, profileId }: { myServers: Server[]; profileId: string }) => {
+const LeftSidebar = ({ profileId, games, servers }: { profileId: string; games: Game[] | null; servers: Server[] | null }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { onOpen } = useModal();
@@ -35,11 +35,8 @@ const LeftSidebar = ({ myServers, profileId }: { myServers: Server[]; profileId:
                   if (!profileId) {
                     router.push('/sign-in');
                   }
-                  if (profileId && myServers.length === 0) {
-                    onOpen('createServer');
-                  }
-                  if (profileId && myServers.length !== 0) {
-                    onOpen('serverList', { myServers });
+                  if (profileId) {
+                    onOpen('createServer', { games, servers });
                   }
                 }}
                 className={`${

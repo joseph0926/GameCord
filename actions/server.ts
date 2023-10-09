@@ -5,37 +5,94 @@ import { v4 as uuidv4 } from 'uuid';
 import { ChannelType, MemberRole } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from '@/actions/user';
+import { NextResponse } from 'next/server';
 
 type CreateServerProps = {
   name: string;
   imageUrl: string;
   path: string;
+  gameId: string;
 };
 
 export const createServer = async ({ data }: { data: CreateServerProps }) => {
-  const profile = await getCurrentUser();
-  if (!profile) {
+  try {
+    const profile = await getCurrentUser();
+    if (!profile) {
+      return null;
+    }
+
+    const { name, imageUrl, path, gameId } = data;
+
+    const existingServer = await db.server.findUnique({
+      where: {
+        gameId
+      }
+    });
+    if (existingServer) {
+      throw new NextResponse('이미 해당 게임의 서버가 존재합니다.', { status: 400 });
+    }
+
+    const server = await db.server.create({
+      data: {
+        profileId: profile.id,
+        name,
+        imageUrl,
+        inviteCode: uuidv4(),
+        channels: {
+          create: [{ name: 'general', profileId: profile.id, type: ChannelType.TEXT }]
+        },
+        members: {
+          create: [{ profileId: profile.id, role: MemberRole.ADMIN }]
+        },
+        gameId
+      }
+    });
+
+    revalidatePath(path);
+
+    return server;
+  } catch (error: any) {
+    console.log(error);
+    throw error.message ? error.message : error;
+  }
+};
+
+export const getServers = async () => {
+  try {
+    const servers = await db.server.findMany({
+      where: {}
+    });
+
+    return servers;
+  } catch (error) {
+    console.log(error);
     return null;
   }
+};
 
-  const { name, imageUrl, path } = data;
-
-  const server = await db.server.create({
-    data: {
-      profileId: profile.id,
-      name,
-      imageUrl,
-      inviteCode: uuidv4(),
-      channels: {
-        create: [{ name: 'general', profileId: profile.id, type: ChannelType.TEXT }]
-      },
-      members: {
-        create: [{ profileId: profile.id, role: MemberRole.ADMIN }]
-      }
+export const joinServer = async (serverId: string) => {
+  try {
+    const profile = await getCurrentUser();
+    if (!profile || profile === 'null') {
+      return null;
     }
-  });
 
-  revalidatePath(path);
-
-  return server;
+    await db.server.update({
+      where: {
+        id: serverId
+      },
+      data: {
+        members: {
+          create: [
+            {
+              profileId: profile.id
+            }
+          ]
+        }
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
