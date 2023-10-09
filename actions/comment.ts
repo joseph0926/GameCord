@@ -2,10 +2,10 @@
 
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
+import { getCurrentUser } from './user';
 
 type CreateCommentProps = {
   content: string;
-  authorId: string;
   postId: string;
   path: string;
 };
@@ -19,9 +19,14 @@ type GetCommentsProps = {
 
 export async function createComment(data: CreateCommentProps) {
   try {
-    const { content, authorId, postId, path } = data;
+    const profile = await getCurrentUser();
+    if (!profile || profile === 'null') {
+      return null;
+    }
 
-    await db.comment.create({ data: { content, authorId, postId } });
+    const { content, postId, path } = data;
+
+    await db.comment.create({ data: { content, authorId: profile.id, postId } });
 
     revalidatePath(path);
   } catch (error) {

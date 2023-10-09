@@ -72,7 +72,7 @@ const PostPage = async ({ params, searchParams }: { params: { postId: string }; 
         ))}
       </div>
       <Comments postId={post.id} totalComments={post.comments.length} page={searchParams?.page} filter={searchParams?.filter} />
-      <CommentForm postId={post.id} authorId={post.authorId} />
+      <CommentForm postId={post.id} />
     </>
   );
 };
