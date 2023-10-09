@@ -21,6 +21,10 @@ export type GetUserPostsProps = {
   pageSize?: number;
 };
 
+export type GetPostProps = {
+  postId: string;
+};
+
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from './user';
@@ -132,6 +136,28 @@ export async function getUserPosts(data: GetUserPostsProps) {
     const isNextPosts = userPosts.length > skipAmount + userPosts.length;
 
     return { posts: userPosts, isNextPosts };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getPost(data: GetPostProps) {
+  try {
+    const { postId } = data;
+
+    const post = await db.post.findUnique({
+      where: {
+        id: postId
+      },
+      include: {
+        tags: true,
+        author: true,
+        comments: true
+      }
+    });
+
+    return post;
   } catch (error) {
     console.log(error);
     throw error;
