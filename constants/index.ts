@@ -34,7 +34,7 @@ export const BADGE_CRITERIA = {
     SILVER: 50,
     GOLD: 100
   },
-  ANSWER_COUNT: {
+  COMMENT_COUNT: {
     BRONZE: 10,
     SILVER: 50,
     GOLD: 100
@@ -44,7 +44,7 @@ export const BADGE_CRITERIA = {
     SILVER: 50,
     GOLD: 100
   },
-  ANSWER_UPVOTES: {
+  COMMENT_UPVOTES: {
     BRONZE: 10,
     SILVER: 50,
     GOLD: 100

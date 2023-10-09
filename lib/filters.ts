@@ -1,4 +1,4 @@
-export const AnswerFilters = [
+export const CommentFilters = [
   { name: 'Highest Upvotes', value: 'highestUpvotes' },
   { name: 'Lowest Upvotes', value: 'lowestUpvotes' },
   { name: 'Most Recent', value: 'recent' },
@@ -16,7 +16,7 @@ export const PostFilters = [
   { name: 'Oldest', value: 'oldest' },
   { name: 'Most Voted', value: 'most_voted' },
   { name: 'Most Viewed', value: 'most_viewed' },
-  { name: 'Most Answered', value: 'most_answered' }
+  { name: 'Most Commented', value: 'most_commented' }
 ];
 
 export const TagFilters = [
@@ -30,12 +30,12 @@ export const HomePageFilters = [
   { name: 'Newest', value: 'newest' },
   { name: 'Recommended', value: 'recommended' },
   { name: 'Frequent', value: 'frequent' },
-  { name: 'Unanswered', value: 'unanswered' }
+  { name: 'Uncommented', value: 'uncommented' }
 ];
 
 export const GlobalSearchFilters = [
   { name: 'Post', value: 'post' },
-  { name: 'Answer', value: 'answer' },
+  { name: 'Comment', value: 'comment' },
   { name: 'User', value: 'user' },
   { name: 'Tag', value: 'tag' }
 ];
