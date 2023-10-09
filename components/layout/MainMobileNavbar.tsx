@@ -6,22 +6,39 @@ import Link from 'next/link';
 import { SignedOut } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { sidebarLinks } from '@/constants';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/useModal';
+import { Game, Server } from '@prisma/client';
 
-const NavbarContent = () => {
+const NavbarContent = ({ profileId, games, servers }: { profileId: string; games: Game[] | null; servers: Server[] | null }) => {
   const pathname = usePathname();
-  const { onOpen } = useModal();
+  const router = useRouter();
+  const { onOpen, data } = useModal();
 
   return (
     <section className="flex h-full flex-col gap-6 pt-16">
       {sidebarLinks.map((item) => {
         const isActive = (pathname?.includes(item.route) && item.route.length > 1) || pathname === item.route;
+
+        if (item.route === '/profile') {
+          if (profileId) {
+            item.route = `${item.route}/${profileId}`;
+          } else {
+            return null;
+          }
+        }
         if (item.route === '/server') {
           return (
             <div
               key={item.route}
-              onClick={() => onOpen('createServer')}
+              onClick={() => {
+                if (!profileId) {
+                  router.push('/sign-in');
+                }
+                if (profileId) {
+                  onOpen('createServer', { games, servers });
+                }
+              }}
               className={`${
                 isActive ? 'primary-gradient cursor-pointer rounded-lg text-light-900' : 'text-dark300_light900'
               } flex cursor-pointer items-center justify-start gap-4 bg-transparent p-4`}
@@ -50,7 +67,7 @@ const NavbarContent = () => {
   );
 };
 
-const MainMobileNavbar = () => {
+const MainMobileNavbar = ({ profileId, games, servers }: { profileId: string; games: Game[] | null; servers: Server[] | null }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -65,10 +82,10 @@ const MainMobileNavbar = () => {
         </Link>
         <div>
           <SheetClose asChild>
-            <NavbarContent />
+            <NavbarContent profileId={profileId} games={games} servers={servers} />
           </SheetClose>
           <SignedOut>
-            <div className="flex flex-col gap-3">
+            <div className="absolute bottom-10 left-0 flex w-full flex-col gap-3 p-6">
               <SheetClose asChild>
                 <Link href="/sign-in">
                   <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
