@@ -34,8 +34,8 @@ GameCord에서 게임에 대한 평가와 리뷰를 남기고, 자유롭게 소�
 ![GameCord-CreateServer](https://github.com/joseph0926/GameCord/assets/100750188/e51d47eb-409f-4d27-8331-e458178e8573)
 
 ### ERD
+![prisma-erd](https://github.com/joseph0926/GameCord/assets/100750188/4c79efd4-42f1-441d-8a32-756dc24cf311)
 
-![prisma-erd](https://github.com/joseph0926/TripCord/assets/100750188/1fc17eec-2072-48bd-8213-de500c2d6e91)
 
 ## 주요 기능
 
