@@ -77,6 +77,17 @@ export const joinServer = async (serverId: string) => {
       return null;
     }
 
+    const serverMembers = await db.member.findMany({
+      where: {
+        serverId
+      }
+    });
+
+    const existingMember = serverMembers.find((member) => member.profileId === profile.id);
+    if (existingMember) {
+      return null;
+    }
+
     await db.server.update({
       where: {
         id: serverId
