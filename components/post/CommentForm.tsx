@@ -14,10 +14,9 @@ import { useOrigin } from '@/hooks/useOrigin';
 
 type CommentFormProps = {
   postId: string;
-  authorId: string;
 };
 
-const CommentForm = ({ postId, authorId }: CommentFormProps) => {
+const CommentForm = ({ postId }: CommentFormProps) => {
   const origin = useOrigin();
   const { theme } = useTheme();
   const editorRef = useRef(null);
@@ -37,7 +36,6 @@ const CommentForm = ({ postId, authorId }: CommentFormProps) => {
     try {
       await createComment({
         content: values.comment,
-        authorId,
         postId,
         path: `${origin}/post/${postId}`
       });

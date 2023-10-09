@@ -34,7 +34,7 @@ const Comments = async ({ postId, totalComments, page, filter }: CommentsProps) 
         {comments.map((comment) => (
           <article key={comment.id} className="light-border border-b py-10">
             <div className="flex items-center justify-between">
-              <div className="mb-8 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
+              <div className="mb-8 flex flex-col-reverse justify-between gap-5 sm:w-full sm:flex-row sm:items-center sm:gap-2">
                 <Link href={`/profile/${comment.author.profileId}`} className="flex flex-1 items-start gap-1 sm:items-center">
                   <Image
                     src={comment.author.imageUrl}
@@ -43,25 +43,14 @@ const Comments = async ({ postId, totalComments, page, filter }: CommentsProps) 
                     alt="profile"
                     className="rounded-full object-cover max-sm:mt-0.5"
                   />
-                  <div className="flex flex-col sm:flex-row sm:items-center">
+                  <div className="flex w-full !flex-col sm:!flex-row sm:items-center sm:justify-between">
                     <p className="body-semibold text-dark300_light700">{comment.author.name}</p>
-
                     <p className="small-regular text-light400_light500 ml-0.5 mt-0.5 line-clamp-1">
                       commented {getTimestamp(comment.createdAt)}
                     </p>
                   </div>
                 </Link>
-                <div className="flex justify-end">
-                  {/* <Votes 
-                    type="Comment"
-                    itemId={JSON.stringify(comment.id)}
-                    userId={JSON.stringify(userId)}
-                    upvotes={10}
-                    hasupVoted={true}
-                    downvotes={2}
-                    hasdownVoted={true}
-                  /> */}
-                </div>
+                <div className="flex justify-end"></div>
               </div>
             </div>
             <ParseHTML data={comment.content} />
