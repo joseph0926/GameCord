@@ -1,7 +1,5 @@
 # Game-Cord
 
-![logo](https://github.com/joseph0926/TripCord/assets/100750188/a8fa4a5f-3f10-4885-b3ac-4f3608e3c59a)
-
 ## 프로젝트 소개
 
 - NextJs v13.5의 서버 컴포넌트를 적극 활용한 웹 애플리케이션
@@ -14,8 +12,26 @@ GameCord에서 게임에 대한 평가와 리뷰를 남기고, 자유롭게 소�
 [GameCord](https://game-cord-six.vercel.app/)
 
 ### 프로젝트 데모
+- MAIN
+![GameCord-Main](https://github.com/joseph0926/GameCord/assets/100750188/cd6fd544-25bc-43ab-81f2-35eed25a5c92)
 
+- Mobile
+![GameCord-Mobile](https://github.com/joseph0926/GameCord/assets/100750188/cc2b0d29-cb2d-4422-92eb-95d24228e00e)
+
+- CHAT
 ![GameCord-Chat](https://github.com/joseph0926/GameCord/assets/100750188/342f584a-9cb2-4413-8983-fa1947170ab4)
+
+- CreatePost
+![GameCord-CreatePost](https://github.com/joseph0926/GameCord/assets/100750188/3df838b3-14da-408a-9cc6-3c2d7142a2db)
+
+- PostDetail
+![GameCord-PostDetail](https://github.com/joseph0926/GameCord/assets/100750188/96192e6b-0f66-4042-98ea-8608163126c5)
+
+- CreateGame
+![GameCord-CreateGame](https://github.com/joseph0926/GameCord/assets/100750188/8115d6eb-d115-4705-8954-7085308fbe40)
+
+- CreateServer
+![GameCord-CreateServer](https://github.com/joseph0926/GameCord/assets/100750188/e51d47eb-409f-4d27-8331-e458178e8573)
 
 ### ERD
 
