@@ -144,7 +144,8 @@ export const POST = async (req: Request) => {
         id: member.id,
         role: member.role,
         profile: {
-          imageUrl: profile.imageUrl
+          imageUrl: profile.imageUrl,
+          name: profile.name
         }
       }
     };

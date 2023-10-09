@@ -115,7 +115,7 @@ export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQu
           <Fragment key={i}>
             {group.items.map((message: MessageWithMemberWithProfile) => (
               <ChatItem
-                key={message.id}
+                key={message.createdAt.toString()}
                 id={message.id}
                 currentMember={member}
                 member={message.member}

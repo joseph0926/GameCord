@@ -1,4 +1,5 @@
 import { getPosts } from '@/actions/post';
+import { getCurrentUser } from '@/actions/user';
 import Filter from '@/components/home/Filter';
 import HomeFilters from '@/components/home/HomeFilters';
 import NoResults from '@/components/home/NoResults';
@@ -10,6 +11,7 @@ import Link from 'next/link';
 
 const MainPage = async () => {
   const { posts } = await getPosts({});
+  const profile = await getCurrentUser();
 
   return (
     <>
@@ -37,6 +39,7 @@ const MainPage = async () => {
               upvotes={12}
               views={q.views}
               createdAt={q.createdAt}
+              profileId={profile?.id}
             />
           ))
         ) : (

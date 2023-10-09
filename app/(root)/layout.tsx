@@ -24,7 +24,7 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <main className="relative bg-light-850 dark:bg-dark-100">
-      <MainNavbar />
+      <MainNavbar profileId={profile?.id} servers={servers} games={games} />
       <div className="flex">
         <LeftSidebar profileId={profile?.id} games={games} servers={servers} />
         <section className="flex min-h-screen flex-1 flex-col px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">
