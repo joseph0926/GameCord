@@ -88,7 +88,9 @@ export async function getPosts(data: GetPostsProps) {
       where: {},
       include: {
         tags: true,
-        author: true
+        author: true,
+        comments: true,
+        votes: true
       },
       orderBy: {
         createdAt: 'desc'
@@ -153,7 +155,8 @@ export async function getPost(data: GetPostProps) {
       include: {
         tags: true,
         author: true,
-        comments: true
+        comments: true,
+        votes: true
       }
     });
 
