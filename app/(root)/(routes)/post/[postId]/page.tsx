@@ -5,9 +5,7 @@ import RenderTag from '@/components/home/RenderTag';
 import CommentForm from '@/components/post/CommentForm';
 import Comments from '@/components/post/Comments';
 import ParseHTML from '@/components/post/ParseHTML';
-import Votes from '@/components/post/Votes';
 import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
-import { VoteType } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -23,11 +21,6 @@ const PostPage = async ({ params, searchParams }: { params: { postId: string }; 
     redirect('/');
   }
 
-  const upvotes = post.votes.filter((vote) => vote.type === VoteType.UPVOTE);
-  const downvotes = post.votes.filter((vote) => vote.type === VoteType.DOWNVOTE);
-  const hasUpVoted = !!upvotes.find((vote) => vote.profileId === profile.id);
-  const hasDownVoted = !!downvotes.find((vote) => vote.profileId === profile.id);
-
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -36,17 +29,7 @@ const PostPage = async ({ params, searchParams }: { params: { postId: string }; 
             <Image src={post.author.imageUrl} className="rounded-full" width={22} height={22} alt="profile" />
             <p className="paragraph-semibold text-dark300_light700">{post.author.name}</p>
           </Link>
-          <div className="flex justify-end">
-            <Votes
-              type="Post"
-              itemId={post.id}
-              profileId={profile.id}
-              upvotes={upvotes.length}
-              hasUpVoted={hasUpVoted}
-              downvotes={downvotes.length}
-              hasDownVoted={hasDownVoted}
-            />
-          </div>
+          <div className="flex justify-end"></div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">{post.title}</h2>
       </div>
