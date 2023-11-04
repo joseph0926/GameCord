@@ -89,8 +89,7 @@ export async function getPosts(data: GetPostsProps) {
       include: {
         tags: true,
         author: true,
-        comments: true,
-        votes: true
+        comments: true
       },
       orderBy: {
         createdAt: 'desc'
@@ -155,8 +154,7 @@ export async function getPost(data: GetPostProps) {
       include: {
         tags: true,
         author: true,
-        comments: true,
-        votes: true
+        comments: true
       }
     });
 

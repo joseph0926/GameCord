@@ -7,7 +7,6 @@ import PostCard from '@/components/home/PostCard';
 import LocalSearchbar from '@/components/layout/LocalSearchbar';
 import { Button } from '@/components/ui/button';
 import { HomePageFilters } from '@/lib/filters';
-import { VoteType } from '@prisma/client';
 import Link from 'next/link';
 
 const MainPage = async () => {
@@ -37,7 +36,7 @@ const MainPage = async () => {
               tags={q.tags}
               author={q.author}
               comments={q.comments}
-              upvotes={q.votes.filter((vote) => vote.type === VoteType.UPVOTE)?.length}
+              upvotes={0}
               views={q.views}
               createdAt={q.createdAt}
               profileId={profile?.id}
