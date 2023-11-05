@@ -1,38 +1,43 @@
+import React, { Suspense } from 'react';
 import { getGames } from '@/actions/game';
 import { getServers } from '@/actions/server';
-import { createUser, getCurrentUser } from '@/actions/user';
+import { getCurrentUser } from '@/actions/user';
 import LeftSidebar from '@/components/layout/LeftSidebar';
 import MainNavbar from '@/components/layout/MainNavbar';
 import RightSidebar from '@/components/layout/RightSidebar';
-import { db } from '@/lib/db';
-import { currentUser } from '@clerk/nextjs';
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
-  const clerkUser = await currentUser();
-  const profile = await getCurrentUser();
-  if (clerkUser && clerkUser.id && !profile) {
-    await createUser({
-      clerkId: clerkUser.id,
-      email: clerkUser.emailAddresses[0].emailAddress,
-      name: clerkUser.username!,
-      imageUrl: clerkUser.imageUrl
-    });
-  }
-
-  const games = await getGames();
-  const servers = await getServers();
-
   return (
     <main className="relative bg-light-850 dark:bg-dark-100">
-      <MainNavbar profileId={profile?.id} servers={servers} games={games} />
+      <Suspense>
+        <LayoutWrapper isNav />
+      </Suspense>
       <div className="flex">
-        <LeftSidebar profileId={profile?.id} games={games} servers={servers} />
+        <Suspense
+          fallback={
+            <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]"></section>
+          }
+        >
+          <LayoutWrapper isNav={false} />
+        </Suspense>
         <section className="flex min-h-screen flex-1 flex-col px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">
           <div className="mx-auto w-full max-w-5xl">{children}</div>
         </section>
         <RightSidebar />
       </div>
     </main>
+  );
+};
+
+const LayoutWrapper = async ({ isNav }: { isNav: boolean }) => {
+  const profile = await getCurrentUser();
+  const games = await getGames();
+  const servers = await getServers();
+
+  return isNav ? (
+    <MainNavbar profileId={profile?.id} servers={servers} games={games} />
+  ) : (
+    <LeftSidebar profileId={profile?.id} games={games} servers={servers} />
   );
 };
 
