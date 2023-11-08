@@ -7,15 +7,36 @@ import { getComments } from '@/actions/comment';
 import { CommentFilters } from '@/lib/filters';
 import Filter from '@/components/home/Filter';
 import Pagination from '@/components/layout/Pagination';
+import { Loader2 } from 'lucide-react';
 
 type CommentsProps = {
   postId: string;
-  totalComments: number;
+  totalComments?: number;
   page?: string;
   filter?: string;
 };
 
 const Comments = async ({ postId, totalComments, page, filter }: CommentsProps) => {
+  return (
+    <div className="mt-11">
+      <div className="flex items-center justify-between">
+        <h3 className="primary-text-gradient">{totalComments} Comments</h3>
+        <Filter filters={CommentFilters} />
+      </div>
+      <React.Suspense
+        fallback={
+          <div>
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        }
+      >
+        <Comment postId={postId} page={page} filter={filter} />
+      </React.Suspense>
+    </div>
+  );
+};
+
+const Comment = async ({ postId, page, filter }: CommentsProps) => {
   const { comments, isNextComment } = await getComments({
     postId,
     page: page ? +page : 1,
@@ -23,13 +44,7 @@ const Comments = async ({ postId, totalComments, page, filter }: CommentsProps) 
   });
 
   return (
-    <div className="mt-11">
-      <div className="flex items-center justify-between">
-        <h3 className="primary-text-gradient">{totalComments} Comments</h3>
-
-        <Filter filters={CommentFilters} />
-      </div>
-
+    <>
       <div>
         {comments.map((comment) => (
           <article key={comment.id} className="light-border border-b py-10">
@@ -57,11 +72,10 @@ const Comments = async ({ postId, totalComments, page, filter }: CommentsProps) 
           </article>
         ))}
       </div>
-
       <div className="mt-10 w-full">
         <Pagination pageNumber={page ? +page : 1} isNext={isNextComment} />
       </div>
-    </div>
+    </>
   );
 };
 
