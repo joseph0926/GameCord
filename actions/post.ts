@@ -25,6 +25,7 @@ export type GetPostProps = {
   postId: string;
 };
 
+import React from 'react';
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from './user';
@@ -143,7 +144,7 @@ export async function getUserPosts(data: GetUserPostsProps) {
   }
 }
 
-export async function getPost(data: GetPostProps) {
+export const getPost = React.cache(async (data: GetPostProps) => {
   try {
     const { postId } = data;
 
@@ -163,4 +164,4 @@ export async function getPost(data: GetPostProps) {
     console.log(error);
     throw error;
   }
-}
+});

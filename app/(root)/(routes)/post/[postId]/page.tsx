@@ -10,6 +10,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+export const generateMetadata = async ({ params }: { params: { postId: string } }) => {
+  const post = await getPost({ postId: params.postId });
+  return {
+    title: `${post?.title}`
+  };
+};
+
 const PostPage = async ({ params, searchParams }: { params: { postId: string }; searchParams: { [key: string]: string | undefined } }) => {
   const profile = await getCurrentUser();
   if (!profile || profile === 'null') {

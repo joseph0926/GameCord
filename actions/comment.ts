@@ -67,7 +67,6 @@ export async function getComments(data: GetCommentsProps) {
       },
       include: {
         author: true,
-        votes: true
       },
       orderBy: sortOptions,
       skip: skipAmount,
