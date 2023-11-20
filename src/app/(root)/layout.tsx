@@ -9,7 +9,7 @@ import RightSidebar from '@/components/layout/RightSidebar';
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="relative bg-light-850 dark:bg-dark-100">
-      <Suspense>
+      <Suspense fallback={<MainNavbar profileId="" games={null} servers={null} isStatic={true} />}>
         <LayoutWrapper isNav />
       </Suspense>
       <div className="flex">
@@ -35,7 +35,7 @@ const LayoutWrapper = async ({ isNav }: { isNav: boolean }) => {
   const servers = await getServers();
 
   return isNav ? (
-    <MainNavbar profileId={profile?.id} servers={servers} games={games} />
+    <MainNavbar profileId={profile?.id} servers={servers} games={games} isStatic={false} />
   ) : (
     <LeftSidebar profileId={profile?.id} games={games} servers={servers} />
   );
