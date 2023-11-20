@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 import { redis, fetchRedis } from '@/lib/redis';
-import { auth, currentUser } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs';
 import { UserRole } from '@prisma/client';
 
 type CreateUserProps = {
@@ -64,18 +64,18 @@ export const createUser = async (data: CreateUserProps) => {
 };
 
 export const getCurrentUser = async () => {
-  const { userId } = auth();
-  if (!userId) {
+  const user = await currentUser();
+  if (!user) {
     return null;
   }
 
   const profile = await db.profile.findUnique({
-    where: { profileId: userId }
+    where: { profileId: user.id }
   });
 
-  const cachedUser = await fetchRedis('get', `user:${userId}`);
+  const cachedUser = await fetchRedis('get', `user:${user.id}`);
   if (JSON.parse(cachedUser)?.id !== profile?.id) {
-    await redis.set(`user:${userId}`, profile, { ex: 86400 });
+    await redis.set(`user:${user.id}`, profile, { ex: 86400 });
     return profile;
   }
   if (cachedUser && cachedUser !== 'null') {
@@ -83,7 +83,7 @@ export const getCurrentUser = async () => {
   }
 
   if (!cachedUser || cachedUser === 'null' || cachedUser === '') {
-    await redis.set(`user:${userId}`, profile, { ex: 86400 });
+    await redis.set(`user:${user.id}`, profile, { ex: 86400 });
   }
 
   return profile;
