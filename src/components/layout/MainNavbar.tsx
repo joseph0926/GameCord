@@ -40,7 +40,7 @@ const MainNavbar = ({ profileId, games, servers, isStatic }: MainNavbarProps) =>
           />
         </SignedIn>
         {isStatic ? (
-          <Loader2 className="h-6 w-8 animate-spin" />
+          <Loader2 className="h-6 w-8 animate-spin sm:hidden" />
         ) : (
           <MainMobileNavbar profileId={profileId} games={games} servers={servers} />
         )}

@@ -5,10 +5,12 @@ import { getCurrentUser } from '@/actions/user';
 import LeftSidebar from '@/components/layout/LeftSidebar';
 import MainNavbar from '@/components/layout/MainNavbar';
 import RightSidebar from '@/components/layout/RightSidebar';
+import { NotificationModal } from '@/components/modal/NotificationModal';
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="relative bg-light-850 dark:bg-dark-100">
+      <NotificationModal />
       <Suspense fallback={<MainNavbar profileId="" games={null} servers={null} isStatic={true} />}>
         <LayoutWrapper isNav />
       </Suspense>
