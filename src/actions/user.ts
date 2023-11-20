@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { redis, fetchRedis } from '@/lib/redis';
 import { currentUser } from '@clerk/nextjs';
 import { UserRole } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
 type CreateUserProps = {
   clerkId: string;
@@ -29,7 +30,7 @@ export const createUser = async (data: CreateUserProps) => {
         profileId: clerkId
       }
     });
-    if (profile?.email === 'rkekqmf0926@gmail.com') {
+    if (profile?.email === 'rkekqmf0926@gmail.com' || profile?.email === 'santiago.stokes@ethereal.email') {
       await db.profile.update({
         where: {
           id: profile.id
@@ -50,11 +51,13 @@ export const createUser = async (data: CreateUserProps) => {
         name,
         imageUrl,
         email,
-        role: email === 'rkekqmf0926@gmail.com' ? UserRole.TOP : UserRole.BOT
+        role: email === 'rkekqmf0926@gmail.com' || email === 'santiago.stokes@ethereal.email' ? UserRole.TOP : UserRole.BOT
       }
     });
 
     await redis.set(`user:${clerkId}`, newProfile, { ex: 86400 });
+
+    revalidatePath('/');
 
     return newProfile;
   } catch (error) {
