@@ -5,6 +5,7 @@ import RenderTag from '@/components/home/RenderTag';
 import CommentForm from '@/components/post/CommentForm';
 import Comments from '@/components/post/Comments';
 import ParseHTML from '@/components/post/ParseHTML';
+import { paths } from '@/lib/paths';
 import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,19 +21,19 @@ export const generateMetadata = async ({ params }: { params: { postId: string } 
 const PostPage = async ({ params, searchParams }: { params: { postId: string }; searchParams: { [key: string]: string | undefined } }) => {
   const profile = await getCurrentUser();
   if (!profile || profile === 'null') {
-    redirect('/sign-in');
+    redirect(paths.auth('IN'));
   }
 
   const post = await getPost({ postId: params.postId });
   if (!post) {
-    redirect('/');
+    redirect(paths.home());
   }
 
   return (
     <>
       <div className="flex-start w-full flex-col">
         <div className="flex w-full flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
-          <Link href={`/profile/${post.author.id}`} className="flex items-center justify-start gap-1">
+          <Link href={paths.profile('USER', post.author.id)} className="flex items-center justify-start gap-1">
             <Image src={post.author.imageUrl} className="rounded-full" width={22} height={22} alt="profile" />
             <p className="paragraph-semibold text-dark300_light700">{post.author.name}</p>
           </Link>

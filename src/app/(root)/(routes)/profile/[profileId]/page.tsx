@@ -2,6 +2,7 @@ import { getCurrentUser } from '@/actions/user';
 import PostTab from '@/components/post/PostTab';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { paths } from '@/lib/paths';
 import { getJoinedDate } from '@/lib/utils';
 import { SignedIn, currentUser } from '@clerk/nextjs';
 import { UserRole } from '@prisma/client';
@@ -20,7 +21,7 @@ const ProfilePage = async ({
   const clerkUser = await currentUser();
   const profile = await getCurrentUser();
   if (!profile) {
-    redirect('/sign-in');
+    redirect(paths.auth('IN'));
   }
 
   return (

@@ -8,6 +8,7 @@ import LocalSearchbar from '@/components/layout/LocalSearchbar';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { HomePageFilters } from '@/lib/filters';
+import { paths } from '@/lib/paths';
 import Link from 'next/link';
 import React from 'react';
 
@@ -16,7 +17,7 @@ const MainPage = async () => {
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-col sm:items-center">
         <h1 className="h1-bold text-dark100_light900">All Posts</h1>
-        <Link href="/create-post" className="flex justify-end max-sm:w-full">
+        <Link href={paths.post('CREATE')} className="flex justify-end max-sm:w-full">
           <Button className="primary-gradient min-h-[46px] px-4 py-3 !text-light-900">게시글 작성</Button>
         </Link>
       </div>

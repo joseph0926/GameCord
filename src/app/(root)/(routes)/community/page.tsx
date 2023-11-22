@@ -1,8 +1,6 @@
 import Filter from '@/components/home/Filter';
 import LocalSearchbar from '@/components/layout/LocalSearchbar';
-import { Button } from '@/components/ui/button';
 import { GameFilters } from '@/lib/filters';
-import Link from 'next/link';
 import React from 'react';
 
 const CommunityPage = () => {

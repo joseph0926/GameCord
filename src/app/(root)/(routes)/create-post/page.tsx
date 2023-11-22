@@ -1,13 +1,14 @@
 import { getGames } from '@/actions/game';
 import { getCurrentUser } from '@/actions/user';
 import PostFrom from '@/components/post/PostForm';
+import { paths } from '@/lib/paths';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
 const Page = async () => {
   const profile = await getCurrentUser();
   if (!profile) {
-    redirect('/sign-in');
+    redirect(paths.auth('IN'));
   }
 
   const games = await getGames();

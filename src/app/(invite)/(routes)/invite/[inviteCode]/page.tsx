@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 
 import { db } from '@/lib/db';
 import { getCurrentUser } from '@/actions/user';
+import { paths } from '@/lib/paths';
 
 interface InviteCodePageProps {
   params: {
@@ -18,7 +19,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   }
 
   if (!params.inviteCode) {
-    return redirect('/');
+    return redirect(paths.home());
   }
 
   const existingServer = await db.server.findFirst({
@@ -33,7 +34,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   });
 
   if (existingServer) {
-    return redirect(`/server/${existingServer.id}`);
+    return redirect(paths.server(existingServer.id));
   }
 
   const server = await db.server.update({
@@ -52,7 +53,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   });
 
   if (server) {
-    return redirect(`/server/${server.id}`);
+    return redirect(paths.server(server.id));
   }
 
   return null;
