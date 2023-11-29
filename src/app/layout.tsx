@@ -1,4 +1,3 @@
-import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 import '../styles/prism.css';
 import type { Metadata } from 'next';
@@ -15,12 +14,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
-      <html lang="ko" suppressHydrationWarning>
-        <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
-          <CustomProviders>{children}</CustomProviders>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="ko" suppressHydrationWarning>
+      <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
+        <CustomProviders>{children}</CustomProviders>
+      </body>
+    </html>
   );
 }

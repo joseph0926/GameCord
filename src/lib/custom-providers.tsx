@@ -14,6 +14,7 @@ import InviteServerModal from '@/components/modal/InviteServerModal';
 import { LeaveServerModal } from '@/components/modal/LeaveServerModal';
 import MembersModal from '@/components/modal/MembersModal';
 import { MessageFileModal } from '@/components/modal/MessageFileModal';
+import { ClerkProvider } from '@clerk/nextjs';
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -46,12 +47,14 @@ export default function CustomProviders({ children }: { children: React.ReactNod
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NextThemesProvider attribute="class" defaultTheme="system" enableSystem={false} storageKey="game-cord-theme">
-        <ModalProvider />
-        <Toaster />
-        {children}
-      </NextThemesProvider>
-    </QueryClientProvider>
+    <ClerkProvider>
+      <QueryClientProvider client={queryClient}>
+        <NextThemesProvider attribute="class" defaultTheme="system" enableSystem={false} storageKey="game-cord-theme">
+          <ModalProvider />
+          <Toaster />
+          {children}
+        </NextThemesProvider>
+      </QueryClientProvider>
+    </ClerkProvider>
   );
 }
