@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { SignedOut } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
-import { sidebarLinks } from '@/constants';
+import { sidebarLinks } from '@/lib/contants';
 import { usePathname, useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/useModal';
 import { Game, Server } from '@prisma/client';
