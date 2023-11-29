@@ -3,11 +3,8 @@ import './globals.css';
 import '../styles/prism.css';
 import type { Metadata } from 'next';
 import { Ubuntu } from 'next/font/google';
-import { ThemeProvider } from '@/providers/ThemeProvider';
 import { cn } from '@/lib/utils';
-import { ModalProvider } from '@/providers/ModalProvider';
-import ToastProvider from '@/providers/ToastProvider';
-import CustomReactQueryProvider from '@/providers/CustomReactQueryProvider';
+import CustomProviders from '@/lib/custom-providers';
 
 const font = Ubuntu({ subsets: ['cyrillic'], weight: '400' });
 
@@ -21,11 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ClerkProvider>
       <html lang="ko" suppressHydrationWarning>
         <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="game-cord-theme">
-            <ToastProvider />
-            <ModalProvider />
-            <CustomReactQueryProvider>{children}</CustomReactQueryProvider>
-          </ThemeProvider>
+          <CustomProviders>{children}</CustomProviders>
         </body>
       </html>
     </ClerkProvider>
