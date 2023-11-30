@@ -4,6 +4,8 @@ import PostCard from '@/components/home/PostCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Suspense } from 'react';
 
+export const dynamic = 'force-dynamic';
+
 const Posts = async () => {
   return (
     <Suspense
