@@ -8,9 +8,9 @@ import { Button } from '@/components/ui/button';
 import { sidebarLinks } from '@/lib/contants';
 import { usePathname, useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/useModal';
-import { ServerWithGame } from '@/actions/server';
+import { Game, Server } from '@prisma/client';
 
-const NavbarContent = ({ servers }: { servers: ServerWithGame[] | null }) => {
+const NavbarContent = ({ servers, games }: { servers: Server[] | null; games: Game[] | null }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { onOpen, data } = useModal();
@@ -37,7 +37,7 @@ const NavbarContent = ({ servers }: { servers: ServerWithGame[] | null }) => {
                   router.push('/sign-in');
                 }
                 if (user) {
-                  onOpen('createServer', { servers });
+                  onOpen('createServer', { servers, games });
                 }
               }}
               className={`${
@@ -68,7 +68,7 @@ const NavbarContent = ({ servers }: { servers: ServerWithGame[] | null }) => {
   );
 };
 
-const MainMobileNavbar = ({ servers }: { servers: ServerWithGame[] | null }) => {
+const MainMobileNavbar = ({ servers, games }: { servers: Server[] | null; games: Game[] | null }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -83,7 +83,7 @@ const MainMobileNavbar = ({ servers }: { servers: ServerWithGame[] | null }) => 
         </Link>
         <div>
           <SheetClose asChild>
-            <NavbarContent servers={servers} />
+            <NavbarContent servers={servers} games={games} />
           </SheetClose>
           <SignedOut>
             <div className="absolute bottom-10 left-0 flex w-full flex-col gap-3 p-6">

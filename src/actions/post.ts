@@ -29,6 +29,7 @@ import React from 'react';
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from './user';
+import { paths } from '@/lib/paths';
 
 export async function createPost(data: CreatePostProps) {
   try {
@@ -76,7 +77,7 @@ export async function createPost(data: CreatePostProps) {
       }
     });
 
-    revalidatePath(path);
+    revalidatePath(paths.home());
   } catch (error) {
     console.log(error);
     throw error;

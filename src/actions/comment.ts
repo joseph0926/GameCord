@@ -3,6 +3,7 @@
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from './user';
+import { paths } from '@/lib/paths';
 
 type CreateCommentProps = {
   content: string;
@@ -28,7 +29,7 @@ export async function createComment(data: CreateCommentProps) {
 
     await db.comment.create({ data: { content, authorId: profile.id, postId } });
 
-    revalidatePath(path);
+    revalidatePath(paths.post('FETCH', postId));
   } catch (error) {
     console.log(error);
     throw error;
@@ -66,7 +67,7 @@ export async function getComments(data: GetCommentsProps) {
         postId
       },
       include: {
-        author: true,
+        author: true
       },
       orderBy: sortOptions,
       skip: skipAmount,

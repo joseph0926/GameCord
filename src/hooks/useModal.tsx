@@ -1,4 +1,3 @@
-import { ServerWithGame } from '@/actions/server';
 import { Channel, ChannelType, Game, Server } from '@prisma/client';
 import { create } from 'zustand';
 
@@ -23,7 +22,7 @@ interface ModalData {
   channelType?: ChannelType;
   apiUrl?: string;
   query?: Record<string, any>;
-  servers?: ServerWithGame[] | null;
+  servers?: Server[] | null;
   games?: Game[] | null;
 }
 
