@@ -15,6 +15,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { postSchema } from '@/lib/validations/post';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Game } from '@prisma/client';
+import { useOrigin } from '@/hooks/useOrigin';
 
 const type: any = 'create';
 
@@ -22,6 +23,7 @@ const PostFrom = ({ games }: { games: Game[] | null }) => {
   const editorRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
+  const origin = useOrigin();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -71,7 +73,7 @@ const PostFrom = ({ games }: { games: Game[] | null }) => {
         title: values.title,
         content: values.content,
         tagNames: values.tags,
-        path: pathname!,
+        path: `${origin}/`,
         gameId: values.gameId
       });
       router.push('/');
