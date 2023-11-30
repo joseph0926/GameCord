@@ -9,10 +9,11 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { HomePageFilters } from '@/lib/filters';
 import { paths } from '@/lib/paths';
+import { currentUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import React from 'react';
 
-const MainPage = async () => {
+const MainPage = () => {
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-col sm:items-center">
@@ -42,7 +43,6 @@ const MainPage = async () => {
 };
 
 const Posts = async () => {
-  const profile = await getCurrentUser();
   const { posts } = await getPosts({});
 
   return (
@@ -59,7 +59,6 @@ const Posts = async () => {
             upvotes={0}
             views={q.views}
             createdAt={q.createdAt}
-            profileId={profile?.id}
           />
         ))
       ) : (

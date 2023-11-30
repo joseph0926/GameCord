@@ -1,14 +1,13 @@
-import { getCurrentUser } from '@/actions/user';
 import PostTab from '@/components/post/PostTab';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { paths } from '@/lib/paths';
+import { db } from '@/lib/db';
 import { getJoinedDate } from '@/lib/utils';
-import { SignedIn, currentUser } from '@clerk/nextjs';
+import { SignedIn } from '@clerk/nextjs';
 import { UserRole } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import React from 'react';
 
 const ProfilePage = async ({
@@ -18,10 +17,14 @@ const ProfilePage = async ({
   params: { profileId: string };
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const clerkUser = await currentUser();
-  const profile = await getCurrentUser();
+  const profile = await db.profile.findUnique({
+    where: {
+      profileId: params.profileId
+    }
+  });
+
   if (!profile) {
-    redirect(paths.auth('IN'));
+    notFound();
   }
 
   return (
@@ -38,7 +41,7 @@ const ProfilePage = async ({
         <div className="flex justify-end max-md:mb-5 sm:mt-3">
           <SignedIn>
             <div className="flex flex-col gap-4">
-              {clerkUser && clerkUser.id === profile.profileId && (
+              {profile.profileId && (
                 <Link href="/profile/edit">
                   <Button className="paragraph-medium btn-secondary text-dark300_light900 min-h-[46px] min-w-[175px] px-4 py-3">
                     Edit Profile
@@ -67,7 +70,7 @@ const ProfilePage = async ({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="posts">
-            <PostTab searchParams={searchParams} profileId={profile.id} clerkId={clerkUser!.id} />
+            <PostTab searchParams={searchParams} profileId={profile.id} />
           </TabsContent>
           <TabsContent value="comments">Comments</TabsContent>
         </Tabs>

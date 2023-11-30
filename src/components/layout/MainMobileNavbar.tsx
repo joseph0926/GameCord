@@ -3,17 +3,18 @@
 import { Sheet, SheetContent, SheetClose, SheetTrigger } from '@/components/ui/sheet';
 import Image from 'next/image';
 import Link from 'next/link';
-import { SignedOut } from '@clerk/nextjs';
+import { SignedOut, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { sidebarLinks } from '@/lib/contants';
 import { usePathname, useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/useModal';
-import { Game, Server } from '@prisma/client';
+import { ServerWithGame } from '@/actions/server';
 
-const NavbarContent = ({ profileId, games, servers }: { profileId: string; games: Game[] | null; servers: Server[] | null }) => {
+const NavbarContent = ({ servers }: { servers: ServerWithGame[] | null }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { onOpen, data } = useModal();
+  const { user } = useUser();
 
   return (
     <section className="flex h-full flex-col gap-6 pt-16">
@@ -21,8 +22,8 @@ const NavbarContent = ({ profileId, games, servers }: { profileId: string; games
         const isActive = (pathname?.includes(item.route) && item.route.length > 1) || pathname === item.route;
 
         if (item.route === '/profile') {
-          if (profileId) {
-            item.route = `${item.route}/${profileId}`;
+          if (user) {
+            item.route = `${item.route}/${user.id}`;
           } else {
             return null;
           }
@@ -32,11 +33,11 @@ const NavbarContent = ({ profileId, games, servers }: { profileId: string; games
             <div
               key={item.route}
               onClick={() => {
-                if (!profileId) {
+                if (!user) {
                   router.push('/sign-in');
                 }
-                if (profileId) {
-                  onOpen('createServer', { games, servers });
+                if (user) {
+                  onOpen('createServer', { servers });
                 }
               }}
               className={`${
@@ -67,7 +68,7 @@ const NavbarContent = ({ profileId, games, servers }: { profileId: string; games
   );
 };
 
-const MainMobileNavbar = ({ profileId, games, servers }: { profileId: string; games: Game[] | null; servers: Server[] | null }) => {
+const MainMobileNavbar = ({ servers }: { servers: ServerWithGame[] | null }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -82,7 +83,7 @@ const MainMobileNavbar = ({ profileId, games, servers }: { profileId: string; ga
         </Link>
         <div>
           <SheetClose asChild>
-            <NavbarContent profileId={profileId} games={games} servers={servers} />
+            <NavbarContent servers={servers} />
           </SheetClose>
           <SignedOut>
             <div className="absolute bottom-10 left-0 flex w-full flex-col gap-3 p-6">

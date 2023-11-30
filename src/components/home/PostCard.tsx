@@ -4,7 +4,6 @@ import RenderTag from './RenderTag';
 import Metric from './Metric';
 import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
 import { format } from 'date-fns';
-import { Profile } from '@prisma/client';
 
 type PostCardProps = {
   id: string;
@@ -23,7 +22,6 @@ type PostCardProps = {
   upvotes: number;
   views: number;
   createdAt: Date;
-  profileId: string;
 };
 
 const PostCard = ({ id, title, tags, author, comments, upvotes, views, createdAt }: PostCardProps) => {
