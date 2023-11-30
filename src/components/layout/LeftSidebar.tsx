@@ -7,9 +7,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import { SignedOut, useUser } from '@clerk/nextjs';
 import { useModal } from '@/hooks/useModal';
-import { Game, Server } from '@prisma/client';
+import { ServerWithGame } from '@/actions/server';
 
-const LeftSidebar = ({ games, servers }: { games: Game[] | null; servers: Server[] | null }) => {
+const LeftSidebar = ({ servers }: { servers: ServerWithGame[] | null }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { onOpen } = useModal();
@@ -37,7 +37,7 @@ const LeftSidebar = ({ games, servers }: { games: Game[] | null; servers: Server
                     router.push('/sign-in');
                   }
                   if (user) {
-                    onOpen('createServer', { games, servers });
+                    onOpen('createServer', { servers });
                   }
                 }}
                 className={`${

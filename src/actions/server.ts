@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
-import { ChannelType, MemberRole } from '@prisma/client';
+import { ChannelType, Game, MemberRole, Server } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from '@/actions/user';
 import { NextResponse } from 'next/server';
@@ -12,6 +12,10 @@ type CreateServerProps = {
   imageUrl: string;
   path: string;
   gameId: string;
+};
+
+export type ServerWithGame = Server & {
+  game: Game;
 };
 
 export const createServer = async ({ data }: { data: CreateServerProps }) => {
@@ -57,10 +61,13 @@ export const createServer = async ({ data }: { data: CreateServerProps }) => {
   }
 };
 
-export const getServers = async () => {
+export const getServersWithGames = async (): Promise<ServerWithGame[] | null> => {
   try {
     const servers = await db.server.findMany({
-      where: {}
+      where: {},
+      include: {
+        game: true
+      }
     });
 
     return servers;

@@ -1,19 +1,13 @@
-import { SignedIn, UserButton } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
 import GlobalSearch from '@/components/home/GlobalSearch';
 import ThemeToggle from '@/components/ui/theme-toggle';
 import MainMobileNavbar from '@/components/layout/MainMobileNavbar';
-import { Game, Server } from '@prisma/client';
-import { Loader2 } from 'lucide-react';
+import { getServersWithGames } from '@/actions/server';
+import { Suspense } from 'react';
+import UserButtonWrapper from './UserButtonWrapper';
 
-type MainNavbarProps = {
-  games: Game[] | null;
-  servers: Server[] | null;
-  isStatic: boolean;
-};
-
-const MainNavbar = ({ games, servers, isStatic }: MainNavbarProps) => {
+const MainNavbar = () => {
   return (
     <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link href="/" className="flex items-center gap-4">
@@ -25,23 +19,19 @@ const MainNavbar = ({ games, servers, isStatic }: MainNavbarProps) => {
       <GlobalSearch />
       <div className="flex-between gap-5">
         <ThemeToggle />
-        <SignedIn>
-          <UserButton
-            afterSignOutUrl="/"
-            appearance={{
-              elements: {
-                avatarBox: 'h-10 w-10'
-              },
-              variables: {
-                colorPrimary: '#ff7000'
-              }
-            }}
-          />
-        </SignedIn>
-        {isStatic ? <Loader2 className="h-6 w-8 animate-spin sm:hidden" /> : <MainMobileNavbar games={games} servers={servers} />}
+        <UserButtonWrapper />
+        <Suspense fallback={<div />}>
+          <MainMobileNavbarWrapper />
+        </Suspense>
       </div>
     </nav>
   );
+};
+
+const MainMobileNavbarWrapper = async () => {
+  const servers = await getServersWithGames();
+
+  return <MainMobileNavbar servers={servers} />;
 };
 
 export default MainNavbar;
