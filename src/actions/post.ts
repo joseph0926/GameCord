@@ -77,7 +77,7 @@ export async function createPost(data: CreatePostProps) {
       }
     });
 
-    revalidatePath('/(root)', 'page');
+    revalidatePath('/', 'layout');
   } catch (error) {
     console.log(error);
     throw error;
