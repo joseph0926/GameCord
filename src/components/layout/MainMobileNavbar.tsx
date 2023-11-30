@@ -3,7 +3,7 @@
 import { Sheet, SheetContent, SheetClose, SheetTrigger } from '@/components/ui/sheet';
 import Image from 'next/image';
 import Link from 'next/link';
-import { SignedOut, auth } from '@clerk/nextjs';
+import { SignedOut, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { sidebarLinks } from '@/lib/contants';
 import { usePathname, useRouter } from 'next/navigation';
@@ -14,7 +14,7 @@ const NavbarContent = ({ games, servers }: { games: Game[] | null; servers: Serv
   const pathname = usePathname();
   const router = useRouter();
   const { onOpen, data } = useModal();
-  const { userId } = auth();
+  const { user } = useUser();
 
   return (
     <section className="flex h-full flex-col gap-6 pt-16">
@@ -22,8 +22,8 @@ const NavbarContent = ({ games, servers }: { games: Game[] | null; servers: Serv
         const isActive = (pathname?.includes(item.route) && item.route.length > 1) || pathname === item.route;
 
         if (item.route === '/profile') {
-          if (userId) {
-            item.route = `${item.route}/${userId}`;
+          if (user) {
+            item.route = `${item.route}/${user.id}`;
           } else {
             return null;
           }
@@ -33,10 +33,10 @@ const NavbarContent = ({ games, servers }: { games: Game[] | null; servers: Serv
             <div
               key={item.route}
               onClick={() => {
-                if (!userId) {
+                if (!user) {
                   router.push('/sign-in');
                 }
-                if (userId) {
+                if (user) {
                   onOpen('createServer', { games, servers });
                 }
               }}

@@ -19,7 +19,7 @@ const ProfilePage = async ({
 }) => {
   const profile = await db.profile.findUnique({
     where: {
-      id: params.profileId
+      profileId: params.profileId
     }
   });
 

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
-import { SignedOut, auth } from '@clerk/nextjs';
+import { SignedOut, useUser } from '@clerk/nextjs';
 import { useModal } from '@/hooks/useModal';
 import { Game, Server } from '@prisma/client';
 
@@ -13,7 +13,7 @@ const LeftSidebar = ({ games, servers }: { games: Game[] | null; servers: Server
   const pathname = usePathname();
   const router = useRouter();
   const { onOpen } = useModal();
-  const { userId } = auth();
+  const { user } = useUser();
 
   return (
     <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
@@ -21,8 +21,8 @@ const LeftSidebar = ({ games, servers }: { games: Game[] | null; servers: Server
         {sidebarLinks.map((item) => {
           const isActive = (pathname?.includes(item.route) && item.route.length > 1) || pathname === item.route;
           if (item.route === '/profile') {
-            if (userId) {
-              item.route = `${item.route}/${userId}`;
+            if (user) {
+              item.route = `${item.route}/${user.id}`;
             } else {
               return null;
             }
@@ -33,10 +33,10 @@ const LeftSidebar = ({ games, servers }: { games: Game[] | null; servers: Server
               <div
                 key={item.route}
                 onClick={() => {
-                  if (!userId) {
+                  if (!user) {
                     router.push('/sign-in');
                   }
-                  if (userId) {
+                  if (user) {
                     onOpen('createServer', { games, servers });
                   }
                 }}
