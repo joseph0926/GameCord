@@ -76,7 +76,7 @@ const PostFrom = ({ games }: { games: Game[] | null }) => {
         path: `${origin}/`,
         gameId: values.gameId
       });
-      router.push('/');
+      router.push('/post');
     } catch (error) {
       console.log(error);
     } finally {

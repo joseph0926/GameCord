@@ -7,6 +7,11 @@ export const sidebarLinks: SidebarLink[] = [
     label: 'Home'
   },
   {
+    imgURL: '/images/star.svg',
+    route: '/post',
+    label: 'Posts'
+  },
+  {
     imgURL: '/images/user.svg',
     route: '/profile',
     label: 'Profile'

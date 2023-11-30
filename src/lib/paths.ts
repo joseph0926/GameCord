@@ -20,8 +20,8 @@ export const paths = {
   profile(type: 'USER' | 'GAME', profileSlug?: string) {
     return type === 'USER' ? `/profile/${profileSlug}` : '/profile/create-game';
   },
-  post(type: 'CREATE' | 'FETCH', postSlug?: string) {
-    return type === 'FETCH' ? `/post/${postSlug}` : '/create-post';
+  post(type: 'CREATE' | 'FETCH' | 'ALL', postSlug?: string) {
+    return type === 'ALL' ? '/post' : type === 'FETCH' ? `/post/${postSlug}` : '/create-post';
   },
   community() {
     return '/community';
