@@ -25,7 +25,7 @@ const CreateServerModal = () => {
   const origin = useOrigin();
   const { isOpen, onClose, type, data } = useModal();
 
-  const { servers } = data;
+  const { servers, games } = data;
 
   const isMoadlOpen = isOpen && type === 'createServer';
 
@@ -145,10 +145,10 @@ const CreateServerModal = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent placeholder="select game,,," className="bg-white dark:bg-black">
-                            {servers ? (
-                              servers.map((server) => (
-                                <SelectItem key={server.game.id} value={server.game.id}>
-                                  {server.game.title}
+                            {games ? (
+                              games.map((game) => (
+                                <SelectItem key={game.id} value={game.id}>
+                                  {game.title}
                                 </SelectItem>
                               ))
                             ) : (

@@ -61,13 +61,10 @@ export const createServer = async ({ data }: { data: CreateServerProps }) => {
   }
 };
 
-export const getServersWithGames = async (): Promise<ServerWithGame[] | null> => {
+export const getServers = async (): Promise<Server[] | null> => {
   try {
     const servers = await db.server.findMany({
-      where: {},
-      include: {
-        game: true
-      }
+      where: {}
     });
 
     return servers;

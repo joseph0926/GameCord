@@ -3,9 +3,10 @@ import Link from 'next/link';
 import GlobalSearch from '@/components/home/GlobalSearch';
 import ThemeToggle from '@/components/ui/theme-toggle';
 import MainMobileNavbar from '@/components/layout/MainMobileNavbar';
-import { getServersWithGames } from '@/actions/server';
+import { getServers } from '@/actions/server';
 import { Suspense } from 'react';
 import UserButtonWrapper from './UserButtonWrapper';
+import { getGames } from '@/actions/game';
 
 const MainNavbar = () => {
   return (
@@ -29,9 +30,10 @@ const MainNavbar = () => {
 };
 
 const MainMobileNavbarWrapper = async () => {
-  const servers = await getServersWithGames();
+  const servers = await getServers();
+  const games = await getGames();
 
-  return <MainMobileNavbar servers={servers} />;
+  return <MainMobileNavbar servers={servers} games={games} />;
 };
 
 export default MainNavbar;

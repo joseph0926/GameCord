@@ -5,6 +5,7 @@ import { getCurrentUser } from './user';
 import { NextResponse } from 'next/server';
 import { UserRole } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
+import { paths } from '@/lib/paths';
 
 type CreateGameProps = {
   title: string;
@@ -44,9 +45,9 @@ export const createGame = async (data: CreateGameProps) => {
       }
     });
 
-    revalidatePath(path);
+    revalidatePath(paths.home());
 
-    return NextResponse.json(game);
+    return game;
   } catch (error) {
     console.log(error);
     return error;
