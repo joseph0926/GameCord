@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { getGames } from '@/actions/game';
 import { getServers } from '@/actions/server';
-import { getCurrentUser } from '@/actions/user';
 import LeftSidebar from '@/components/layout/LeftSidebar';
 import MainNavbar from '@/components/layout/MainNavbar';
 import RightSidebar from '@/components/layout/RightSidebar';
@@ -11,7 +10,7 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="relative bg-light-850 dark:bg-dark-100">
       <NotificationModal />
-      <Suspense fallback={<MainNavbar profileId="" games={null} servers={null} isStatic={true} />}>
+      <Suspense fallback={<MainNavbar games={null} servers={null} isStatic={true} />}>
         <LayoutWrapper isNav />
       </Suspense>
       <div className="flex">
@@ -32,15 +31,10 @@ const MainLayout = async ({ children }: { children: React.ReactNode }) => {
 };
 
 const LayoutWrapper = async ({ isNav }: { isNav: boolean }) => {
-  const profile = await getCurrentUser();
   const games = await getGames();
   const servers = await getServers();
 
-  return isNav ? (
-    <MainNavbar profileId={profile?.id} servers={servers} games={games} isStatic={false} />
-  ) : (
-    <LeftSidebar profileId={profile?.id} games={games} servers={servers} />
-  );
+  return isNav ? <MainNavbar servers={servers} games={games} isStatic={false} /> : <LeftSidebar games={games} servers={servers} />;
 };
 
 export default MainLayout;

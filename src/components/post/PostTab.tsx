@@ -7,10 +7,9 @@ import NoResults from '../home/NoResults';
 type PostTabProps = {
   searchParams: { [key: string]: string | undefined };
   profileId: string;
-  clerkId: string;
 };
 
-const PostTab = async ({ searchParams, profileId, clerkId }: PostTabProps) => {
+const PostTab = async ({ searchParams, profileId }: PostTabProps) => {
   const result = await getUserPosts({
     profileId,
     page: searchParams.page ? +searchParams.page : 1
@@ -30,7 +29,6 @@ const PostTab = async ({ searchParams, profileId, clerkId }: PostTabProps) => {
         <PostCard
           key={post.id}
           id={post.id}
-          profileId={clerkId}
           title={post.title}
           tags={post.tags}
           author={post.author}

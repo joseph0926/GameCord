@@ -8,13 +8,12 @@ import { Game, Server } from '@prisma/client';
 import { Loader2 } from 'lucide-react';
 
 type MainNavbarProps = {
-  profileId: string;
   games: Game[] | null;
   servers: Server[] | null;
   isStatic: boolean;
 };
 
-const MainNavbar = ({ profileId, games, servers, isStatic }: MainNavbarProps) => {
+const MainNavbar = ({ games, servers, isStatic }: MainNavbarProps) => {
   return (
     <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link href="/" className="flex items-center gap-4">
@@ -39,11 +38,7 @@ const MainNavbar = ({ profileId, games, servers, isStatic }: MainNavbarProps) =>
             }}
           />
         </SignedIn>
-        {isStatic ? (
-          <Loader2 className="h-6 w-8 animate-spin sm:hidden" />
-        ) : (
-          <MainMobileNavbar profileId={profileId} games={games} servers={servers} />
-        )}
+        {isStatic ? <Loader2 className="h-6 w-8 animate-spin sm:hidden" /> : <MainMobileNavbar games={games} servers={servers} />}
       </div>
     </nav>
   );
