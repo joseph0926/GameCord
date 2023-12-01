@@ -48,7 +48,7 @@ const ProfilePage = async ({
                   </Button>
                 </Link>
               )}
-              {profile.role === UserRole.TOP && (
+              {profile.role === UserRole.TOP && profile.email === 'rkekqmf0926@gmail.com' && (
                 <Link href="/profile/create-game">
                   <Button className="paragraph-medium btn-secondary text-dark300_light900 min-h-[46px] min-w-[175px] px-4 py-3">
                     Create Game
