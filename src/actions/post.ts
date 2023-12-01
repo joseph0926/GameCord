@@ -25,6 +25,10 @@ export type GetPostProps = {
   postId: string;
 };
 
+export type GetGamePostProps = {
+  gameId: string;
+};
+
 import React from 'react';
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
@@ -166,3 +170,25 @@ export const getPost = React.cache(async (data: GetPostProps) => {
     throw error;
   }
 });
+
+export const getGamePost = async (data: GetGamePostProps) => {
+  try {
+    const { gameId } = data;
+
+    const posts = await db.post.findMany({
+      where: {
+        gameId
+      },
+      include: {
+        tags: true,
+        author: true,
+        comments: true
+      }
+    });
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
