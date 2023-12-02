@@ -1,5 +1,4 @@
 import { getPost } from '@/actions/post';
-import { getCurrentUser } from '@/actions/user';
 import Metric from '@/components/home/Metric';
 import RenderTag from '@/components/home/RenderTag';
 import CommentForm from '@/components/post/CommentForm';
@@ -19,11 +18,6 @@ export const generateMetadata = async ({ params }: { params: { postId: string } 
 };
 
 const PostPage = async ({ params, searchParams }: { params: { postId: string }; searchParams: { [key: string]: string | undefined } }) => {
-  const profile = await getCurrentUser();
-  if (!profile || profile === 'null') {
-    redirect(paths.auth('IN'));
-  }
-
   const post = await getPost({ postId: params.postId });
   if (!post) {
     redirect(paths.home());
