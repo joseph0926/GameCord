@@ -1,27 +1,33 @@
 import { getGames } from '@/actions/game';
-import { getCurrentUser } from '@/actions/user';
 import PostFrom from '@/components/post/PostForm';
-import { paths } from '@/lib/paths';
-import { redirect } from 'next/navigation';
-import React from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import React, { Suspense } from 'react';
 
-const Page = async () => {
-  const profile = await getCurrentUser();
-  if (!profile) {
-    redirect(paths.auth('IN'));
-  }
-
-  const games = await getGames();
-
+const CreatePost = () => {
   return (
     <div>
       <h1 className="h1-bold text-dark100_light900">게시글 작성</h1>
-
       <div className="mt-9">
-        <PostFrom games={games} />
+        <Suspense
+          fallback={
+            <div className="mt-10 flex w-full flex-col gap-6">
+              {[1, 2, 3, 4, 5].map((num, idx) => (
+                <Skeleton key={num} className="h-[50px] w-full" />
+              ))}
+            </div>
+          }
+        >
+          <CreatePostWrapper />
+        </Suspense>
       </div>
     </div>
   );
 };
 
-export default Page;
+const CreatePostWrapper = async () => {
+  const games = await getGames();
+
+  return <PostFrom games={games} />;
+};
+
+export default CreatePost;
