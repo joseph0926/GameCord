@@ -1,9 +1,13 @@
-import { getPosts } from '@/actions/post';
+import { PostsWithData } from '@/actions/post';
 import PostCard from '../home/PostCard';
 import NoResults from '../home/NoResults';
 
-export default async function PostsWrapper() {
-  const { posts } = await getPosts({});
+interface PostsProps {
+  fetchData: () => Promise<PostsWithData[] | null>;
+}
+
+export default async function PostsWrapper({ fetchData }: PostsProps) {
+  const posts = await fetchData();
 
   if (!posts || posts.length < 0) {
     return (
