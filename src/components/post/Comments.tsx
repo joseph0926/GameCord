@@ -7,7 +7,7 @@ import { getComments } from '@/actions/comment';
 import { CommentFilters } from '@/lib/filters';
 import Filter from '@/components/home/Filter';
 import Pagination from '@/components/layout/Pagination';
-import { Loader2 } from 'lucide-react';
+import { ListLoading } from '../ui/list-loading';
 
 type CommentsProps = {
   postId: string;
@@ -23,13 +23,7 @@ const Comments = async ({ postId, totalComments, page, filter }: CommentsProps) 
         <h3 className="primary-text-gradient">{totalComments} Comments</h3>
         <Filter filters={CommentFilters} />
       </div>
-      <React.Suspense
-        fallback={
-          <div>
-            <Loader2 className="h-8 w-8 animate-spin" />
-          </div>
-        }
-      >
+      <React.Suspense fallback={<ListLoading num={2} />}>
         <Comment postId={postId} page={page} filter={filter} />
       </React.Suspense>
     </div>
