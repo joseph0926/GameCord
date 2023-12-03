@@ -17,7 +17,9 @@ const MainNavbar = () => {
           Game<span className="text-primary-500">Cord</span>
         </p>
       </Link>
-      <GlobalSearch />
+      <Suspense>
+        <GlobalSearch />
+      </Suspense>
       <div className="flex-between gap-5">
         <ThemeToggle />
         <UserButtonWrapper />

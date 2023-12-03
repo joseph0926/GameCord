@@ -29,11 +29,18 @@ export type GetGamePostProps = {
   gameId: string;
 };
 
+export type PostsWithData = Post & {
+  author: Profile;
+  comments: Comment[];
+  tags: Tag[];
+};
+
 import React from 'react';
 import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from './user';
 import { paths } from '@/lib/paths';
+import { Comment, Post, Profile, Tag } from '@prisma/client';
 
 export async function createPost(data: CreatePostProps) {
   try {
@@ -88,7 +95,7 @@ export async function createPost(data: CreatePostProps) {
   }
 }
 
-export async function getPosts(data: GetPostsProps) {
+export async function getPosts(): Promise<PostsWithData[] | null> {
   try {
     const posts = await db.post.findMany({
       where: {},
@@ -102,7 +109,7 @@ export async function getPosts(data: GetPostsProps) {
       }
     });
 
-    return { posts };
+    return posts;
   } catch (error) {
     console.log(error);
     throw error;
@@ -171,7 +178,7 @@ export const getPost = React.cache(async (data: GetPostProps) => {
   }
 });
 
-export const getGamePost = async (data: GetGamePostProps) => {
+export const getGamePost = async (data: GetGamePostProps): Promise<PostsWithData[] | null> => {
   try {
     const { gameId } = data;
 
@@ -191,4 +198,17 @@ export const getGamePost = async (data: GetGamePostProps) => {
     console.log(error);
     return null;
   }
+};
+
+export const getSearchPosts = async (term: string): Promise<PostsWithData[] | null> => {
+  return db.post.findMany({
+    where: {
+      OR: [{ title: { contains: term } }, { content: { contains: term } }]
+    },
+    include: {
+      tags: true,
+      author: true,
+      comments: true
+    }
+  });
 };
