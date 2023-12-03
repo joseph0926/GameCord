@@ -11,6 +11,8 @@ import { Button } from '../ui/button';
 import { useTheme } from 'next-themes';
 import { createComment } from '@/actions/comment';
 import { useOrigin } from '@/hooks/useOrigin';
+import { useUser } from '@clerk/nextjs';
+import toast from 'react-hot-toast';
 
 type CommentFormProps = {
   postId: string;
@@ -20,6 +22,7 @@ const CommentForm = ({ postId }: CommentFormProps) => {
   const origin = useOrigin();
   const { theme } = useTheme();
   const editorRef = useRef(null);
+  const { user } = useUser();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,7 +63,11 @@ const CommentForm = ({ postId }: CommentFormProps) => {
         <h4 className="paragraph-semibold text-dark400_light800">댓글을 작성해주세요.</h4>
       </div>
       <Form {...form}>
-        <form className="mt-6 flex w-full flex-col gap-10" onSubmit={form.handleSubmit(submitHandler)}>
+        <form
+          onClick={() => !user && toast.error('로그인 후 작성 가능합니다.')}
+          className="mt-6 flex w-full flex-col gap-10"
+          onSubmit={form.handleSubmit(submitHandler)}
+        >
           <FormField
             control={form.control}
             name="comment"
@@ -68,6 +75,7 @@ const CommentForm = ({ postId }: CommentFormProps) => {
               <FormItem className="flex w-full flex-col gap-3">
                 <FormControl className="mt-3.5">
                   <Editor
+                    disabled={!user}
                     apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                     onInit={(evt, editor) => {
                       // @ts-ignore
@@ -110,7 +118,7 @@ const CommentForm = ({ postId }: CommentFormProps) => {
             )}
           />
           <div className="flex justify-end">
-            <Button type="submit" className="primary-gradient w-fit text-white" disabled={isLoading}>
+            <Button type="submit" className="primary-gradient w-fit text-white" disabled={isLoading || !user}>
               {isLoading ? '작성중...' : '작성'}
             </Button>
           </div>
