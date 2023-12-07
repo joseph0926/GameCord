@@ -4,18 +4,20 @@ import NoResults from '../home/NoResults';
 
 interface PostsProps {
   fetchData: () => Promise<PostsWithData[] | null>;
+  isShowImage?: boolean;
 }
 
-export default async function PostsWrapper({ fetchData }: PostsProps) {
+export default async function PostsWrapper({ fetchData, isShowImage }: PostsProps) {
   const posts = await fetchData();
 
-  if (!posts || posts.length < 0) {
+  if (!posts || posts.length === 0) {
     return (
       <NoResults
         title="해당 게시글을 찾을 수 없습니다,,,"
         description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem deleniti doloribus fugiat aspernatur"
         href="/create-post"
         linkTitle="게시글 작성하러가기"
+        isShowImage={isShowImage}
       />
     );
   }

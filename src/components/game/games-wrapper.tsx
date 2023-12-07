@@ -1,18 +1,24 @@
 import Link from 'next/link';
 import NoResults from '@/components/home/NoResults';
-import { getGames } from '@/actions/game';
 import { ChevronRight } from 'lucide-react';
+import { Game } from '@prisma/client';
 
-export default async function GamesWrapper() {
-  const games = await getGames();
+interface GamesProps {
+  fetchData: () => Promise<Game[] | null>;
+  isShowImage: boolean;
+}
 
-  if (!games) {
+export default async function GamesWrapper({ fetchData, isShowImage }: GamesProps) {
+  const games = await fetchData();
+
+  if (!games || games.length === 0) {
     return (
       <NoResults
         title="게임이 존재하지 않습니다,,,"
         description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem deleniti doloribus fugiat aspernatur"
         href="/"
         linkTitle="홈으로 돌아가기"
+        isShowImage={isShowImage}
       />
     );
   }

@@ -204,9 +204,9 @@ export const getGamePost = async (data: GetGamePostProps): Promise<PostsWithData
 };
 
 export const getSearchPosts = async (term: string): Promise<PostsWithData[] | null> => {
-  return db.post.findMany({
+  return await db.post.findMany({
     where: {
-      OR: [{ title: { contains: term } }, { content: { contains: term } }]
+      OR: [{ title: { contains: term, mode: 'insensitive' } }, { content: { contains: term, mode: 'insensitive' } }]
     },
     include: {
       tags: true,
