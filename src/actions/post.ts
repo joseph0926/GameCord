@@ -190,6 +190,9 @@ export const getGamePost = async (data: GetGamePostProps): Promise<PostsWithData
         tags: true,
         author: true,
         comments: true
+      },
+      orderBy: {
+        createdAt: 'desc'
       }
     });
 

@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import Filter from '@/components/home/Filter';
 import HomeFilters from '@/components/home/HomeFilters';
-import LocalSearchbar from '@/components/layout/LocalSearchbar';
 import GamesWrapper from '@/components/game/games-wrapper';
 import { Button } from '@/components/ui/button';
 import { ListLoading } from '@/components/ui/list-loading';
@@ -19,7 +18,6 @@ const MainPage = () => {
         </Link>
       </div>
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
-        <LocalSearchbar route="/" iconPosition="left" imgSrc="/assets/icons/search.svg" placeholder="search,,," otherClassName="flex-1" />
         <Filter filters={HomePageFilters} otherClassName="min-h-[56px] sm:min-w-[170px]" containerClassName="hidden max-md:flex" />
       </div>
       <HomeFilters />
