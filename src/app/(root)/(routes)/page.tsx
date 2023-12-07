@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ListLoading } from '@/components/ui/list-loading';
 import { HomePageFilters } from '@/lib/filters';
 import { paths } from '@/lib/paths';
+import { getGames } from '@/actions/game';
 
 const MainPage = () => {
   return (
@@ -22,7 +23,7 @@ const MainPage = () => {
       </div>
       <HomeFilters />
       <Suspense fallback={<ListLoading num={5} />}>
-        <GamesWrapper />
+        <GamesWrapper fetchData={getGames} isShowImage={true} />
       </Suspense>
     </>
   );

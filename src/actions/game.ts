@@ -3,7 +3,7 @@
 import { db } from '@/lib/db';
 import { getCurrentUser } from './user';
 import { NextResponse } from 'next/server';
-import { UserRole } from '@prisma/client';
+import { Game, UserRole } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { paths } from '@/lib/paths';
 
@@ -65,4 +65,17 @@ export const getGames = async () => {
     console.log(error);
     return null;
   }
+};
+
+export const getSearchGames = async (term: string): Promise<Game[] | null> => {
+  const games = await db.game.findMany({
+    where: {
+      title: {
+        contains: term,
+        mode: 'insensitive'
+      }
+    }
+  });
+
+  return games;
 };
