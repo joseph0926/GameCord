@@ -212,7 +212,8 @@ model Vote {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  type VoteType
+  type      VoteType
+  voteCount Int      @default(0)
 
   profileId String
   profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)

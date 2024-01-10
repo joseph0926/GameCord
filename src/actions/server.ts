@@ -77,7 +77,7 @@ export const getServers = async (): Promise<Server[] | null> => {
 export const joinServer = async (serverId: string) => {
   try {
     const profile = await getCurrentUser();
-    if (!profile || profile === 'null') {
+    if (!profile) {
       return null;
     }
 

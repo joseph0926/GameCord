@@ -1,4 +1,5 @@
-import { getPost } from '@/actions/post';
+'use client';
+
 import { PostProps } from '@/app/(root)/(routes)/post/[postId]/page';
 import NoResults from '../home/NoResults';
 import Link from 'next/link';
@@ -8,11 +9,20 @@ import Metric from '../home/Metric';
 import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
 import ParseHTML from './ParseHTML';
 import RenderTag from '../home/RenderTag';
-import Comments from './Comments';
-import CommentForm from './CommentForm';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 
-export default async function PostWrapper({ params, searchParams }: PostProps) {
-  const post = await getPost({ postId: params.postId });
+export default function PostWrapper({ post }: PostProps) {
+  const [vote, setVote] = useState<{
+    commentId: string | null;
+    createdAt: string;
+    id: string | null;
+    postId: string | null;
+    profileId: string | null;
+    type: string | null;
+    updatedAt: string;
+    voteCount: number;
+  } | null>(null);
 
   if (!post) {
     return (
@@ -24,6 +34,21 @@ export default async function PostWrapper({ params, searchParams }: PostProps) {
       />
     );
   }
+
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      const res = await fetch('/api/vote', {
+        headers: {
+          'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({ postId: post.id })
+      });
+      return await res.json();
+    },
+    onSuccess: (newData) => setVote(newData)
+  });
+
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -32,7 +57,16 @@ export default async function PostWrapper({ params, searchParams }: PostProps) {
             <Image src={post.author.imageUrl} className="rounded-full" width={22} height={22} alt="profile" />
             <p className="paragraph-semibold text-dark300_light700">{post.author.name}</p>
           </Link>
-          <div className="flex justify-end"></div>
+          <div className="flex justify-end gap-4">
+            <div className="flex cursor-pointer items-center gap-1" onClick={() => mutate()}>
+              <Image src="/assets/icons/upvote.svg" alt="upvote" width={18} height={18} />
+              <span>{vote?.voteCount}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Image src="/assets/icons/downvote.svg" alt="downvote" width={18} height={18} />
+              <span>{0}</span>
+            </div>
+          </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">{post.title}</h2>
       </div>
@@ -68,8 +102,6 @@ export default async function PostWrapper({ params, searchParams }: PostProps) {
           <RenderTag key={tag.id} id={tag.id} name={tag.name} showCount={false} />
         ))}
       </div>
-      <Comments postId={post.id} totalComments={post.comments.length} page={searchParams?.page} filter={searchParams?.filter} />
-      <CommentForm postId={post.id} />
     </>
   );
 }

@@ -31,7 +31,7 @@ export default async function PostsWrapper({ fetchData, isShowImage }: PostsProp
           tags={q.tags}
           author={q.author}
           comments={q.comments}
-          upvotes={0}
+          votes={q.votes}
           views={q.views}
           createdAt={q.createdAt}
         />

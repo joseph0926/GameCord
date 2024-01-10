@@ -33,6 +33,7 @@ export type PostsWithData = Post & {
   author: Profile;
   comments: Comment[];
   tags: Tag[];
+  votes: Vote[];
 };
 
 import React from 'react';
@@ -40,11 +41,15 @@ import { db } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from './user';
 import { paths } from '@/lib/paths';
-import { Comment, Post, Profile, Tag } from '@prisma/client';
+import { Comment, Post, Profile, Tag, Vote } from '@prisma/client';
+import { redirect } from 'next/navigation';
 
 export async function createPost(data: CreatePostProps) {
   try {
     const profile = await getCurrentUser();
+    if (!profile) {
+      redirect(paths.auth('IN'));
+    }
 
     const { title, content, tagNames, gameId, path } = data;
 
@@ -102,7 +107,8 @@ export async function getPosts(): Promise<PostsWithData[] | null> {
       include: {
         tags: true,
         author: true,
-        comments: true
+        comments: true,
+        votes: true
       },
       orderBy: {
         createdAt: 'desc'
@@ -143,7 +149,8 @@ export async function getUserPosts(data: GetUserPostsProps) {
             name: true,
             imageUrl: true
           }
-        }
+        },
+        votes: true
       }
     });
 
@@ -167,7 +174,8 @@ export const getPost = React.cache(async (data: GetPostProps) => {
       include: {
         tags: true,
         author: true,
-        comments: true
+        comments: true,
+        votes: true
       }
     });
 
@@ -189,7 +197,8 @@ export const getGamePost = async (data: GetGamePostProps): Promise<PostsWithData
       include: {
         tags: true,
         author: true,
-        comments: true
+        comments: true,
+        votes: true
       },
       orderBy: {
         createdAt: 'desc'
@@ -211,7 +220,8 @@ export const getSearchPosts = async (term: string): Promise<PostsWithData[] | nu
     include: {
       tags: true,
       author: true,
-      comments: true
+      comments: true,
+      votes: true
     }
   });
 };
