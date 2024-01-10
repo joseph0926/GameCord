@@ -21,7 +21,7 @@ type GetCommentsProps = {
 export async function createComment(data: CreateCommentProps) {
   try {
     const profile = await getCurrentUser();
-    if (!profile || profile === 'null') {
+    if (!profile) {
       return null;
     }
 

@@ -3,7 +3,7 @@
 import { db } from '@/lib/db';
 import { redis, fetchRedis } from '@/lib/redis';
 import { currentUser } from '@clerk/nextjs';
-import { UserRole } from '@prisma/client';
+import { UserRole, Profile } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
 type CreateUserProps = {
@@ -66,7 +66,7 @@ export const createUser = async (data: CreateUserProps) => {
   }
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): Promise<Profile | null> => {
   const user = await currentUser();
   if (!user) {
     return null;

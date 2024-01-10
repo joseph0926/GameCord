@@ -2,8 +2,13 @@ import { Suspense } from 'react';
 import PostWrapper from '@/components/post/post-wrapper';
 import { Loader2 } from 'lucide-react';
 import { BoxLoading, ListLoading } from '@/components/ui/list-loading';
+import { PostsWithData, getPost } from '@/actions/post';
+import Comments from '@/components/post/Comments';
+import CommentForm from '@/components/post/CommentForm';
+import NoResults from '@/components/home/NoResults';
 
 export interface PostProps {
+  post?: PostsWithData | null;
   params: { postId: string };
   searchParams: { [key: string]: string | undefined };
 }
@@ -21,9 +26,24 @@ function PostLoading() {
 }
 
 const PostPage = async ({ params, searchParams }: PostProps) => {
+  const post = await getPost({ postId: params.postId });
+  if (!post) {
+    return (
+      <NoResults
+        title="게시글이 존재하지 않습니다,,,"
+        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem deleniti doloribus fugiat aspernatur"
+        href="/"
+        linkTitle="홈으로 돌아가기"
+        isShowImage={true}
+      />
+    );
+  }
+
   return (
     <Suspense fallback={<PostLoading />}>
-      <PostWrapper params={params} searchParams={searchParams} />
+      <PostWrapper params={params} searchParams={searchParams} post={post} />
+      <Comments postId={post.id} totalComments={post.comments.length} page={searchParams?.page} filter={searchParams?.filter} />
+      <CommentForm postId={post.id} />
     </Suspense>
   );
 };
