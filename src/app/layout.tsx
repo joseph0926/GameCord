@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={cn(ubuntu.className, "text bg")}>
+      <body className={cn(ubuntu.className, "w-screen h-screen text bg")}>
         <CustomProviders>{children}</CustomProviders>
       </body>
     </html>
