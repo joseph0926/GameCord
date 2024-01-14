@@ -116,3 +116,26 @@
     @apply text-slate-300 dark:text-slate-700;
   }
 }
+
+.hamburger-line {
+  transition: all 0.3s ease;
+}
+.line1 {
+  transform-origin: 0% 0%;
+}
+.line2 {
+  transition: opacity 0.3s ease;
+}
+.line3 {
+  transform-origin: 0% 100%;
+}
+
+.toggle .line1 {
+  transform: rotate(45deg);
+}
+.toggle .line2 {
+  opacity: 0;
+}
+.toggle .line3 {
+  transform: rotate(-45deg);
+}

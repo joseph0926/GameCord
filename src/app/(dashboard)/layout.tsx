@@ -9,7 +9,7 @@ export default function DashboardLayout({
   return (
     <div className="relative">
       <Sidebar />
-      <div className="absolute h-full w-[calc(100vw-6rem)] md:w-[calc(100vw-13rem)] lg:w-[calc(100vw-15rem)] top-0 left-24 md:left-52 lg:left-60">
+      <div className="max-sm:left-0 max-sm:w-full absolute h-full w-[calc(100vw-6rem)] md:w-[calc(100vw-13rem)] lg:w-[calc(100vw-15rem)] top-0 left-24 md:left-52 lg:left-60">
         <Navbar />
         {children}
       </div>
