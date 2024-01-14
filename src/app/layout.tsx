@@ -18,7 +18,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={cn(ubuntu.className, "w-screen h-screen text bg")}>
+      <body
+        className={cn(
+          ubuntu.className,
+          "w-screen h-screen bg-[url('/bg.png')] text"
+        )}
+      >
         <CustomProviders>{children}</CustomProviders>
       </body>
     </html>

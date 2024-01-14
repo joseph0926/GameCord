@@ -19,6 +19,14 @@ const config = {
     },
     extend: {
       colors: {
+        priBg: {
+          light: "#091039",
+          dark: "#060B26",
+        },
+        secBg: {
+          light: "#42466c",
+          dark: "#2C2F48",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -98,22 +98,39 @@
     @apply bg-red-700/50 dark:bg-red-700/50;
   }
   .bg {
-    @apply bg-slate-100 dark:bg-slate-900;
+    @apply bg-priBg-light dark:bg-priBg-dark/50;
   }
   .bg2 {
-    @apply bg-slate-300 dark:bg-slate-700;
+    @apply bg-secBg-light/50 dark:bg-secBg-dark;
   }
   .back {
-    @apply dark:bg-slate-900/50 bg-slate-100/50;
+    @apply dark:bg-slate-700/50 bg-slate-100/50;
   }
   .backDark {
     @apply bg-slate-900/20 dark:bg-slate-100/20;
   }
   .text {
-    @apply text-slate-900 dark:text-slate-100;
+    @apply text-slate-300 dark:text-slate-100;
   }
   .text2 {
     @apply text-slate-300 dark:text-slate-700;
+  }
+  .bg-gradient {
+    @apply bg-gradient-to-tr dark:from-[#060B26] dark:to-[#1A1F37] from-[#091039] to-[#272e52];
+  }
+}
+
+.gradient-text {
+  font-weight: 500;
+  font-size: 20px;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(90deg, #ffffff 50%, #757a8c 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .gradient-text {
+    font-size: 18px;
   }
 }
 

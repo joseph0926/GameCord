@@ -6,7 +6,7 @@ import MobileSidebar from "./mobile-sidebar";
 
 export default function Navbar() {
   return (
-    <div className="flex items-center justify-between h-24 bg2 w-full p-4">
+    <div className="flex items-center justify-between h-24 bg-gradient2 w-full p-4">
       <Link href="/" className="block sm:hidden">
         <div className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14">
           <Image
@@ -29,7 +29,9 @@ export default function Navbar() {
           />
         </span>
       </div>
-      <MobileSidebar />
+      <div className="block mb-3 sm:hidden">
+        <MobileSidebar />
+      </div>
     </div>
   );
 }
