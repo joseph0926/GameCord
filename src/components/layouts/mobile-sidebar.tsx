@@ -2,6 +2,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "../ui/theme-toggle";
 import Link from "next/link";
 import { navLinks } from "@/lib/contants";
+import { Separator } from "../ui/separator";
 
 export default function MobileSidebar() {
   return (
@@ -15,6 +16,13 @@ export default function MobileSidebar() {
       </SheetTrigger>
       <SheetContent className="bg-gradient border-none">
         <>
+          <Link
+            href="/"
+            className="relative py-4 flex items-center justify-center w-full"
+          >
+            <h1 className="gradient-text">My Note</h1>
+          </Link>
+          <Separator className="bg-gradient-to-r from-transparent via-[#E0E1E2] to-transparent" />
           <div className="flex flex-col gap-6 mt-10">
             {navLinks.map((item) => (
               <Link

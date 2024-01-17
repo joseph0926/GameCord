@@ -1,8 +1,7 @@
 export default function Overview() {
   return (
-    <div>
-      <h2 className="font-semibold text-[16px] mb-4"></h2>
-      <div className="flex items-center gap-4"></div>
+    <div className="w-full h-[80px]">
+      <div className="flex items-center justify-between"></div>
     </div>
   );
 }
