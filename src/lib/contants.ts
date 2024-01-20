@@ -1,52 +1,21 @@
-import { SidebarLink } from '@/@types/custom';
+import {
+  Home,
+  Book,
+  Calendar,
+  BarChart,
+  MessageCircle,
+  Settings,
+} from "lucide-react";
 
-export const sidebarLinks: SidebarLink[] = [
-  {
-    imgURL: '/images/home.svg',
-    route: '/',
-    label: 'Home'
-  },
-  {
-    imgURL: '/images/star.svg',
-    route: '/post',
-    label: 'Posts'
-  },
-  {
-    imgURL: '/images/user.svg',
-    route: '/profile',
-    label: 'Profile'
-  },
-  {
-    imgURL: '/images/message.svg',
-    route: '/server',
-    label: 'Server'
-  }
+export const navLinks = [
+  { href: "/", label: "Dashboard", icon: Home },
+  { href: "/notes", label: "Notes", icon: Book },
+  { href: "/schedule", label: "Schedule", icon: Calendar },
+  { href: "/board", label: "Board", icon: BarChart },
+  { href: "/chat", label: "Chat", icon: MessageCircle },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
-export const BADGE_CRITERIA = {
-  QUESTION_COUNT: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100
-  },
-  COMMENT_COUNT: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100
-  },
-  QUESTION_UPVOTES: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100
-  },
-  COMMENT_UPVOTES: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100
-  },
-  TOTAL_VIEWS: {
-    BRONZE: 1000,
-    SILVER: 10000,
-    GOLD: 100000
-  }
-};
+export const overviews = [
+  {}
+]
