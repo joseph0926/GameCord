@@ -1,41 +1,14 @@
+'use server';
+
 import { db } from '@/lib/db';
 import { SettingsSchema } from '@/lib/schemas';
 import * as z from 'zod';
-import { currentUser } from '@/actions/auth';
 import bcrypt from 'bcryptjs';
 import { generateVerificationToken } from '@/lib/token';
 import { unstable_update } from '@/lib/auth';
 import { sendVerificationEmail } from '@/lib/mail';
-
-export const getAccountByUserId = async (userId: string) => {
-  try {
-    const account = await db.account.findFirst({
-      where: { userId },
-    });
-
-    return account;
-  } catch {
-    return null;
-  }
-};
-
-export const getUserByEmail = async (email: string) => {
-  try {
-    const user = await db.user.findUnique({ where: { email } });
-    return user;
-  } catch (error) {
-    return null;
-  }
-};
-
-export const getUserById = async (id: string | undefined) => {
-  try {
-    const user = await db.user.findUnique({ where: { id } });
-    return user;
-  } catch (error) {
-    return null;
-  }
-};
+import { currentUser } from '@/query/current-user';
+import { getUserByEmail, getUserById } from '@/query/get-user';
 
 export const settings = async (values: z.infer<typeof SettingsSchema>) => {
   const user = await currentUser();

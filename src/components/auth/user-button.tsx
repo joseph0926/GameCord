@@ -27,9 +27,9 @@ export function UserButton() {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40" align="end">
+      <DropdownMenuContent className="w-50" align="end">
         <DropdownMenuItem className="cursor-pointer">
-          <Link href="/auth/settings">
+          <Link href="/auth/settings" className="flex items-center">
             <Settings className="mr-2 h-4 w-4" />
             Settings
           </Link>

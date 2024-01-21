@@ -27,6 +27,7 @@ export default function LoginForm() {
     searchParams.get('error') === 'OAuthAccountNotLinked'
       ? '해당 이메일은 이미 사용 중인 이메일입니다.'
       : '';
+  const callbackUrl = searchParams.get('callbackUrl');
 
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
@@ -45,9 +46,19 @@ export default function LoginForm() {
     setSuccess('');
 
     startTransition(() => {
-      login(values).then((data) => {
-        setError(data?.error);
-      });
+      login(values, callbackUrl)
+        .then((data) => {
+          if (data?.error) {
+            form.reset();
+            setError(data.error);
+          }
+
+          if (data?.success) {
+            form.reset();
+            setSuccess(data.success);
+          }
+        })
+        .catch(() => setError('Something went wrong'));
     });
   };
 

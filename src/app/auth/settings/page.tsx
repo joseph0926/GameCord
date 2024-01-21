@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-import { Switch } from '@/components/ui/switch';
 import {
   Select,
   SelectContent,
@@ -17,14 +16,13 @@ import {
 import { SettingsSchema } from '@/lib/schemas';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { settings } from '@/actions/user';
+import { settings } from '@/actions/settings';
 import {
   Form,
   FormField,
   FormControl,
   FormItem,
   FormLabel,
-  FormDescription,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -32,6 +30,7 @@ import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { FormError } from '@/components/ui/form-error';
 import { FormSuccess } from '@/components/ui/form-success';
 import { UserRole } from '@prisma/client';
+import Link from 'next/link';
 
 const SettingsPage = () => {
   const user = useCurrentUser();
@@ -70,8 +69,11 @@ const SettingsPage = () => {
   };
 
   return (
-    <Card className="w-[600px]">
-      <CardHeader>
+    <Card className="w-full max-md:h-full max-md:overflow-y-scroll md:w-[600px]">
+      <CardHeader className="item-center relative flex justify-center">
+        <Link href="/dashboard" className="mb-4">
+          <h1 className="gradient-text">Return to the dashboard</h1>
+        </Link>
         <p className="text-center text-2xl font-semibold">⚙️ Settings</p>
       </CardHeader>
       <CardContent>
@@ -178,29 +180,6 @@ const SettingsPage = () => {
                   </FormItem>
                 )}
               />
-              {user?.isOAuth === false && (
-                <FormField
-                  control={form.control}
-                  name="isTwoFactorEnabled"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                      <div className="space-y-0.5">
-                        <FormLabel>Two Factor Authentication</FormLabel>
-                        <FormDescription>
-                          Enable two factor authentication for your account
-                        </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch
-                          disabled={isPending}
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              )}
             </div>
             <FormError message={error} />
             <FormSuccess message={success} />

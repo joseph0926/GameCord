@@ -89,9 +89,9 @@ export default function Landing() {
   }
 
   function sliderSection() {
-    let mm = gsap.matchMedia();
+    // let mm = gsap.matchMedia();
 
-    mm.add('(min-width: 768px)', () => {
+    gsap.context(() => {
       const slider = sliderRef.current;
       const sliderSections = gsap.utils.toArray('.slide') as HTMLDivElement[];
 
