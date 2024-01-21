@@ -1,31 +1,37 @@
-import type { Metadata } from "next";
-import { Ubuntu } from "next/font/google";
-import "./globals.css";
-import { CustomProviders } from "@/lib/custom-providers";
-import { cn } from "@/lib/utils";
+import type { Metadata } from 'next';
+import { Ubuntu } from 'next/font/google';
+import './globals.css';
+import { CustomProviders } from '@/lib/custom-providers';
+import { cn } from '@/lib/utils';
+import { SessionProvider } from 'next-auth/react';
+import { auth } from '@/lib/auth';
 
-const ubuntu = Ubuntu({ subsets: ["latin"], weight: "400" });
+const ubuntu = Ubuntu({ subsets: ['latin'], weight: '400' });
 
 export const metadata: Metadata = {
-  title: "MyNote",
-  description: "본인의 일정 관리를 쉽게 만드는 웹 애플리케이션",
+  title: 'MyNote',
+  description: '본인의 일정 관리를 쉽게 만드는 웹 애플리케이션',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+
   return (
-    <html lang="ko">
-      <body
-        className={cn(
-          ubuntu.className,
-          "w-screen h-screen bg-[url('/bg.png')] text"
-        )}
-      >
-        <CustomProviders>{children}</CustomProviders>
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang="ko">
+        <body
+          className={cn(
+            ubuntu.className,
+            "text h-screen w-screen bg-[url('/bg.png')]",
+          )}
+        >
+          <CustomProviders>{children}</CustomProviders>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

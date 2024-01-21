@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { LoginSchema, SignupSchema } from '@/lib/schemas';
 import { db } from '@/lib/db';
 import { getUserByEmail } from '@/actions/user';
-import { signIn } from '@/lib/auth';
+import { signIn, signOut } from '@/lib/auth';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { AuthError } from 'next-auth';
 
@@ -60,4 +60,8 @@ export const signup = async (values: z.infer<typeof SignupSchema>) => {
   });
 
   return { success: '인증 이메일을 발송하였습니다.' };
+};
+
+export const logout = async () => {
+  await signOut();
 };

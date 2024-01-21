@@ -1,22 +1,15 @@
-import { auth, signOut } from '@/lib/auth';
-import { Button } from '@/components/ui/button';
+'use client';
 
-export async function LogoutButton() {
-  const session = await auth();
+import { logout } from '@/actions/auth';
+
+export function LogoutButton({ children }: { children: React.ReactNode }) {
+  const logoutHandler = () => {
+    logout();
+  };
 
   return (
-    <div className="absolute bottom-16 left-3 w-24 md:w-52 lg:w-60">
-      <form
-        action={async () => {
-          'use server';
-
-          await signOut();
-        }}
-      >
-        <Button variant="secondary" type="submit" className="w-[90%]">
-          로그아웃
-        </Button>
-      </form>
-    </div>
+    <span onClick={logoutHandler} className="cursor-pointer">
+      {children}
+    </span>
   );
 }

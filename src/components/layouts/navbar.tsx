@@ -1,25 +1,27 @@
-import { Input } from "../ui/input";
-import { Search } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import MobileSidebar from "./mobile-sidebar";
+import { Input } from '../ui/input';
+import { Search } from 'lucide-react';
+import MobileSidebar from '@/components/layouts/mobile-sidebar';
+import { UserButton } from '@/components/auth/user-button';
 
 export default function Navbar() {
   return (
-    <div className="flex items-center justify-between h-24 bg-gradient2 w-full p-4">
-      <h2 className="font-semibold text-[14px] hidden md:block">Dashboard</h2>
-      <div className="max-sm:flex items-center justify-center">
+    <div className="bg-gradient2 flex h-24 w-full items-center justify-between p-4 px-8">
+      <h2 className="hidden text-[14px] font-semibold md:block">Dashboard</h2>
+      <div className="w-[80%] items-center justify-center max-sm:flex sm:w-[70%] md:w-[60%]">
         <span className="relative">
-          <Search className="absolute top-[50%] text2 translate-y-[-50%] left-2 w-6 h-6" />
+          <Search className="text2 absolute left-2 top-[50%] h-6 w-6 translate-y-[-50%]" />
           <Input
             type="text"
             placeholder="Search"
-            className="rounded-2xl pr-6 pl-10"
+            className="rounded-2xl pl-10 pr-6"
           />
         </span>
       </div>
-      <div className="block mb-3 sm:hidden">
+      <div className="mb-3 block sm:hidden">
         <MobileSidebar />
+      </div>
+      <div className="hidden sm:block">
+        <UserButton />
       </div>
     </div>
   );
