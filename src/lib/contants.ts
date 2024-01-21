@@ -15,7 +15,3 @@ export const navLinks = [
   { href: "/chat", label: "Chat", icon: MessageCircle },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
-
-export const overviews = [
-  {}
-]
