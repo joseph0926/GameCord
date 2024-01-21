@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import { TextPlugin } from "gsap/TextPlugin";
-import SplitType from "split-type";
-import Lenis from "@studio-freight/lenis";
-import "./landing.css";
-import Image from "next/image";
-import Link from "next/link";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { TextPlugin } from 'gsap/TextPlugin';
+import SplitType from 'split-type';
+import Lenis from '@studio-freight/lenis';
+import './landing.css';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Landing() {
   gsap.registerPlugin(TextPlugin);
@@ -22,7 +22,7 @@ export default function Landing() {
   const sliderRef = useRef<HTMLDivElement | null>(null);
 
   function animateWords() {
-    const words = ["Note", "AI Chat", "Schedule"];
+    const words = ['Note', 'AI Chat', 'Schedule'];
     let currentIndex = 0;
     let split: SplitType;
     const textElement = textRef.current;
@@ -30,7 +30,7 @@ export default function Landing() {
     function updateText() {
       if (textElement) {
         textElement.textContent = words[currentIndex];
-        split = new SplitType(textElement, { types: "chars" });
+        split = new SplitType(textElement, { types: 'chars' });
         animateChars(split.chars);
         currentIndex = (currentIndex + 1) % words.length;
       }
@@ -42,7 +42,7 @@ export default function Landing() {
         yPercent: 100,
         stagger: 0.03,
         duration: 1.5,
-        ease: "power4.out",
+        ease: 'power4.out',
         onComplete: () => {
           if (split) {
             split.revert();
@@ -58,8 +58,8 @@ export default function Landing() {
     const inspectionTl = gsap.timeline({
       scrollTrigger: {
         trigger: inspectionRef.current,
-        start: "top bottom",
-        end: "bottom top",
+        start: 'top bottom',
+        end: 'bottom top',
         scrub: true,
       },
     });
@@ -74,14 +74,14 @@ export default function Landing() {
           y: -50,
           height: 300,
         },
-        "<"
+        '<',
       );
 
     gsap.to(marqueeRef.current, {
       scrollTrigger: {
         trigger: marqueeRef.current,
-        start: "top 80%",
-        end: "bottom top",
+        start: 'top 80%',
+        end: 'bottom top',
         scrub: true,
       },
       x: 200,
@@ -91,21 +91,21 @@ export default function Landing() {
   function sliderSection() {
     let mm = gsap.matchMedia();
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add('(min-width: 768px)', () => {
       const slider = sliderRef.current;
-      const sliderSections = gsap.utils.toArray(".slide") as HTMLDivElement[];
+      const sliderSections = gsap.utils.toArray('.slide') as HTMLDivElement[];
 
       if (slider) {
         const sliderTl = gsap.timeline({
           defaults: {
-            ease: "none",
+            ease: 'none',
           },
           scrollTrigger: {
             trigger: slider,
             pin: true,
             pinnedContainer: slider,
             scrub: 1,
-            end: () => "+=" + slider.offsetWidth,
+            end: () => '+=' + slider.offsetWidth,
           },
         });
 
@@ -115,22 +115,22 @@ export default function Landing() {
             {
               xPercent: -290,
             },
-            "<"
+            '<',
           )
           .to(
-            ".progress",
+            '.progress',
             {
-              width: "100%",
+              width: '100%',
             },
-            "<"
+            '<',
           );
 
         sliderSections.forEach((stop, index) => {
-          const slidePElem = stop.querySelector(".slide-p");
+          const slidePElem = stop.querySelector('.slide-p');
 
           if (slidePElem instanceof HTMLElement) {
             const slideText = new SplitType(slidePElem, {
-              types: "chars",
+              types: 'chars',
             });
 
             sliderTl.from(slideText.chars, {
@@ -138,8 +138,8 @@ export default function Landing() {
               stagger: 0.03,
               scrollTrigger: {
                 trigger: slidePElem,
-                start: "top bottom",
-                end: "bottom center",
+                start: 'top bottom',
+                end: 'bottom center',
                 containerAnimation: sliderTl,
                 scrub: true,
               },
@@ -151,36 +151,36 @@ export default function Landing() {
   }
 
   function contactSection() {
-    gsap.set("h4, .inner-contact span", {
+    gsap.set('h4, .inner-contact span', {
       yPercent: 100,
     });
-    gsap.set(".inner-contact p", {
+    gsap.set('.inner-contact p', {
       opacity: 0,
     });
-    gsap.set(".inner-contact a", {
+    gsap.set('.inner-contact a', {
       opacity: 0,
     });
 
     const contactTl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".inner-contact",
-        start: "50% 100%",
-        end: "10% 40%",
+        trigger: '.inner-contact',
+        start: '50% 100%',
+        end: '10% 40%',
         scrub: true,
       },
     });
 
     contactTl
-      .to(".line-top, .line-bottom", {
-        width: "100%",
+      .to('.line-top, .line-bottom', {
+        width: '100%',
       })
-      .to("h4, .inner-contact span", {
+      .to('h4, .inner-contact span', {
         yPercent: 0,
       })
-      .to(".inner-contact p", {
+      .to('.inner-contact p', {
         opacity: 1,
       })
-      .to(".inner-contact a", {
+      .to('.inner-contact a', {
         opacity: 1,
       });
   }
@@ -291,7 +291,7 @@ export default function Landing() {
         </div>
       </section>
       <section className="loading-screen relative">
-        <Link href="/">
+        <Link href="/dashboard">
           <svg
             width="106"
             height="106"
@@ -305,7 +305,7 @@ export default function Landing() {
               fill="#fff"
             />
           </svg>
-          <span className="absolute top-[60%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <span className="absolute left-[50%] top-[60%] translate-x-[-50%] translate-y-[-50%]">
             Go to your Dashboard
           </span>
         </Link>

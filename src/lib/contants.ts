@@ -5,13 +5,13 @@ import {
   BarChart,
   MessageCircle,
   Settings,
-} from "lucide-react";
+} from 'lucide-react';
 
 export const navLinks = [
-  { href: "/", label: "Dashboard", icon: Home },
-  { href: "/notes", label: "Notes", icon: Book },
-  { href: "/schedule", label: "Schedule", icon: Calendar },
-  { href: "/board", label: "Board", icon: BarChart },
-  { href: "/chat", label: "Chat", icon: MessageCircle },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: '/dashboard', label: 'Dashboard', icon: Home },
+  { href: '/dashboard/notes', label: 'Notes', icon: Book },
+  { href: '/dashboard/schedule', label: 'Schedule', icon: Calendar },
+  { href: '/dashboard/board', label: 'Board', icon: BarChart },
+  { href: '/dashboard/chat', label: 'Chat', icon: MessageCircle },
+  { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ];
