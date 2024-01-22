@@ -7,22 +7,37 @@ import { useRouter } from 'next/navigation';
 import { createNote } from '@/actions/note';
 import { toast } from 'sonner';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useEffect, useState } from 'react';
 
 export default function Note() {
   const router = useRouter();
   const user = useCurrentUser();
+  const [isPending, setIsPending] = useState(false);
 
-  const onCreate = () => {
-    const promise = createNote({ title: 'Untitled' }).then((noteId) =>
-      router.push(`/notes/${noteId}`),
-    );
+  const onCreate = async () => {
+    try {
+      setIsPending(true);
+      const result = await createNote({ title: 'Untitled' });
 
-    toast.promise(promise, {
-      loading: '새로운 노트 생성중,,,',
-      success: '노트 생성 완료!',
-      error: '노트 생성에 실패하였습니다.',
-    });
+      if (result.data) {
+        router.push(`/dashboard/notes/${result.data.id}`);
+        toast.success('노트 생성 완료!');
+      } else {
+        toast.error('노트 생성에 실패하였습니다.');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('노트 생성에 실패하였습니다.');
+    } finally {
+      setIsPending(false);
+    }
   };
+
+  useEffect(() => {
+    if (isPending) {
+      toast.loading('새로운 노트 생성중,,,');
+    }
+  }, [isPending]);
 
   return (
     <div className="flex h-full flex-col items-center justify-center space-y-4">

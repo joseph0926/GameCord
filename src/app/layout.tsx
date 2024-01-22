@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { SessionProvider } from 'next-auth/react';
 import { auth } from '@/lib/auth';
 import { Toaster } from 'sonner';
+import { EdgeStoreProvider } from '@/hooks/useEdgeStore';
 
 const ubuntu = Ubuntu({ subsets: ['latin'], weight: '400' });
 
@@ -30,10 +31,12 @@ export default async function RootLayout({
             "text h-screen w-screen bg-[url('/bg.png')]",
           )}
         >
-          <CustomProviders>
-            <Toaster position="bottom-center" />
-            {children}
-          </CustomProviders>
+          <EdgeStoreProvider>
+            <CustomProviders>
+              <Toaster position="bottom-center" />
+              {children}
+            </CustomProviders>
+          </EdgeStoreProvider>
         </body>
       </html>
     </SessionProvider>

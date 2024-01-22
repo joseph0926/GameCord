@@ -1,38 +1,17 @@
-'use client';
-
-import dynamic from 'next/dynamic';
-import { useMemo } from 'react';
-
-import { Toolbar } from '@/components/toolbar';
-import { Cover } from '@/components/cover';
+import { Cover } from '@/components/note/cover';
+import Note from '@/components/note/note';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getNoteById } from '@/query/get-note';
+import { Note as NoteType } from '@prisma/client';
 
-interface DocumentIdPageProps {
-  params: {
-    documentId: Id<'documents'>;
-  };
-}
+export default async function NotePage({
+  params,
+}: {
+  params: { noteId: string };
+}) {
+  const note = (await getNoteById({ noteId: params.noteId })) as NoteType;
 
-const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
-  const Editor = useMemo(
-    () => dynamic(() => import('@/components/editor'), { ssr: false }),
-    [],
-  );
-
-  const document = useQuery(api.documents.getById, {
-    documentId: params.documentId,
-  });
-
-  const update = useMutation(api.documents.update);
-
-  const onChange = (content: string) => {
-    update({
-      id: params.documentId,
-      content,
-    });
-  };
-
-  if (document === undefined) {
+  if (note == null) {
     return (
       <div>
         <Cover.Skeleton />
@@ -48,19 +27,5 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     );
   }
 
-  if (document === null) {
-    return <div>Not found</div>;
-  }
-
-  return (
-    <div className="pb-40">
-      <Cover url={document.coverImage} />
-      <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
-        <Toolbar initialData={document} />
-        <Editor onChange={onChange} initialContent={document.content} />
-      </div>
-    </div>
-  );
-};
-
-export default DocumentIdPage;
+  return <Note noteId={note.id} note={note} />;
+}

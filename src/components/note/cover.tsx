@@ -7,19 +7,19 @@ import { useParams } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useCoverImage } from '@/hooks/use-cover-image';
-import { useEdgeStore } from '@/lib/edgestore';
+import { useCoverImage } from '@/hooks/useCoverImage';
+import { useEdgeStore } from '@/hooks/useEdgeStore';
+import { removeCoverImage } from '@/actions/note';
 
 interface CoverImageProps {
-  url?: string;
+  url?: string | null;
   preview?: boolean;
 }
 
 export const Cover = ({ url, preview }: CoverImageProps) => {
   const { edgestore } = useEdgeStore();
-  const params = useParams();
+  const params: { noteId: string } = useParams();
   const coverImage = useCoverImage();
-  const removeCoverImage = useMutation(api.documents.removeCoverImage);
 
   const onRemove = async () => {
     if (url) {
@@ -28,7 +28,7 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
       });
     }
     removeCoverImage({
-      id: params.documentId as Id<'documents'>,
+      noteId: params.noteId,
     });
   };
 
