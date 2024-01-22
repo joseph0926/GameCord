@@ -180,3 +180,24 @@ export const removeCoverImage = async ({ noteId }: { noteId: string }) => {
     data: note,
   };
 };
+
+export const getNotes = async () => {
+  const user = await currentUser();
+  if (!user || user.id === undefined) {
+    return {
+      message: '인증 오류',
+      data: null,
+    };
+  }
+
+  const notes = await db.note.findMany({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  return {
+    message: 'Note를 불러왔습니다.',
+    data: notes,
+  };
+};
