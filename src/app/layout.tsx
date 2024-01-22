@@ -5,6 +5,7 @@ import { CustomProviders } from '@/lib/custom-providers';
 import { cn } from '@/lib/utils';
 import { SessionProvider } from 'next-auth/react';
 import { auth } from '@/lib/auth';
+import { Toaster } from 'sonner';
 
 const ubuntu = Ubuntu({ subsets: ['latin'], weight: '400' });
 
@@ -29,7 +30,10 @@ export default async function RootLayout({
             "text h-screen w-screen bg-[url('/bg.png')]",
           )}
         >
-          <CustomProviders>{children}</CustomProviders>
+          <CustomProviders>
+            <Toaster position="bottom-center" />
+            {children}
+          </CustomProviders>
         </body>
       </html>
     </SessionProvider>

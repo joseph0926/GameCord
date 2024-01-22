@@ -26,6 +26,7 @@ model User {
   role          UserRole  @default(USER)
 
   accounts Account[]
+  notes    Note[]
 }
 
 model Account {
@@ -66,4 +67,21 @@ model PasswordResetToken {
   expires DateTime
 
   @@unique([email, token])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+
+  content     String?
+  coverImage  String?
+  icon        String?
+  isArchived  Boolean
+  isPublished Boolean
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

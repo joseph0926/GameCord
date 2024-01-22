@@ -1,4 +1,3 @@
-import { LogoutButton } from '@/components/auth/logout-button';
 import Navbar from '@/components/layouts/navbar';
 import Sidebar from '@/components/layouts/sidebar';
 
@@ -14,7 +13,6 @@ export default function DashboardLayout({
         <Navbar />
         {children}
       </div>
-      <LogoutButton />
     </div>
   );
 }

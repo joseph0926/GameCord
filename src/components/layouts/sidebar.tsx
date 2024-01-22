@@ -4,6 +4,8 @@ import { navLinks } from '@/lib/contants';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { Separator } from '../ui/separator';
+import { Button } from '../ui/button';
+import { LogoutButton } from '../auth/logout-button';
 
 export default function Sidebar() {
   return (
@@ -27,7 +29,12 @@ export default function Sidebar() {
           </Link>
         ))}
       </div>
-      <div className="absolute bottom-4 w-full">
+      <div className="absolute bottom-4 flex w-full flex-col gap-4">
+        <LogoutButton>
+          <Button variant="secondary" size="lg" className="w-[90%]">
+            Logout
+          </Button>
+        </LogoutButton>
         <ThemeToggle classNames="bg2 w-[90%]" />
       </div>
     </div>
