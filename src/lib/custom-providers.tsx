@@ -1,47 +1,60 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import { type ThemeProviderProps } from 'next-themes/dist/types';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { PropsWithChildren } from 'react';
-import { QueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
+import CreateChannelModal from '@/components/modal/CreateChannelModal';
+import CreateServerModal from '@/components/modal/CreateServerModal';
+import { DeleteChannelModal } from '@/components/modal/DeleteChannelModal';
+import { DeleteMessageModal } from '@/components/modal/DeleteMessageModal';
+import { DeleteServerModal } from '@/components/modal/DeleteServerModal';
+import EditServerModal from '@/components/modal/EditServerModal';
+import InviteServerModal from '@/components/modal/InviteServerModal';
+import { LeaveServerModal } from '@/components/modal/LeaveServerModal';
+import MembersModal from '@/components/modal/MembersModal';
+import { MessageFileModal } from '@/components/modal/MessageFileModal';
+import { ClerkProvider } from '@clerk/nextjs';
 
-export function CustomProviders({ children }: { children: React.ReactNode }) {
-  return (
-    <ReactQueryPvorider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem
-        disableTransitionOnChange
-      >
-        {children}
-      </ThemeProvider>
-    </ReactQueryPvorider>
-  );
-}
+export const ModalProvider = () => {
+  const [isMounted, setIsMounted] = useState(false);
 
-function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
-}
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-const queryClientOptions = {
-  defaultOptions: {
-    queries: {
-      staleTime: 60000,
-    },
-  },
-};
-
-const ReactQueryPvorider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [queryClientStore] = useState(
-    () => new QueryClient(queryClientOptions),
-  );
+  if (!isMounted) {
+    return null;
+  }
 
   return (
-    <QueryClientProvider client={queryClientStore}>
-      {children}
-    </QueryClientProvider>
+    <>
+      <CreateServerModal />
+      <InviteServerModal />
+      <EditServerModal />
+      <MembersModal />
+      <CreateChannelModal />
+      <DeleteServerModal />
+      <LeaveServerModal />
+      <DeleteChannelModal />
+      <MessageFileModal />
+      <DeleteMessageModal />
+    </>
   );
 };
+
+export default function CustomProviders({ children }: { children: React.ReactNode }) {
+  const [queryClient] = useState(() => new QueryClient());
+
+  return (
+    <ClerkProvider>
+      <QueryClientProvider client={queryClient}>
+        <NextThemesProvider attribute="class" defaultTheme="system" enableSystem={false} storageKey="game-cord-theme">
+          <ModalProvider />
+          <Toaster />
+          {children}
+        </NextThemesProvider>
+      </QueryClientProvider>
+    </ClerkProvider>
+  );
+}
