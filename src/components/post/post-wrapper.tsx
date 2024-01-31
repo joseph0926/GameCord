@@ -9,7 +9,6 @@ import Metric from '../home/Metric';
 import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
 import ParseHTML from './ParseHTML';
 import RenderTag from '../home/RenderTag';
-import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export default function PostWrapper({ post }: PostProps) {
@@ -35,20 +34,6 @@ export default function PostWrapper({ post }: PostProps) {
     );
   }
 
-  const { mutate } = useMutation({
-    mutationFn: async () => {
-      const res = await fetch('/api/vote', {
-        headers: {
-          'Content-type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({ postId: post.id })
-      });
-      return await res.json();
-    },
-    onSuccess: (newData) => setVote(newData)
-  });
-
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -58,7 +43,7 @@ export default function PostWrapper({ post }: PostProps) {
             <p className="paragraph-semibold text-dark300_light700">{post.author.name}</p>
           </Link>
           <div className="flex justify-end gap-4">
-            <div className="flex cursor-pointer items-center gap-1" onClick={() => mutate()}>
+            <div className="flex cursor-pointer items-center gap-1">
               <Image src="/assets/icons/upvote.svg" alt="upvote" width={18} height={18} />
               <span>{vote?.voteCount}</span>
             </div>

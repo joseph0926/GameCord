@@ -34,7 +34,7 @@
   pointer-events: none;
 }
 
-.mask {
+.mask-e {
   overflow: hidden;
 }
 
@@ -67,7 +67,7 @@ header a.collection {
 }
 
 /* Hero */
-.hero {
+.hero-e {
   height: 100vh;
 }
 
@@ -88,7 +88,7 @@ header a.collection {
   top: 2px;
   left: 2px;
 }
-.right {
+.right-e {
   height: 100vh;
   flex: 0.65;
   display: none;
@@ -96,10 +96,10 @@ header a.collection {
   pointer-events: none;
   overflow: hidden;
 }
-.right img {
+.right-e img {
   position: absolute;
   top: 0;
-  right: 0;
+  right-e: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -108,7 +108,7 @@ header a.collection {
   opacity: 1;
 }
 
-.right .img-overlay {
+.right-e .img-overlay {
   position: absolute;
   z-index: 3;
   top: 0;
@@ -200,7 +200,7 @@ h3 {
   font-size: clamp(1.2rem, 2vw, 2.5rem);
 }
 .slide:nth-of-type(3) {
-  background: #000 url('/hero03.png') no-repeat;
+  background: #000 url('/hero03.jpg') no-repeat;
   background-size: cover;
   color: white;
 }
@@ -275,7 +275,7 @@ a.cta {
   main {
     display: flex;
 
-    .right {
+    .right-e {
       display: block;
     }
   }

@@ -6,7 +6,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin';
 import SplitType from 'split-type';
 import Lenis from '@studio-freight/lenis';
-import './landing.css';
+import styles from './landing.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -22,7 +22,7 @@ export default function Landing() {
   const sliderRef = useRef<HTMLDivElement | null>(null);
 
   function animateWords() {
-    const words = ['Note', 'AI Chat', 'Schedule'];
+    const words = ['Game', 'Chat', 'Community'];
     let currentIndex = 0;
     let split: SplitType;
     const textElement = textRef.current;
@@ -204,20 +204,20 @@ export default function Landing() {
 
   return (
     <div className="bg-black">
-      <main className="hero">
-        <div className="left layout-ws">
+      <main className="hero-m">
+        <div className="left-e layout-ws text-white">
           <h1>
-            <div className="mask primary-h1">
-              <span ref={textRef}>Schedule</span>
+            <div className="mask-e primary-h1">
+              <span ref={textRef}>Game</span>
             </div>
-            <div className="mask">
+            <div className="mask-e">
               <span>Create Your Own</span>
             </div>
           </h1>
         </div>
-        <div className="right">
+        <div className="right-e">
           <div className="img-overlay"></div>
-          <Image src="/main.jpg" alt="right" width={100} height={100} />
+          <Image src="/main.png" alt="right-e" width={100} height={100} />
         </div>
       </main>
 
@@ -232,7 +232,7 @@ export default function Landing() {
             efficient and streamlined user experience.
           </p>
         </div>
-        <div className="mask marquee">
+        <div className="mask-e marquee">
           <h3 ref={marqueeRef}>Convenience</h3>
         </div>
       </section>
@@ -267,11 +267,11 @@ export default function Landing() {
         <div className="inner-contact">
           <div className="line-top"></div>
           <div className="layout-ws">
-            <div className="mask">
+            <div className="mask-e">
               <h4>오늘 바로 시작하세요.</h4>
             </div>
             <a href="#" className="cta">
-              <div className="mask">
+              <div className="mask-e">
                 <span>리스트에 추가하기</span>
               </div>
             </a>
@@ -291,7 +291,7 @@ export default function Landing() {
               fill="#fff"
             />
           </svg>
-          <span className="absolute left-[50%] top-[60%] translate-x-[-50%] translate-y-[-50%]">Go to your Dashboard</span>
+          <span className="absolute left-[50%] top-[60%] translate-x-[-50%] translate-y-[-50%] text-[24px] text-white">Go to GameCord</span>
         </Link>
       </section>
     </div>
