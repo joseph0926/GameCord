@@ -6,7 +6,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin';
 import SplitType from 'split-type';
 import Lenis from '@studio-freight/lenis';
-import styles from './landing.module.css';
+import './landing.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -204,7 +204,7 @@ export default function Landing() {
 
   return (
     <div className="bg-black">
-      <main className="hero-m">
+      <main className="hero-e">
         <div className="left-e layout-ws text-white">
           <h1>
             <div className="mask-e primary-h1">
