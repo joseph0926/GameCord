@@ -8,8 +8,15 @@ import { ListLoading } from '@/components/ui/list-loading';
 import { HomePageFilters } from '@/lib/filters';
 import { paths } from '@/lib/paths';
 import { getGames } from '@/actions/game';
+import { auth } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 
 const MainPage = () => {
+  const { userId } = auth();
+  if (!userId) {
+    redirect('/landing');
+  }
+
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-col sm:items-center">

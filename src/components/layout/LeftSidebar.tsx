@@ -22,7 +22,7 @@ const LeftSidebar = ({ servers, games }: { servers: Server[] | null; games: Game
           const isActive = (pathname?.includes(item.route) && item.route.length > 1) || pathname === item.route;
           if (item.route === '/profile') {
             if (user) {
-              item.route = `${item.route}/${user.primaryEmailAddress?.id}`;
+              item.route = `${item.route}/${user.id}`;
             } else {
               return null;
             }

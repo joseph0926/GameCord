@@ -2,15 +2,8 @@ import React from 'react';
 import MainNavbar from '@/components/layout/MainNavbar';
 import LeftSidebarWrapper from '@/components/layout/LeftSidebarWrapper';
 import RightSidebar from '@/components/layout/RightSidebar';
-import { auth, currentUser } from '@clerk/nextjs';
-import { redirect } from 'next/navigation';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
-  const { userId } = auth();
-  if (!userId) {
-    redirect('/landing');
-  }
-
   return (
     <main className="relative bg-light-850 dark:bg-dark-100">
       <MainNavbar />
