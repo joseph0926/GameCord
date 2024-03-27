@@ -49,7 +49,7 @@ export default function CustomProviders({ children }: { children: React.ReactNod
   return (
     <ClerkProvider>
       <QueryClientProvider client={queryClient}>
-        <NextThemesProvider attribute="class" defaultTheme="system" enableSystem={false} storageKey="game-cord-theme">
+        <NextThemesProvider attribute="class" defaultTheme="light" enableSystem={false} storageKey="game-cord-theme">
           <ModalProvider />
           <Toaster />
           {children}

@@ -1,5 +1,4 @@
 import './globals.css';
-import '../styles/prism.css';
 import type { Metadata } from 'next';
 import { Ubuntu } from 'next/font/google';
 import { cn } from '@/lib/utils';
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
+      <body className={cn(font.className, 'background-gradient')}>
         <CustomProviders>{children}</CustomProviders>
       </body>
     </html>
