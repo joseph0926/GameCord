@@ -12,6 +12,10 @@ GameCord에서 게임에 대한 평가와 리뷰를 남기고, 자유롭게 소�
 [GameCord](https://game-cord-six.vercel.app/)
 
 ### 프로젝트 데모
+- AUTH
+![gamecord-sign](https://github.com/joseph0926/GameCord/assets/100750188/983dd57e-5a6d-4446-a5bd-203e2546829b)
+
+
 - MAIN
 ![GameCord-Main](https://github.com/joseph0926/GameCord/assets/100750188/cd6fd544-25bc-43ab-81f2-35eed25a5c92)
 
