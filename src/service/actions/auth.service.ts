@@ -29,7 +29,7 @@ export const login = async (
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: 'Email does not exist!' };
+    return { error: '해당 이메일로 가입된 정보가 존재하지 않습니다.' };
   }
 
   if (!existingUser.emailVerified) {
@@ -42,7 +42,7 @@ export const login = async (
       verificationToken.token
     );
 
-    return { success: 'Confirmation email sent!' };
+    return { success: '이메일 인증을 완료해주세요.' };
   }
 
   try {
@@ -78,7 +78,7 @@ export const register = async (values: z.infer<typeof signupSchema>) => {
   const existingUser = await getUserByEmail(email);
 
   if (existingUser) {
-    return { error: 'Email already in use!' };
+    return { error: '해당 이메일로 가입된 정보가 이미 존재합니다.' };
   }
 
   await db.user.create({
@@ -92,5 +92,5 @@ export const register = async (values: z.infer<typeof signupSchema>) => {
   const verificationToken = await generateVerificationToken(email);
   await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
-  return { success: 'Confirmation email sent!' };
+  return { success: '이메일 인증 메일을 발송하였습니다.' };
 };

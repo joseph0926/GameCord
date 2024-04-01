@@ -15,6 +15,8 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useTransition } from 'react';
 import { register } from '@/service/actions/auth.service';
+import toast from 'react-hot-toast';
+import { Loader2 } from 'lucide-react';
 
 export default function SignupForm() {
   const [isPending, startTransition] = useTransition();
@@ -30,9 +32,18 @@ export default function SignupForm() {
 
   const submitHandler = (values: z.infer<typeof signupSchema>) => {
     startTransition(() => {
-      register(values).then((data) => {
-        console.log(data);
-      });
+      register(values)
+        .then((data) => {
+          if (data?.success) {
+            toast.success('회원가입에 성공하였습니다.');
+          }
+          if (data?.error) {
+            toast.error(data.error);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   };
 
@@ -139,9 +150,11 @@ export default function SignupForm() {
           variant="outline"
           size="lg"
           className="bg-transparent font-semibold text-gray-100"
-          disabled={hasEmailError || hasPasswordError || hasNameError}
+          disabled={
+            hasEmailError || hasPasswordError || hasNameError || isPending
+          }
         >
-          Signup
+          {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Signup'}
         </Button>
       </form>
     </Form>
