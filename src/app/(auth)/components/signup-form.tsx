@@ -13,8 +13,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useTransition } from 'react';
+import { register } from '@/service/actions/auth.service';
 
 export default function SignupForm() {
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -25,7 +29,11 @@ export default function SignupForm() {
   });
 
   const submitHandler = (values: z.infer<typeof signupSchema>) => {
-    console.log(values);
+    startTransition(() => {
+      register(values).then((data) => {
+        console.log(data);
+      });
+    });
   };
 
   const hasEmailError = form.formState.errors.email != undefined;

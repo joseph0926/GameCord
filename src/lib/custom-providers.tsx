@@ -14,7 +14,7 @@ import InviteServerModal from '@/components/modal/InviteServerModal';
 import { LeaveServerModal } from '@/components/modal/LeaveServerModal';
 import MembersModal from '@/components/modal/MembersModal';
 import { MessageFileModal } from '@/components/modal/MessageFileModal';
-import { ClerkProvider } from '@clerk/nextjs';
+import { useModal } from '@/hooks/useModal';
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -29,7 +29,7 @@ export const ModalProvider = () => {
 
   return (
     <>
-      <CreateServerModal />
+      {/* <CreateServerModal />
       <InviteServerModal />
       <EditServerModal />
       <MembersModal />
@@ -38,23 +38,30 @@ export const ModalProvider = () => {
       <LeaveServerModal />
       <DeleteChannelModal />
       <MessageFileModal />
-      <DeleteMessageModal />
+      <DeleteMessageModal /> */}
     </>
   );
 };
 
-export default function CustomProviders({ children }: { children: React.ReactNode }) {
+export default function CustomProviders({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <ClerkProvider>
-      <QueryClientProvider client={queryClient}>
-        <NextThemesProvider attribute="class" defaultTheme="system" enableSystem={false} storageKey="game-cord-theme">
-          <ModalProvider />
-          <Toaster />
-          {children}
-        </NextThemesProvider>
-      </QueryClientProvider>
-    </ClerkProvider>
+    <QueryClientProvider client={queryClient}>
+      <NextThemesProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem={false}
+        storageKey="game-cord-theme"
+      >
+        <ModalProvider />
+        <Toaster />
+        {children}
+      </NextThemesProvider>
+    </QueryClientProvider>
   );
 }

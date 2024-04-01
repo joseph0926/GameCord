@@ -1,4 +1,3 @@
-import { Channel, ChannelType, Game, Server } from '@prisma/client';
 import { create } from 'zustand';
 
 export type ModalType =
@@ -16,21 +15,11 @@ export type ModalType =
   | 'serverList'
   | 'notification';
 
-interface ModalData {
-  server?: Server;
-  channel?: Channel;
-  channelType?: ChannelType;
-  apiUrl?: string;
-  query?: Record<string, any>;
-  servers?: Server[] | null;
-  games?: Game[] | null;
-}
-
 interface ModalStore {
   type: ModalType | null;
-  data: ModalData;
   isOpen: boolean;
-  onOpen: (type: ModalType, data?: ModalData) => void;
+  data: any;
+  onOpen: (type: ModalType, data?: any) => void;
   onClose: () => void;
 }
 
