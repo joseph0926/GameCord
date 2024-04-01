@@ -2,15 +2,17 @@
 
 import * as z from 'zod';
 import { AuthError } from 'next-auth';
+import bcrypt from 'bcryptjs';
 
 import { signIn } from '@/auth';
-import { signinSchema } from '@/lib/validations/sign.schema';
+import { signinSchema, signupSchema } from '@/lib/validations/sign.schema';
 import { getUserByEmail } from '@/service/query/auth.service';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import {
   generateVerificationToken,
   sendVerificationEmail
 } from '../query/user.service';
+import { db } from '@/lib/db';
 
 export const login = async (
   values: z.infer<typeof signinSchema>,
@@ -27,7 +29,7 @@ export const login = async (
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: 'Email does not exist!' };
+    return { error: '해당 이메일로 가입된 정보가 존재하지 않습니다.' };
   }
 
   if (!existingUser.emailVerified) {
@@ -40,7 +42,7 @@ export const login = async (
       verificationToken.token
     );
 
-    return { success: 'Confirmation email sent!' };
+    return { success: '이메일 인증을 완료해주세요.' };
   }
 
   try {
@@ -61,4 +63,34 @@ export const login = async (
 
     throw error;
   }
+};
+
+export const register = async (values: z.infer<typeof signupSchema>) => {
+  const validatedFields = signupSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: 'Invalid fields!' };
+  }
+
+  const { email, password, name } = validatedFields.data;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const existingUser = await getUserByEmail(email);
+
+  if (existingUser) {
+    return { error: '해당 이메일로 가입된 정보가 이미 존재합니다.' };
+  }
+
+  await db.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword
+    }
+  });
+
+  const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+
+  return { success: '이메일 인증 메일을 발송하였습니다.' };
 };

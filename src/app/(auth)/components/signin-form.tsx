@@ -13,9 +13,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useState, useTransition } from 'react';
+import { useTransition } from 'react';
 import { login } from '@/service/actions/auth.service';
 import { useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export default function SigninForm() {
   const searchParams = useSearchParams();
@@ -30,25 +31,29 @@ export default function SigninForm() {
 
   const callbackUrl = searchParams?.get('callbackUrl');
 
-  const [error, setError] = useState<string | undefined>('');
   const [isPending, startTransition] = useTransition();
 
   const submitHandler = (values: z.infer<typeof signinSchema>) => {
-    setError('');
-
     startTransition(() => {
       login(values, callbackUrl)
         .then((data) => {
+          console.log(data);
+
           if (data?.error) {
             form.reset();
-            setError(data.error);
+            toast.error(data.error);
           }
 
           if (data?.success) {
             form.reset();
+            if (data?.success === '이메일 인증을 완료해주세요.') {
+              toast.error(data.success);
+            } else {
+              toast.success('로그인 성공!');
+            }
           }
         })
-        .catch(() => setError('Something went wrong'));
+        .catch(() => toast.error('Something went wrong'));
     });
   };
 
