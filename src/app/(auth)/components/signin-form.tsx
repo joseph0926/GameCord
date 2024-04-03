@@ -13,10 +13,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { login } from '@/service/actions/auth.service';
 import { useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { Loader2 } from 'lucide-react';
+import { FormError } from '@/components/ui/form-error';
+import { FormSuccess } from '@/components/ui/form-success';
 
 export default function SigninForm() {
   const searchParams = useSearchParams();
@@ -31,17 +34,20 @@ export default function SigninForm() {
 
   const callbackUrl = searchParams?.get('callbackUrl');
 
+  const [error, setError] = useState<string | undefined>('');
+  const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, startTransition] = useTransition();
 
   const submitHandler = (values: z.infer<typeof signinSchema>) => {
+    setError('');
+    setSuccess('');
+
     startTransition(() => {
       login(values, callbackUrl)
         .then((data) => {
-          console.log(data);
-
           if (data?.error) {
             form.reset();
-            toast.error(data.error);
+            setError(data.error);
           }
 
           if (data?.success) {
@@ -49,7 +55,7 @@ export default function SigninForm() {
             if (data?.success === '이메일 인증을 완료해주세요.') {
               toast.error(data.success);
             } else {
-              toast.success('로그인 성공!');
+              setSuccess(data.success);
             }
           }
         })
@@ -126,14 +132,16 @@ export default function SigninForm() {
             )}
           />
         </div>
+        <FormError message={error} />
+        <FormSuccess message={success} />
         <Button
           type="submit"
           variant="outline"
           size="lg"
           className="bg-transparent font-semibold text-gray-100"
-          disabled={hasEmailError || hasPasswordError}
+          disabled={hasEmailError || hasPasswordError || isPending}
         >
-          Login
+          {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Login'}
         </Button>
       </form>
     </Form>
