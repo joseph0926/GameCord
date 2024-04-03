@@ -13,12 +13,16 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { register } from '@/service/actions/auth.service';
 import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
+import { FormError } from '@/components/ui/form-error';
+import { FormSuccess } from '@/components/ui/form-success';
 
 export default function SignupForm() {
+  const [error, setError] = useState<string | undefined>('');
+  const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -31,14 +35,17 @@ export default function SignupForm() {
   });
 
   const submitHandler = (values: z.infer<typeof signupSchema>) => {
+    setError('');
+    setSuccess('');
+
     startTransition(() => {
       register(values)
         .then((data) => {
           if (data?.success) {
-            toast.success('회원가입에 성공하였습니다.');
+            setSuccess(data.success);
           }
           if (data?.error) {
-            toast.error(data.error);
+            setError(data.error);
           }
         })
         .catch((err) => {
@@ -145,6 +152,8 @@ export default function SignupForm() {
             )}
           />
         </div>
+        <FormError message={error} />
+        <FormSuccess message={success} />
         <Button
           type="submit"
           variant="outline"

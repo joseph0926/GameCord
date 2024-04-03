@@ -33,7 +33,17 @@ interface ChatMessagesProps {
   type: 'channel' | 'conversation';
 }
 
-export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQuery, paramKey, paramValue, type }: ChatMessagesProps) => {
+export const ChatMessages = ({
+  name,
+  member,
+  chatId,
+  apiUrl,
+  socketUrl,
+  socketQuery,
+  paramKey,
+  paramValue,
+  type
+}: ChatMessagesProps) => {
   const queryKey = `chat:${chatId}`;
   const addKey = `chat:${chatId}:messages`;
   const updateKey = `chat:${chatId}:messages:update`;
@@ -41,12 +51,13 @@ export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQu
   const chatRef = useRef<ElementRef<'div'>>(null);
   const bottomRef = useRef<ElementRef<'div'>>(null);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useChatQuery({
-    queryKey,
-    apiUrl,
-    paramKey,
-    paramValue
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useChatQuery({
+      queryKey,
+      apiUrl,
+      paramKey,
+      paramValue
+    });
   useChatScroll({
     chatRef,
     bottomRef,
@@ -58,7 +69,9 @@ export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQu
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const channel = pusherClient.subscribe(toPusherKey(`chat:${socketQuery.channelId}`));
+    const channel = pusherClient.subscribe(
+      toPusherKey(`chat:${socketQuery.channelId}`)
+    );
 
     channel.bind('new-message', (newMessage: Message) => {
       queryClient.setQueryData([queryKey], (old: any) => {
@@ -78,7 +91,9 @@ export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQu
     return (
       <div className="flex flex-1 flex-col items-center justify-center">
         <Loader2 className="my-4 h-7 w-7 animate-spin text-zinc-500" />
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">Loading messages...</p>
+        <p className="text-xs text-zinc-500 dark:text-zinc-400">
+          Loading messages...
+        </p>
       </div>
     );
   }
@@ -87,7 +102,9 @@ export const ChatMessages = ({ name, member, chatId, apiUrl, socketUrl, socketQu
     return (
       <div className="flex flex-1 flex-col items-center justify-center">
         <ServerCrash className="my-4 h-7 w-7 text-zinc-500" />
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">Something went wrong!</p>
+        <p className="text-xs text-zinc-500 dark:text-zinc-400">
+          알수없는 에러가 발생하였습니다.
+        </p>
       </div>
     );
   }
