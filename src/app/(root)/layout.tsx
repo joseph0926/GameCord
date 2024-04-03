@@ -1,21 +1,17 @@
+import LeftSidebar from '@/components/layout/left-sidebar';
+import MainNavbar from '@/components/layout/main-navbar';
 import React from 'react';
-import MainNavbar from '@/components/layout/MainNavbar';
-import LeftSidebarWrapper from '@/components/layout/LeftSidebarWrapper';
-import RightSidebar from '@/components/layout/RightSidebar';
 
-const MainLayout = ({ children }: { children: React.ReactNode }) => {
+export default function MainLayout({}: { children: React.ReactNode }) {
   return (
-    <main className="relative bg-light-850 dark:bg-dark-100">
+    <>
       <MainNavbar />
-      <div className="flex">
-        <LeftSidebarWrapper />
-        <section className="flex min-h-screen flex-1 flex-col px-6 pb-6 pt-36 max-md:pb-14 sm:px-14">
-          <div className="mx-auto w-full max-w-5xl">{children}</div>
-        </section>
-        <RightSidebar />
+      <div className="h-screen w-full bg-gray-800 text-white dark:bg-gray-100 dark:text-black">
+        <div className="sticky left-0 top-0 h-full w-[15rem]">
+          <LeftSidebar />
+        </div>
+        {/* {children} */}
       </div>
-    </main>
+    </>
   );
-};
-
-export default MainLayout;
+}
