@@ -2,7 +2,7 @@ import { Search } from 'lucide-react';
 import Image from 'next/image';
 import { Input } from '../ui/input';
 import LeftSidebarHome from './left-sidebar-home';
-import LeftSidebarCommunity from './left-sidebar-community';
+import LeftSidebarCategory from './left-sidebar-category';
 
 export default function LeftSidebar() {
   return (
@@ -28,7 +28,7 @@ export default function LeftSidebar() {
         />
       </div>
       <LeftSidebarHome />
-      <LeftSidebarCommunity />
+      <LeftSidebarCategory />
     </div>
   );
 }

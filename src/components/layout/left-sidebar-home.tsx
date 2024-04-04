@@ -3,7 +3,6 @@ import { ChevronRight } from 'lucide-react';
 export default function LeftSidebarHome() {
   return (
     <div className="flex w-full flex-col gap-4 border-b border-solid border-gray-600 pb-4">
-      <h2 className="font-semibold">Home</h2>
       <div className="flex flex-col gap-4">
         <div className="flex w-full items-center justify-between">
           <span className="cursor-pointer text-sm text-gray-400">

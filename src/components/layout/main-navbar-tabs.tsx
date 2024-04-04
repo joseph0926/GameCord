@@ -3,7 +3,7 @@
 import { BarChart, TrendingUp } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 export default function MainNavbarTabs() {
@@ -22,9 +22,15 @@ export default function MainNavbarTabs() {
     [searchParams]
   );
 
+  useEffect(() => {
+    if (!type) {
+      router.push(pathname + '?' + createQueryString('type', 'real'));
+    }
+  }, [type]);
+
   return (
     <Tabs
-      defaultValue={type || 'best'}
+      defaultValue={type || 'real'}
       onValueChange={(e) => {
         router.push(pathname + '?' + createQueryString('type', e));
       }}
@@ -33,7 +39,7 @@ export default function MainNavbarTabs() {
         <TabsTrigger
           value="real"
           className={cn(
-            'flex items-center gap-2 text-[0.875rem] text-gray-400',
+            'flex items-center gap-2 text-[0.875rem] text-gray-400 data-[state=active]:bg-transparent data-[state=active]:text-gray-100',
             type === 'real'
               ? 'border-b-2 border-solid border-blue-400 !bg-transparent !text-gray-100'
               : 'text-gray-400'
