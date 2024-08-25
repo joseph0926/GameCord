@@ -1,12 +1,7 @@
-import { getServers } from '@/actions/server';
-import LeftSidebar from './LeftSidebar';
-import { getGames } from '@/actions/game';
+import { LeftSidebar } from './left-sidebar';
 
 const LeftSidebarWrapper = async () => {
-  const servers = await getServers();
-  const games = await getGames();
-
-  return <LeftSidebar servers={servers} games={games} />;
+  return <LeftSidebar />;
 };
 
 export default LeftSidebarWrapper;

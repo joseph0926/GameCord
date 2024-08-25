@@ -1,14 +1,11 @@
-import { Suspense } from 'react';
-import Link from 'next/link';
 import Filter from '@/components/home/Filter';
 import HomeFilters from '@/components/home/HomeFilters';
-import GamesWrapper from '@/components/game/games-wrapper';
 import { Button } from '@/components/ui/button';
 import { ListLoading } from '@/components/ui/list-loading';
 import { HomePageFilters } from '@/lib/filters';
 import { paths } from '@/lib/paths';
-import { getGames } from '@/actions/game';
-import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { Suspense } from 'react';
 
 const MainPage = () => {
   return (
@@ -33,7 +30,7 @@ const MainPage = () => {
       </div>
       <HomeFilters />
       <Suspense fallback={<ListLoading num={5} />}>
-        <GamesWrapper fetchData={getGames} isShowImage={true} />
+        {/* <GamesWrapper fetchData={getGames} isShowImage={true} /> */}
       </Suspense>
     </>
   );

@@ -1,11 +1,9 @@
-import './globals.css';
-import '../styles/prism.css';
+import CustomProviders from '@/lib/custom-providers';
+import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Ubuntu } from 'next/font/google';
-import { cn } from '@/lib/utils';
-import CustomProviders from '@/lib/custom-providers';
-import { SessionProvider } from 'next-auth/react';
-import { auth } from '@/auth';
+import '../styles/prism.css';
+import './globals.css';
 
 const font = Ubuntu({ subsets: ['cyrillic'], weight: '400' });
 
@@ -20,14 +18,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
-
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
-        <SessionProvider session={session}>
-          <CustomProviders>{children}</CustomProviders>
-        </SessionProvider>
+        <CustomProviders>{children}</CustomProviders>
       </body>
     </html>
   );

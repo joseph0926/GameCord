@@ -1,12 +1,11 @@
+import { getGames } from '@/actions/game';
+import { getServers } from '@/actions/server';
+import MainMobileNavbar from '@/components/layout/MainMobileNavbar';
+import ThemeToggle from '@/components/ui/theme-toggle';
 import Image from 'next/image';
 import Link from 'next/link';
-import GlobalSearch from '@/components/home/GlobalSearch';
-import ThemeToggle from '@/components/ui/theme-toggle';
-import MainMobileNavbar from '@/components/layout/MainMobileNavbar';
-import { getServers } from '@/actions/server';
 import { Suspense } from 'react';
 import UserButtonWrapper from './UserButtonWrapper';
-import { getGames } from '@/actions/game';
 
 const MainNavbar = () => {
   return (
@@ -17,14 +16,12 @@ const MainNavbar = () => {
           Game<span className="text-primary-500">Cord</span>
         </p>
       </Link>
-      <Suspense>
-        <GlobalSearch />
-      </Suspense>
+      <Suspense>{/* <GlobalSearch /> */}</Suspense>
       <div className="flex-between gap-5">
         <ThemeToggle />
         <UserButtonWrapper />
         <Suspense fallback={<div />}>
-          <MainMobileNavbarWrapper />
+          {/* <MainMobileNavbarWrapper /> */}
         </Suspense>
       </div>
     </nav>
