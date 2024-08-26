@@ -1,7 +1,7 @@
 import { Member, Profile, Server } from '@prisma/client';
 
 export type SidebarLink = {
-  imgURL: string;
+  icon: JSX.Element;
   route: string;
   label: string;
 };

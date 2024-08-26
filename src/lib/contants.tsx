@@ -1,23 +1,24 @@
 import { SidebarLink } from '@/@types/custom';
+import { Home, List, MessageCircle, User2 } from 'lucide-react';
 
 export const sidebarLinks: SidebarLink[] = [
   {
-    imgURL: '/images/home.svg',
+    icon: <Home />,
     route: '/',
     label: 'Home'
   },
   {
-    imgURL: '/images/star.svg',
+    icon: <List />,
     route: '/post',
     label: 'Posts'
   },
   {
-    imgURL: '/images/user.svg',
+    icon: <User2 />,
     route: '/profile',
     label: 'Profile'
   },
   {
-    imgURL: '/images/message.svg',
+    icon: <MessageCircle />,
     route: '/server',
     label: 'Server'
   }
