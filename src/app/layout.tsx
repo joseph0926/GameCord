@@ -1,5 +1,4 @@
 import CustomProviders from '@/lib/custom-providers';
-import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { Ubuntu } from 'next/font/google';
 import '../styles/prism.css';
@@ -20,7 +19,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
+      <body className={font.className}>
         <CustomProviders>{children}</CustomProviders>
       </body>
     </html>

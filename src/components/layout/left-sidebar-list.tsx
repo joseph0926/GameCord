@@ -87,7 +87,7 @@ function Cursor({ position }: { position: PositionType }) {
       animate={{
         ...position
       }}
-      className="size-7 md:size-12 absolute z-0 cursor-pointer rounded-full bg-white"
+      className="size-7 md:size-12 absolute z-0 cursor-pointer rounded-full bg-white dark:bg-black"
     />
   );
 }
