@@ -10,14 +10,16 @@ type PositionType = {
   top: number;
   width: string;
   height: number;
+  left: number;
   opacity: number;
 };
 
 export function LeftSidebarList() {
   const [position, setPosition] = useState<PositionType>({
     top: 0,
-    width: '8rem',
+    width: '10rem',
     height: 0,
+    left: 0,
     opacity: 0
   });
 
@@ -59,13 +61,14 @@ function List({
         const { height } = liRef.current.getBoundingClientRect();
 
         setPosition({
-          top: liRef.current.offsetTop,
-          width: '8rem',
+          top: liRef.current.offsetTop - 15,
+          width: '10rem',
           height: height + 20,
+          left: -30,
           opacity: 1
         });
       }}
-      className="relative"
+      className="relative z-10"
     >
       <Link
         href={item.route}
