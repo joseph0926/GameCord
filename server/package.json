@@ -1,0 +1,15 @@
+{
+  "name": "gamecord-server",
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter @app/shared build && pnpm -r build",
+    "dev": "pnpm -r --parallel start:dev",
+    "test": "pnpm -r test",
+    "clean": "pnpm -r exec rm -rf dist node_modules",
+    "install:all": "pnpm install"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1",
+    "typescript": "^5.6.3"
+  }
+}

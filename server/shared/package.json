@@ -1,0 +1,19 @@
+{
+  "name": "@app/shared",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "prebuild": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@app/shared": "workspace:^"
+  }
+}
