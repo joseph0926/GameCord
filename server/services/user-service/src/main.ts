@@ -1,6 +1,6 @@
+import { CustomLoggerService, LoggingInterceptor } from '@gamecord/shared';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { CustomLoggerService, LoggingInterceptor } from '@shared';
 
 import { AppModule } from './app.module';
 

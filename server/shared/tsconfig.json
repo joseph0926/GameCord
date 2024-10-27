@@ -5,7 +5,10 @@
     "baseUrl": "./",
     "declaration": true,
     "composite": true,
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test"]

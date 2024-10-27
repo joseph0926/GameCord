@@ -18,6 +18,7 @@ const config = [
         ecmaVersion: 'latest',
         sourceType: 'module',
         project: ['./tsconfig.json'],
+        projectService: true,
       },
       globals: {
         ...globals.node,

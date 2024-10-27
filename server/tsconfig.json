@@ -17,8 +17,10 @@
     "noFallthroughCasesInSwitch": false,
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["shared/src/*"]
+      "@shared": ["./shared/src"],
+      "@shared/*": ["./shared/src/*"]
     }
   },
-  "references": [{ "path": "./shared" }]
+  "references": [{ "path": "./shared" }],
+  "exclude": ["node_modules", "dist"]
 }
