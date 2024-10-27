@@ -1,4 +1,5 @@
 import { Injectable, LoggerService } from '@nestjs/common';
+import { LogMetadata } from 'src/interfaces/logger.interface';
 import { createLogger, format, Logger, transports } from 'winston';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
 
@@ -34,7 +35,7 @@ export class CustomLoggerService implements LoggerService {
         new transports.Console({
           format: format.combine(
             format.colorize(),
-            format.printf(({ timestamp, level, message, context, ...meta }) => {
+            format.printf(({ timestamp, level, message, context, ...meta }: LogMetadata) => {
               return `${timestamp} ${level}: [${context}] ${message} ${
                 Object.keys(meta).length ? JSON.stringify(meta, null, 2) : ''
               }`;
@@ -76,10 +77,10 @@ export class CustomLoggerService implements LoggerService {
    * @param context - 선택적 컨텍스트 (기본값: 생성자에서 설정된 컨텍스트)
    * @param meta - 추가 메타데이터
    */
-  log(message: string, context?: string, ...meta: any[]) {
+  log(message: string, context?: string, meta?: LogMetadata) {
     this.logger.info(message, {
       context: context || this.context,
-      ...meta,
+      ...(meta || {}),
     });
   }
 
@@ -90,11 +91,11 @@ export class CustomLoggerService implements LoggerService {
    * @param context - 선택적 컨텍스트
    * @param meta - 추가 메타데이터
    */
-  error(message: string, trace?: string, context?: string, ...meta: any[]) {
+  error(message: string, trace?: string, context?: string, meta?: LogMetadata) {
     this.logger.error(message, {
       context: context || this.context,
       trace,
-      ...meta,
+      ...(meta || {}),
     });
   }
 
@@ -104,10 +105,10 @@ export class CustomLoggerService implements LoggerService {
    * @param context - 선택적 컨텍스트
    * @param meta - 추가 메타데이터
    */
-  warn(message: string, context?: string, ...meta: any[]) {
+  warn(message: string, context?: string, meta?: LogMetadata) {
     this.logger.warn(message, {
       context: context || this.context,
-      ...meta,
+      ...(meta || {}),
     });
   }
 
@@ -117,10 +118,10 @@ export class CustomLoggerService implements LoggerService {
    * @param context - 선택적 컨텍스트
    * @param meta - 추가 메타데이터
    */
-  debug(message: string, context?: string, ...meta: any[]) {
+  debug(message: string, context?: string, meta?: LogMetadata) {
     this.logger.debug(message, {
       context: context || this.context,
-      ...meta,
+      ...(meta || {}),
     });
   }
 
@@ -130,10 +131,10 @@ export class CustomLoggerService implements LoggerService {
    * @param context - 선택적 컨텍스트
    * @param meta - 추가 메타데이터
    */
-  verbose(message: string, context?: string, ...meta: any[]) {
+  verbose(message: string, context?: string, meta?: LogMetadata) {
     this.logger.verbose(message, {
       context: context || this.context,
-      ...meta,
+      ...(meta || {}),
     });
   }
 }
