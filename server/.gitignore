@@ -5,6 +5,7 @@ node_modules/
 # Build
 dist/
 build/
+shared/dist
 
 # Logs
 logs
