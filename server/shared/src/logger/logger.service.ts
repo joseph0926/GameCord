@@ -1,7 +1,7 @@
 import { Injectable, LoggerService } from '@nestjs/common';
-import { LogMetadata } from 'src/interfaces/logger.interface';
 import { createLogger, format, Logger, transports } from 'winston';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
+import { LogMetadata } from '../interfaces';
 
 /**
  * 마이크로서비스 전반에 걸쳐 사용되는 커스텀 로거 서비스

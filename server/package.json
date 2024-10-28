@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "lint": "eslint \"**/*.{ts,tsx}\" --fix",
     "lint:all": "pnpm -r run lint",
-    "format:all": "pnpm -r run format"
+    "format:all": "pnpm -r run format",
+    "type": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^22.8.1",
