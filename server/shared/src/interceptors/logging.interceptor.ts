@@ -1,8 +1,8 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HttpRequest, ResponseData, RpcData } from '../interfaces';
 
+import { HttpRequest, ResponseData, RpcData } from '../interfaces';
 import { CustomLoggerService } from '../logger/logger.service';
 
 /**
