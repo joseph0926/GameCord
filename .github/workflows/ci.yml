@@ -79,14 +79,3 @@ jobs:
         run: |
           cd services/${{ matrix.service }}
           pnpm type-check
-
-      # TODO: test 관련 추가 예정
-      # - name: Run tests
-      #   run: |
-      #     cd services/${{ matrix.service }}
-      #     pnpm test
-
-      # - name: Run E2E tests
-      #   run: |
-      #     cd services/${{ matrix.service }}
-      #     pnpm test:e2e
