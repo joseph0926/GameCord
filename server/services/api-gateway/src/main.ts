@@ -1,24 +1,34 @@
-import { CustomLoggerService, LoggingInterceptor } from '@gamecord/shared';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const logger = new CustomLoggerService('UserService');
+  const app = await NestFactory.create(AppModule);
 
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-    transport: Transport.TCP,
-    options: {
-      host: 'localhost',
-      port: Number(process.env.PORT) || 4000,
-    },
-    logger,
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
+
+  app.enableCors({
+    origin: process.env.ALLOWED_ORIGINS?.split(',') || '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
   });
 
-  app.useGlobalInterceptors(new LoggingInterceptor());
+  const config = new DocumentBuilder()
+    .setTitle('API Gateway')
+    .setDescription('Microservices API Gateway')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
-  await app.listen();
-  logger.log('API Gateway Service is running');
+  await app.listen(process.env.PORT || 4000);
 }
 bootstrap();

@@ -13,7 +13,8 @@ import { CustomLoggerService } from '../logger/logger.service';
 export class LoggingInterceptor implements NestInterceptor<unknown, unknown> {
   private readonly logger: CustomLoggerService;
 
-  constructor() {
+  constructor(logger: CustomLoggerService) {
+    this.logger = logger;
     this.logger.setContext('LoggingInterceptor');
   }
 

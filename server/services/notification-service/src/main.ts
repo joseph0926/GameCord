@@ -16,7 +16,7 @@ async function bootstrap() {
     logger,
   });
 
-  app.useGlobalInterceptors(new LoggingInterceptor());
+  app.useGlobalInterceptors(new LoggingInterceptor(logger));
 
   await app.listen();
   logger.log('Notification Service is running');
