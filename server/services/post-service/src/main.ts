@@ -16,7 +16,7 @@ async function bootstrap() {
     logger,
   });
 
-  app.useGlobalInterceptors(new LoggingInterceptor(logger));
+  app.useGlobalInterceptors(new LoggingInterceptor());
 
   await app.listen();
   logger.log('Post Service is running');
