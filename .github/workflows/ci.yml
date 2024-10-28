@@ -60,6 +60,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build shared package
+        run: |
+          cd shared
+          pnpm build
+
       - name: Lint
         run: |
           cd services/${{ matrix.service }}
