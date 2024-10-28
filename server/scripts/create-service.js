@@ -10,10 +10,8 @@ if (!serviceName) {
 
 const serviceDir = path.join(__dirname, '../services', serviceName);
 
-// Create service directory
 fs.mkdirSync(serviceDir, { recursive: true });
 
-// Create package.json
 const packageJson = {
   name: `@app/${serviceName}`,
   version: '1.0.0',
@@ -71,11 +69,9 @@ const tsConfig = {
 
 fs.writeFileSync(path.join(serviceDir, 'tsconfig.json'), JSON.stringify(tsConfig, null, 2));
 
-// Create basic service structure
 const srcDir = path.join(serviceDir, 'src');
 fs.mkdirSync(srcDir, { recursive: true });
 
-// Create main.ts
 const mainTs = `
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -99,7 +95,6 @@ bootstrap();
 
 fs.writeFileSync(path.join(srcDir, 'main.ts'), mainTs);
 
-// Create app.module.ts
 const appModuleTs = `
 import { Module } from '@nestjs/common';
 
