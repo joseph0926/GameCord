@@ -33,8 +33,8 @@ export const AuthBg = memo(() => {
 
   return (
     <>
-      <div className="absolute inset-0 dark:opacity-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-200 via-pink-200 to-cyan-200" />
+      <div className="absolute inset-0 h-full dark:opacity-0 overflow-hidden">
+        <div className="absolute inset-0 h-full bg-gradient-to-r from-violet-200 via-pink-200 to-cyan-200" />
 
         <motion.div
           variants={moveVariants}
