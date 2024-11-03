@@ -3,49 +3,51 @@ import { z } from "zod";
 export const signInSchema = z.object({
   email: z
     .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Please provide a valid email address." }),
+    .min(1, { message: "이메일을 입력해주세요." })
+    .email({ message: "올바른 이메일 주소를 입력해주세요." }),
 
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters long. " })
-    .max(100, { message: "Password cannot exceed 100 characters." }),
+    .min(6, { message: "비밀번호는 최소 6자 이상이어야 합니다." })
+    .max(100, { message: "비밀번호는 100자를 초과할 수 없습니다." }),
 });
 
 export const signUpSchema = z.object({
   username: z
     .string()
-    .min(3, { message: "Username must be at least 3 characters long." })
-    .max(30, { message: "Username cannot exceed 30 characters." })
+    .min(3, { message: "사용자 이름은 최소 3자 이상이어야 합니다." })
+    .max(30, { message: "사용자 이름은 30자를 초과할 수 없습니다." })
     .regex(/^[a-zA-Z0-9_]+$/, {
-      message: "Username can only contain letters, numbers, and underscores.",
+      message: "사용자 이름은 영문, 숫자, 밑줄(_)만 사용할 수 있습니다.",
     }),
 
   name: z
     .string()
-    .min(1, { message: "Name is required." })
-    .max(50, { message: "Name cannot exceed 50 characters." })
-    .regex(/^[a-zA-Z\s]+$/, {
-      message: "Name can only contain letters and spaces.",
+    .min(1, { message: "이름을 입력해주세요." })
+    .max(50, { message: "이름은 50자를 초과할 수 없습니다." })
+    .regex(/^[가-힣a-zA-Z\s]+$/, {
+      message: "이름은 한글, 영문, 공백만 사용할 수 있습니다.",
     }),
 
   email: z
     .string()
-    .min(1, { message: "Email is required." })
-    .email({ message: "Please provide a valid email address." }),
+    .min(1, { message: "이메일을 입력해주세요." })
+    .email({ message: "올바른 이메일 주소를 입력해주세요." }),
 
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters long." })
-    .max(100, { message: "Password cannot exceed 100 characters." })
+    .min(6, { message: "비밀번호는 최소 6자 이상이어야 합니다." })
+    .max(100, { message: "비밀번호는 100자를 초과할 수 없습니다." })
     .regex(/[A-Z]/, {
-      message: "Password must contain at least one uppercase letter.",
+      message: "비밀번호는 최소 1개의 대문자를 포함해야 합니다.",
     })
     .regex(/[a-z]/, {
-      message: "Password must contain at least one lowercase letter.",
+      message: "비밀번호는 최소 1개의 소문자를 포함해야 합니다.",
     })
-    .regex(/[0-9]/, { message: "Password must contain at least one number." })
+    .regex(/[0-9]/, {
+      message: "비밀번호는 최소 1개의 숫자를 포함해야 합니다.",
+    })
     .regex(/[^a-zA-Z0-9]/, {
-      message: "Password must contain at least one special character.",
+      message: "비밀번호는 최소 1개의 특수문자를 포함해야 합니다.",
     }),
 });

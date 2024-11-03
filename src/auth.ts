@@ -23,9 +23,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             throw AUTH_ERRORS.INVALID_CREDENTIALS;
           }
 
+          const email = credentials.email as string;
+          const password = credentials.password as string;
+
           const user = await prisma.user.findUnique({
             where: {
-              email: credentials.email,
+              email,
             },
             include: {
               accounts: true,
@@ -40,10 +43,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             throw AUTH_ERRORS.EMAIL_NOT_VERIFIED;
           }
 
-          const isPasswordValid = await bcrypt.compare(
-            credentials.password as string,
-            user.password
-          );
+          const isPasswordValid = await bcrypt.compare(password, user.password);
 
           if (!isPasswordValid) {
             throw AUTH_ERRORS.INVALID_CREDENTIALS;
@@ -65,11 +65,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account }) {
-      // OAuth 로그인 시 이메일 인증 확인
       if (account?.provider === "google") {
         return true;
       }
-
       return !!user.emailVerified;
     },
     async session({ session, token }) {
@@ -90,16 +88,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.picture = user.image;
         token.emailVerified = user.emailVerified;
       }
-
       return token;
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: "/sign-in",
     error: "/auth/error",
   },
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
+  jwt: {
+    maxAge: 30 * 24 * 60 * 60,
   },
   debug: process.env.NODE_ENV === "development",
 });

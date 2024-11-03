@@ -3,14 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  DefaultValues,
-  FieldValues,
-  Path,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
-import { z, ZodType } from "zod";
+import { Path, useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,26 +17,78 @@ import {
 import { Input } from "@/components/ui/input";
 import ROUTES from "@/constants/routes";
 import { formVariants, inputVariants } from "@/constants/animation";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { signIn } from "next-auth/react";
+import { register } from "@/actions/auth.action";
+import { signInSchema, signUpSchema } from "@/schemas/auth.schema";
 
-interface AuthFormProps<T extends FieldValues> {
-  schema: ZodType<T>;
-  defaultValues: T;
-  onSubmit: (data: T) => Promise<{ success: boolean }>;
+type SignInFormValues = z.infer<typeof signInSchema>;
+
+type SignUpFormValues = z.infer<typeof signUpSchema>;
+
+type FormValues = SignInFormValues | SignUpFormValues;
+
+interface AuthFormProps {
   formType: "SIGN_IN" | "SIGN_UP";
 }
 
-export const AuthForm = <T extends FieldValues>({
-  schema,
-  defaultValues,
-  formType,
-}: AuthFormProps<T>) => {
-  const form = useForm<z.infer<typeof schema>>({
+export const AuthForm = ({ formType }: AuthFormProps) => {
+  const router = useRouter();
+
+  const schema = formType === "SIGN_IN" ? signInSchema : signUpSchema;
+  const defaultValues =
+    formType === "SIGN_IN"
+      ? ({
+          email: "",
+          password: "",
+        } as SignInFormValues)
+      : ({
+          email: "",
+          password: "",
+          name: "",
+          username: "",
+        } as SignUpFormValues);
+
+  const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: defaultValues as DefaultValues<T>,
+    defaultValues,
   });
 
-  const handleSubmit: SubmitHandler<T> = async (data) => {
-    console.log(data);
+  const handleSubmit = async (data: FormValues) => {
+    try {
+      if (formType === "SIGN_UP") {
+        const response = await register(data as SignUpFormValues);
+
+        if (!response.success) {
+          throw new Error(
+            response.error?.message || "회원가입에 실패했습니다."
+          );
+        }
+
+        toast.success("회원가입이 완료되었습니다. 이메일을 확인해주세요.");
+        router.push(ROUTES.SIGN_IN);
+      } else {
+        const result = await signIn("credentials", {
+          email: (data as SignInFormValues).email,
+          password: (data as SignInFormValues).password,
+          redirect: false,
+        });
+
+        if (result?.error) {
+          throw new Error(result.error);
+        }
+
+        toast.success("로그인되었습니다.");
+        router.push(ROUTES.HOME);
+        router.refresh();
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      toast.error(
+        error instanceof Error ? error.message : "오류가 발생했습니다."
+      );
+    }
   };
 
   const buttonText = formType === "SIGN_IN" ? "로그인" : "회원가입";
@@ -67,14 +113,11 @@ export const AuthForm = <T extends FieldValues>({
           >
             <FormField
               control={form.control}
-              name={field as Path<T>}
+              name={field as Path<FormValues>}
               render={({ field }) => (
                 <FormItem className="space-y-2">
                   <FormLabel className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                    {field.name === "email"
-                      ? "이메일 주소"
-                      : field.name.charAt(0).toUpperCase() +
-                        field.name.slice(1)}
+                    {getFieldLabel(field.name)}
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -140,3 +183,13 @@ export const AuthForm = <T extends FieldValues>({
     </Form>
   );
 };
+
+function getFieldLabel(fieldName: string): string {
+  const labels: Record<string, string> = {
+    email: "이메일 주소",
+    password: "비밀번호",
+    name: "이름",
+    username: "사용자 이름",
+  };
+  return labels[fieldName] || fieldName;
+}
