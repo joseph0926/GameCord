@@ -4,17 +4,17 @@ import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { motion } from "framer-motion";
 import React from "react";
-import ROUTES from "@/constants/routes";
 import { Button } from "../ui/button";
 import { buttonVariants } from "@/constants/animation";
 import { toast } from "sonner";
+import ROUTES from "@/constants/routes";
 
 export const SocialAuthForm = () => {
   const handleSignIn = async (provider: "github" | "google") => {
     try {
       await signIn(provider, {
-        callbackUrl: ROUTES.HOME,
-        redirect: false,
+        redirectTo: ROUTES.HOME,
+        redirect: true,
       });
     } catch (error) {
       console.log(error);
