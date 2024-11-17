@@ -1,10 +1,8 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { posts } from '@/constants/layout';
 import { ROUTES } from '@/constants/routes';
-import { PostCard } from '@/components/card/post-card';
-import { HomeFilter } from '@/components/home/home-filter';
-import { LocalSearch } from '@/components/home/local-search';
+import { SearchContainer } from '@/components/home/search-container';
+import { posts } from '@/constants/layout';
 
 type SearchParams = {
   searchParams: Promise<{ [key: string]: string }>;
@@ -13,7 +11,7 @@ type SearchParams = {
 export default async function Home({ searchParams }: SearchParams) {
   const { query = '', filter = '' } = await searchParams;
 
-  const filteredPosts = posts.filter((post) => {
+  const initialFilteredPosts = posts.filter((post) => {
     const matchesQuery = post.title.toLowerCase().includes(query.toLowerCase());
     const matchesFilter = filter
       ? post.tags[0].name.toLowerCase() === filter.toLowerCase()
@@ -35,19 +33,13 @@ export default async function Home({ searchParams }: SearchParams) {
           <Link href={ROUTES.CREATE_POST}>Create Post</Link>
         </Button>
       </section>
-      <section className="mt-11">
-        <LocalSearch
-          route="/"
-          placeholder="Search posts..."
-          otherClasses="flex-1"
-        />
-      </section>
-      <HomeFilter />
-      <div className="mt-10 flex w-full flex-col gap-6">
-        {filteredPosts.map((post) => (
-          <PostCard key={post._id} post={post} />
-        ))}
-      </div>
+
+      <SearchContainer
+        initialPosts={posts}
+        initialFilteredPosts={initialFilteredPosts}
+        initialQuery={query}
+        initialFilter={filter}
+      />
     </>
   );
 }
