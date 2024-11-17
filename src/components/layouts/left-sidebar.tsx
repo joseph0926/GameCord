@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../ui/button';
@@ -8,9 +8,15 @@ import { NavLinks } from './nav-links';
 import { ROUTES } from '@/constants/routes';
 import { LogIn, UserPlus, ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 export const LeftSidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 1024px)');
+  const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+  useEffect(() => {
+    setIsCollapsed(isMobile);
+  }, [isMobile]);
 
   const sidebarVariants = {
     expanded: {
@@ -39,7 +45,7 @@ export const LeftSidebar = () => {
   return (
     <div className="relative flex h-screen">
       <motion.section
-        initial="expanded"
+        initial={isMobile ? 'collapsed' : 'expanded'}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         variants={sidebarVariants}
         className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-700 sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r border-gray-200 bg-white p-6 pt-36 shadow-md dark:border-gray-700 dark:bg-gray-800 dark:shadow-none max-sm:hidden"
@@ -125,15 +131,17 @@ export const LeftSidebar = () => {
         </div>
       </motion.section>
 
-      <motion.button
-        initial="expanded"
-        animate={isCollapsed ? 'collapsed' : 'expanded'}
-        variants={toggleButtonVariants}
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3 top-44 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
-      >
-        <ChevronLeft className="h-4 w-4" />
-      </motion.button>
+      {!isMobile && (
+        <motion.button
+          initial="expanded"
+          animate={isCollapsed ? 'collapsed' : 'expanded'}
+          variants={toggleButtonVariants}
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="absolute -right-3 top-44 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </motion.button>
+      )}
     </div>
   );
 };
