@@ -1,9 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { getDeviconClassName } from '@/lib/utils';
+import { cn, getDeviconClassName } from '@/lib/utils';
 import { Badge } from '../ui/badge';
 import { ROUTES } from '@/constants/routes';
+import { X } from 'lucide-react'; // Lucide 아이콘 추가
 
 interface Props {
   _id: string;
@@ -34,26 +34,25 @@ export const TagCard = ({
 
   const Content = (
     <>
-      <Badge className="subtle-medium background-light800_dark300 text-light400_light500 flex flex-row gap-2 rounded-md border-none px-4 py-2 uppercase">
-        <div className="flex-center space-x-2">
-          <i className={`${iconClass} text-sm`}></i>
+      <Badge className="flex flex-row gap-2 rounded-md border-none bg-gray-100 px-4 py-2 text-xs font-medium uppercase text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+        <div className="flex items-center justify-center space-x-2">
+          <i className={cn(iconClass, 'text-sm')}></i>
           <span>{name}</span>
         </div>
 
         {remove && (
-          <Image
-            src="/icons/close.svg"
-            width={12}
-            height={12}
-            alt="close icon"
-            className="cursor-pointer object-contain invert-0 dark:invert"
+          <X
+            size={12}
+            className="cursor-pointer text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
             onClick={handleRemove}
           />
         )}
       </Badge>
 
       {showCount && (
-        <p className="small-medium text-dark500_light700">{posts}</p>
+        <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+          {posts}
+        </p>
       )}
     </>
   );

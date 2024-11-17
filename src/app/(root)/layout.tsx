@@ -8,7 +8,7 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="background-light850_dark100 realtive">
+    <main className="relative bg-gray-50 dark:bg-gray-900">
       <Navbar />
       <div className="flex">
         <LeftSidebar />

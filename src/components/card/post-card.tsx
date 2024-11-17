@@ -5,6 +5,7 @@ import { ROUTES } from '@/constants/routes';
 import { TagCard } from './tag-card';
 import { Metric } from '../ui/metric';
 import { PostType, TagType } from '@/types/post.type';
+import { ThumbsUp, MessageSquare, Eye } from 'lucide-react';
 
 interface PostCardProps {
   post: PostType;
@@ -14,15 +15,15 @@ export const PostCard = ({
   post: { _id, title, tags, author, createdAt, upvotes, answers, views },
 }: PostCardProps) => {
   return (
-    <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
+    <div className="rounded-lg border bg-white p-9 shadow-sm dark:bg-gray-800 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
-          <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
+          <span className="line-clamp-1 flex text-sm text-gray-500 dark:text-gray-400 sm:hidden">
             {getTimeStamp(createdAt)}
           </span>
 
-          <Link href={ROUTES.QUESTION(_id)}>
-            <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
+          <Link href={ROUTES.POST(_id)}>
+            <h3 className="line-clamp-1 flex-1 text-base font-semibold text-gray-900 dark:text-gray-100 sm:text-xl">
               {title}
             </h3>
           </Link>
@@ -35,38 +36,38 @@ export const PostCard = ({
         ))}
       </div>
 
-      <div className="flex-between mt-6 w-full flex-wrap gap-3">
+      <div className="mt-6 flex w-full flex-wrap justify-between gap-3">
         <Metric
-          imgUrl={author.image}
+          Icon={author.image}
           alt={author.name}
           value={author.name}
           title={`• asked ${getTimeStamp(createdAt)}`}
           href={ROUTES.PROFILE(author._id)}
-          textStyles="body-medium text-dark400_light700"
+          textStyles="text-sm text-gray-500 dark:text-gray-400"
           isAuthor
         />
 
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
           <Metric
-            imgUrl="/icons/like.svg"
+            Icon={ThumbsUp}
             alt="like"
             value={upvotes}
             title=" Votes"
-            textStyles="small-medium text-dark400_light800"
+            textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
           <Metric
-            imgUrl="/icons/message.svg"
+            Icon={MessageSquare}
             alt="answers"
             value={answers}
             title=" Answers"
-            textStyles="small-medium text-dark400_light800"
+            textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
           <Metric
-            imgUrl="/icons/eye.svg"
+            Icon={Eye}
             alt="views"
             value={views}
             title=" Views"
-            textStyles="small-medium text-dark400_light800"
+            textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
         </div>
       </div>

@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import { cn } from '@/lib/utils';
+import { SessionProvider } from '@/providers/session.provider';
+import { ThemeProvider } from 'next-themes';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -22,9 +24,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={cn(pretendard.className, 'antialiased')}>
-        {children}
-      </body>
+      <SessionProvider>
+        <body className={cn(pretendard.className, 'antialiased')}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </SessionProvider>
     </html>
   );
 }

@@ -1,24 +1,23 @@
 'use client';
 
-import Image from 'next/image';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { formUrlQuery, removeKeysFromUrlQuery } from '@/lib/url';
 import { Input } from '../ui/input';
+import { Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-interface Props {
+type LocalSearchProps = {
   route: string;
-  imgSrc: string;
   placeholder: string;
   otherClasses?: string;
-}
+};
 
 export const LocalSearch = ({
   route,
-  imgSrc,
   placeholder,
   otherClasses,
-}: Props) => {
+}: LocalSearchProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -53,22 +52,18 @@ export const LocalSearch = ({
 
   return (
     <div
-      className={`background-light800_darkgradient flex min-h-[56px] grow items-center gap-4 rounded-[10px] px-4 ${otherClasses}`}
+      className={cn(
+        'flex min-h-[56px] grow items-center gap-4 rounded-lg bg-gray-100 px-4 dark:bg-gray-800',
+        otherClasses
+      )}
     >
-      <Image
-        src={imgSrc}
-        width={24}
-        height={24}
-        alt="Search"
-        className="cursor-pointer"
-      />
-
+      <Search className="cursor-pointer text-gray-500 dark:text-gray-400" />
       <Input
         type="text"
         placeholder={placeholder}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="paragraph-regular no-focus placeholder text-dark400_light700 border-none shadow-none outline-none"
+        className="border-none bg-transparent text-base text-gray-700 shadow-none outline-none placeholder:text-gray-500 focus:ring-0 dark:text-gray-200 dark:placeholder:text-gray-400"
       />
     </div>
   );

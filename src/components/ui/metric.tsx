@@ -1,43 +1,55 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface MetricProps {
-  imgUrl: string;
+  Icon: string | LucideIcon;
   alt: string;
   value: string | number;
   title: string;
   href?: string;
   textStyles: string;
   isAuthor?: boolean;
-  imgStyles?: string;
+  iconStyles?: string;
 }
 
 export const Metric = ({
-  imgUrl,
+  Icon,
   alt,
   value,
   title,
   href,
   textStyles,
-  imgStyles,
+  iconStyles,
   isAuthor,
 }: MetricProps) => {
   const metricContent = (
     <>
-      <Image
-        src={imgUrl}
-        width={16}
-        height={16}
-        alt={alt}
-        className={`rounded-full object-contain ${imgStyles}`}
-      />
+      {typeof Icon === 'string' ? (
+        <Image
+          src={Icon}
+          width={16}
+          height={16}
+          alt={alt}
+          className={cn('rounded-full object-contain', iconStyles)}
+        />
+      ) : (
+        <Icon
+          size={16}
+          className={cn('text-gray-500 dark:text-gray-400', iconStyles)}
+        />
+      )}
 
-      <p className={`${textStyles} flex items-center gap-1`}>
+      <p className={cn(textStyles, 'flex items-center gap-1')}>
         {value}
 
         <span
-          className={`small-regular line-clamp-1 ${isAuthor ? 'max-sm:hidden' : ''}`}
+          className={cn(
+            'line-clamp-1 text-sm font-normal',
+            isAuthor ? 'max-sm:hidden' : ''
+          )}
         >
           {title}
         </span>
@@ -46,10 +58,10 @@ export const Metric = ({
   );
 
   return href ? (
-    <Link href={href} className="flex-center gap-1">
+    <Link href={href} className="flex items-center gap-1">
       {metricContent}
     </Link>
   ) : (
-    <div className="flex-center gap-1">{metricContent}</div>
+    <div className="flex items-center gap-1">{metricContent}</div>
   );
 };

@@ -2,8 +2,8 @@ export const ROUTES = {
   HOME: '/',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
-  ASK_QUESTION: '/ask-post',
+  CREATE_POST: '/create-post',
   PROFILE: (id: string) => `/profile/${id}`,
-  QUESTION: (id: string) => `/post/${id}`,
+  POST: (id: string) => `/post/${id}`,
   TAGS: (id: string) => `/tags/${id}`,
 };

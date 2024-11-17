@@ -3,7 +3,6 @@
 import { SheetClose } from '@/components/ui/sheet';
 import { sidebarLinks } from '@/constants/layout';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
@@ -34,21 +33,20 @@ export const NavLinks = ({
             key={item.label}
             className={cn(
               isActive
-                ? 'primary-gradient text-light-900 rounded-lg'
-                : 'text-dark300_light900',
+                ? 'rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                : 'text-gray-700 dark:text-gray-200',
               'flex items-center justify-start gap-4 bg-transparent p-4'
             )}
           >
-            <Image
-              src={item.imgURL}
-              alt={item.label}
-              width={20}
-              height={20}
-              className={cn({ 'invert-colors': !isActive })}
+            <item.icon
+              size={20}
+              className={cn(
+                isActive ? 'text-white' : 'text-gray-700 dark:text-gray-200'
+              )}
             />
             <p
               className={cn(
-                isActive ? 'base-bold' : 'base-medium',
+                isActive ? 'text-base font-bold' : 'text-base font-medium',
                 !isMobileNav && 'max-lg:hidden'
               )}
             >
