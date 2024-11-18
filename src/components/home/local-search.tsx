@@ -58,7 +58,7 @@ export function LocalSearch({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuery = e.target.value;
     setSearchQuery(newQuery);
-    onSearch(newQuery); // 실시간 검색을 위한 콜백
+    onSearch(newQuery);
   };
 
   const handleClear = () => {

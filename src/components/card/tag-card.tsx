@@ -3,7 +3,7 @@ import React from 'react';
 import { cn, getDeviconClassName } from '@/lib/utils';
 import { Badge } from '../ui/badge';
 import { ROUTES } from '@/constants/routes';
-import { X } from 'lucide-react'; // Lucide 아이콘 추가
+import { X } from 'lucide-react';
 
 interface Props {
   _id: string;
