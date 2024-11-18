@@ -13,70 +13,70 @@ export const sidebarLinks = [
   {
     icon: Home,
     route: '/',
-    label: 'Home',
+    label: '홈',
   },
   {
     icon: GamepadIcon,
     route: '/games',
-    label: 'Games',
+    label: '게임',
   },
   {
     icon: Users,
     route: '/communities',
-    label: 'Communities',
+    label: '커뮤니티',
   },
   {
     icon: Headphones,
     route: '/voice-channels',
-    label: 'Voice Channels',
+    label: '음성채널',
   },
   {
     icon: Trophy,
     route: '/achievements',
-    label: 'Achievements',
+    label: '업적',
   },
   {
     icon: Hash,
     route: '/tags',
-    label: 'Tags',
+    label: '태그',
   },
   {
     icon: User,
     route: '/profile',
-    label: 'Profile',
+    label: '프로필',
   },
   {
     icon: PenSquare,
     route: '/create-post',
-    label: 'Create Post',
+    label: '글쓰기',
   },
 ];
 
 export const hotPosts = [
-  { _id: '1', title: 'Best strategies for Elden Ring final boss' },
-  { _id: '2', title: 'New Starfield mod adds multiplayer support' },
-  { _id: '3', title: 'Hidden easter eggs in Baldurs Gate 3' },
-  { _id: '4', title: 'Counter-Strike 2 pro tips and tricks' },
-  { _id: '5', title: 'League of Legends Season 14 meta analysis' },
+  { _id: '1', title: '엘든 링 최종 보스 공략법' },
+  { _id: '2', title: '스타필드 멀티플레이어 모드 추가' },
+  { _id: '3', title: '발더스 게이트 3 숨겨진 이스터에그' },
+  { _id: '4', title: '카운터-스트라이크 2 프로팁' },
+  { _id: '5', title: '리그 오브 레전드 시즌 14 메타 분석' },
 ];
 
 export const popularTags = [
-  { _id: '1', name: 'rpg', posts: 1200 },
-  { _id: '2', name: 'fps', posts: 950 },
-  { _id: '3', name: 'mmorpg', posts: 800 },
-  { _id: '4', name: 'indie', posts: 600 },
-  { _id: '5', name: 'esports', posts: 450 },
+  { _id: '1', name: 'RPG', posts: 1200 },
+  { _id: '2', name: 'FPS', posts: 950 },
+  { _id: '3', name: 'MMORPG', posts: 800 },
+  { _id: '4', name: '인디게임', posts: 600 },
+  { _id: '5', name: 'E스포츠', posts: 450 },
 ];
 
 export const posts = [
   {
     _id: '1',
-    title: 'Looking for Valorant teammates (Diamond+)',
-    description: 'Seeking active players for regular competitive matches',
+    title: '발로란트 팀원 구합니다 (다이아몬드 이상)',
+    description: '정기적인 경쟁전 참여할 활성 유저 구합니다',
     tags: [{ _id: '1', name: 'FPS' }],
     author: {
       _id: '1',
-      name: 'ProGamer123',
+      name: '프로게이머123',
       image:
         'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg',
     },
@@ -87,16 +87,15 @@ export const posts = [
   },
   {
     _id: '2',
-    title: 'Guide: How to improve aim in FPS games',
-    description:
-      'Comprehensive guide for improving your aim with practical exercises',
+    title: '가이드: FPS 게임 조준 실력 향상하기',
+    description: '실전 연습을 포함한 종합적인 조준 실력 향상 가이드',
     tags: [
       { _id: '1', name: 'FPS' },
-      { _id: '2', name: 'Guide' },
+      { _id: '2', name: '가이드' },
     ],
     author: {
       _id: '2',
-      name: 'AimMaster',
+      name: '에임마스터',
       image:
         'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg',
     },

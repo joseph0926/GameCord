@@ -20,12 +20,10 @@ export function HomeFilter({ onFilter }: HomeFilterProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleFilterClick = (filter: string) => {
-    // 즉시 UI 업데이트 및 필터링
     const newFilter = filter === active ? '' : filter;
     setActive(newFilter);
     onFilter(newFilter);
 
-    // URL 업데이트는 트랜지션으로 처리
     startTransition(() => {
       let newUrl = '';
       if (newFilter) {
