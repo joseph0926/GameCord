@@ -19,7 +19,7 @@ export const MobileNavbar = () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="border-none bg-white dark:bg-gray-800"
+        className="h-full border-none bg-white dark:bg-gray-800"
       >
         <SheetTitle className="hidden">Navigation</SheetTitle>
         <Link href="/" className="flex items-center gap-1">
@@ -29,7 +29,7 @@ export const MobileNavbar = () => {
           </p>
         </Link>
 
-        <div className="scrollbar-none flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
+        <div className="scrollbar-none flex flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
             <section className="flex h-full flex-col gap-6 pt-16">
               <NavLinks isMobileNav />
