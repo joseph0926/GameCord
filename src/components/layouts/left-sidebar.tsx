@@ -1,9 +1,9 @@
 'use client';
 
-import { AnimatePresence,motion } from 'framer-motion';
-import { ChevronLeft,LogIn, UserPlus } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronLeft, LogIn, UserPlus } from 'lucide-react';
 import Link from 'next/link';
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { cn } from '@/lib/utils';
@@ -43,7 +43,7 @@ export const LeftSidebar = () => {
   };
 
   return (
-    <div className="relative flex h-screen">
+    <div className="sticky top-0 flex h-screen">
       <motion.section
         initial={isMobile ? 'collapsed' : 'expanded'}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
