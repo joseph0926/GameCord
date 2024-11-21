@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button } from '../ui/button';
 import {
   Card,
   CardContent,
@@ -15,6 +14,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { formAnimation, itemAnimation } from '@/constants/form';
+import { CreatePostSchema } from '@/schemas/post.schema';
+import { TagCard } from '../card/tag-card';
+import { Button } from '../ui/button';
 import {
   Form,
   FormControl,
@@ -25,10 +28,7 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
-import { CreatePostSchema } from '@/schemas/post.schema';
-import { TagCard } from '../card/tag-card';
 import { Separator } from '../ui/separator';
-import { formAnimation, itemAnimation } from '@/constants/form';
 
 const Editor = dynamic(() => import('@/components/editor'), {
   ssr: false,

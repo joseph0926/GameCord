@@ -1,5 +1,5 @@
-import { auth } from '@/auth';
 import { SessionProvider as AuthProvider } from 'next-auth/react';
+import { auth } from '@/auth';
 
 export async function SessionProvider({
   children,

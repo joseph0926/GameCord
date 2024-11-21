@@ -1,12 +1,12 @@
 'use client';
 
-import { SheetClose } from '@/components/ui/sheet';
-import { sidebarLinks } from '@/constants/layout';
-import { cn } from '@/lib/utils';
+import { AnimatePresence,motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { SheetClose } from '@/components/ui/sheet';
+import { sidebarLinks } from '@/constants/layout';
+import { cn } from '@/lib/utils';
 
 export const NavLinks = ({
   isMobileNav = false,

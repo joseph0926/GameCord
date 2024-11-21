@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
-import { MobileNavbar } from './mobile-navbar';
 import Theme from '@/components/ui/theme';
+import { MobileNavbar } from './mobile-navbar';
 
 export const Navbar = () => {
   return (

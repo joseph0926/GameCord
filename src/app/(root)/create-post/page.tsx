@@ -1,6 +1,6 @@
+import { Gamepad, MessagesSquare,Users } from 'lucide-react';
 import { CreatePostForm } from '@/components/post/create-post-form';
 import { Card, CardContent } from '@/components/ui/card';
-import { Gamepad, Users, MessagesSquare } from 'lucide-react';
 
 export default function CreatePost() {
   return (

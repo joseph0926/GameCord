@@ -1,13 +1,13 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import React from 'react';
-import { Button } from '../ui/button';
-import { ROUTES } from '@/constants/routes';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
 import { buttonVariants } from '@/constants/auth';
+import { ROUTES } from '@/constants/routes';
+import { Button } from '../ui/button';
 
 export const SocialAuthForm = () => {
   const buttonClass =

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useTransition } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useTransition } from 'react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { filters } from '@/constants/home';
 import { formUrlQuery, removeKeysFromUrlQuery } from '@/lib/url';
+import { cn } from '@/lib/utils';
 
 interface HomeFilterProps {
   onFilter: (filter: string) => void;

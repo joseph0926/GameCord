@@ -1,9 +1,9 @@
+import { X } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { ROUTES } from '@/constants/routes';
 import { cn, getDeviconClassName } from '@/lib/utils';
 import { Badge } from '../ui/badge';
-import { ROUTES } from '@/constants/routes';
-import { X } from 'lucide-react';
 
 interface Props {
   _id: string;

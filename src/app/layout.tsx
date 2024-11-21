@@ -1,10 +1,10 @@
+import './globals.css';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import './globals.css';
-import { cn } from '@/lib/utils';
-import { SessionProvider } from '@/providers/session.provider';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
+import { cn } from '@/lib/utils';
+import { SessionProvider } from '@/providers/session.provider';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',

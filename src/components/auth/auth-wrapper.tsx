@@ -1,7 +1,7 @@
 'use client';
 
-import { containerVariants, itemVariants } from '@/constants/auth';
 import { motion } from 'framer-motion';
+import { containerVariants, itemVariants } from '@/constants/auth';
 import { SocialAuthForm } from './social-auth-form';
 
 export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {

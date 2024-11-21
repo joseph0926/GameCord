@@ -1,12 +1,12 @@
 import {
-  Home,
-  Users,
-  User,
-  PenSquare,
   GamepadIcon,
   Hash,
   Headphones,
+  Home,
+  PenSquare,
   Trophy,
+  User,
+  Users,
 } from 'lucide-react';
 
 export const sidebarLinks = [

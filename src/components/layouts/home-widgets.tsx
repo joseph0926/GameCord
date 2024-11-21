@@ -1,7 +1,7 @@
+import Link from 'next/link';
 import { hotPosts, popularTags } from '@/constants/layout';
 import { ROUTES } from '@/constants/routes';
 import { Button } from '../ui/button';
-import Link from 'next/link';
 
 export function HomeWidgets() {
   return (

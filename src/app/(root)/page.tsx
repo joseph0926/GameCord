@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ROUTES } from '@/constants/routes';
 import { SearchContainer } from '@/components/home/search-container';
-import { posts } from '@/constants/layout';
 import { HomeWidgets } from '@/components/layouts/home-widgets';
+import { Button } from '@/components/ui/button';
+import { posts } from '@/constants/layout';
+import { ROUTES } from '@/constants/routes';
 
 type SearchParams = {
   searchParams: Promise<{ [key: string]: string }>;

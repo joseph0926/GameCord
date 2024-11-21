@@ -1,15 +1,15 @@
+import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
-  SheetTrigger,
+  SheetClose,
   SheetContent,
   SheetTitle,
-  SheetClose,
+  SheetTrigger,
 } from '@/components/ui/sheet';
 import { ROUTES } from '@/constants/routes';
 import { NavLinks } from './nav-links';
-import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 
 export const MobileNavbar = () => {
   return (

@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Search, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { usePathname,useRouter, useSearchParams } from 'next/navigation';
+import { useState, useTransition } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { formUrlQuery, removeKeysFromUrlQuery } from '@/lib/url';
+import { cn } from '@/lib/utils';
 
 interface LocalSearchProps {
   route: string;

@@ -1,35 +1,34 @@
 'use client';
 
+import '@mdxeditor/editor/style.css';
+import './dark-editor.css';
 import {
-  MDXEditor,
-  UndoRedo,
   BoldItalicUnderlineToggles,
-  toolbarPlugin,
   CodeToggle,
-  headingsPlugin,
-  listsPlugin,
-  linkPlugin,
-  quotePlugin,
-  markdownShortcutPlugin,
-  ListsToggle,
-  linkDialogPlugin,
+  ConditionalContents,
   CreateLink,
+  diffSourcePlugin,
+  headingsPlugin,
+  imagePlugin,
   InsertImage,
   InsertTable,
-  tablePlugin,
-  imagePlugin,
-  ConditionalContents,
-  Separator,
   InsertThematicBreak,
-  diffSourcePlugin,
+  linkDialogPlugin,
+  linkPlugin,
+  listsPlugin,
+  ListsToggle,
+  markdownShortcutPlugin,
+  MDXEditor,
   MDXEditorMethods,
+  quotePlugin,
+  Separator,
+  tablePlugin,
+  toolbarPlugin,
+  UndoRedo,
 } from '@mdxeditor/editor';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Ref } from 'react';
-
-import '@mdxeditor/editor/style.css';
-import './dark-editor.css';
 
 interface Props {
   value: string;

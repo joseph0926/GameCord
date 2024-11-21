@@ -1,11 +1,11 @@
+import { Eye,MessageSquare, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import { getTimeStamp } from '@/lib/utils';
 import { ROUTES } from '@/constants/routes';
-import { TagCard } from './tag-card';
-import { Metric } from '../ui/metric';
+import { getTimeStamp } from '@/lib/utils';
 import { PostType, TagType } from '@/types/post.type';
-import { ThumbsUp, MessageSquare, Eye } from 'lucide-react';
+import { Metric } from '../ui/metric';
+import { TagCard } from './tag-card';
 
 interface PostCardProps {
   post: PostType;
