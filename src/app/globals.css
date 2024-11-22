@@ -73,10 +73,20 @@ body {
 
 @layer utilities {
   .markdown {
-    @apply prose prose-p:text-foreground prose-ol:text-foreground prose-ul:text-muted-foreground prose-headings:text-foreground prose-h1:scroll-m-20 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:scroll-m-20 prose-h2:border-b prose-h2:pb-2 prose-h2:text-3xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:first:mt-0 prose-strong:text-foreground prose-strong:font-semibold prose-blockquote:text-muted-foreground prose-blockquote:border-l-2 prose-blockquote:pl-6 prose-blockquote:italic max-w-full;
+    @apply prose max-w-full prose-headings:text-foreground prose-h1:scroll-m-20 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:scroll-m-20 prose-h2:border-b prose-h2:pb-2 prose-h2:text-3xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:first:mt-0 prose-p:text-foreground prose-blockquote:border-l-2 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-muted-foreground prose-strong:font-semibold prose-strong:text-foreground prose-ol:text-foreground prose-ul:text-muted-foreground;
   }
 
   .markdown-editor {
-    @apply prose prose-p:m-0 prose-p:text-foreground prose-ul:text-foreground prose-ol:text-foreground prose-headings:text-foreground prose-h1:scroll-m-20 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:scroll-m-20 prose-h2:text-3xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:first:mt-0 prose-strong:text-foreground prose-strong:font-semibold prose-blockquote:text-muted-foreground prose-blockquote:border-l-2 prose-blockquote:pl-6 max-w-full;
+    @apply prose max-w-full prose-headings:text-foreground prose-h1:scroll-m-20 prose-h1:text-4xl prose-h1:font-extrabold prose-h1:tracking-tight prose-h2:scroll-m-20 prose-h2:text-3xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:first:mt-0 prose-p:m-0 prose-p:text-foreground prose-blockquote:border-l-2 prose-blockquote:pl-6 prose-blockquote:text-muted-foreground prose-strong:font-semibold prose-strong:text-foreground prose-ol:text-foreground prose-ul:text-foreground;
+  }
+
+  .sidebar-expanded {
+    @apply sm:ml-[220px];
+    transition: margin-left 0.2s ease-in-out;
+  }
+
+  .sidebar-collapsed {
+    @apply sm:ml-[80px];
+    transition: margin-left 0.2s ease-in-out;
   }
 }

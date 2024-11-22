@@ -12,42 +12,42 @@ import {
 export const sidebarLinks = [
   {
     icon: Home,
-    route: '/',
+    href: '/',
     label: '홈',
   },
   {
     icon: GamepadIcon,
-    route: '/games',
+    href: '/games',
     label: '게임',
   },
   {
     icon: Users,
-    route: '/communities',
+    href: '/communities',
     label: '커뮤니티',
   },
   {
     icon: Headphones,
-    route: '/voice-channels',
+    href: '/voice-channels',
     label: '음성채널',
   },
   {
     icon: Trophy,
-    route: '/achievements',
+    href: '/achievements',
     label: '업적',
   },
   {
     icon: Hash,
-    route: '/tags',
+    href: '/tags',
     label: '태그',
   },
   {
     icon: User,
-    route: '/profile',
+    href: '/profile',
     label: '프로필',
   },
   {
     icon: PenSquare,
-    route: '/create-post',
+    href: '/create-post',
     label: '글쓰기',
   },
 ];

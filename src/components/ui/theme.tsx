@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const Theme = () => {
+export const Theme = () => {
   const { setTheme } = useTheme();
 
   return (
@@ -37,5 +37,3 @@ const Theme = () => {
     </DropdownMenu>
   );
 };
-
-export default Theme;

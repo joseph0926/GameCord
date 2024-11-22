@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence,motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
@@ -39,11 +39,11 @@ export const NavLinks = ({
     <>
       {sidebarLinks.map((item) => {
         const isActive =
-          (pathname.includes(item.route) && item.route.length > 1) ||
-          pathname === item.route;
+          (pathname.includes(item.href) && item.href.length > 1) ||
+          pathname === item.href;
 
-        if (item.route === '/profile') {
-          if (userId) item.route = `${item.route}/${userId}`;
+        if (item.href === '/profile') {
+          if (userId) item.href = `${item.href}/${userId}`;
           else return null;
         }
 
@@ -55,7 +55,7 @@ export const NavLinks = ({
             transition={{ duration: 0.2 }}
           >
             <Link
-              href={item.route}
+              href={item.href}
               key={item.label}
               className={cn(
                 isActive
@@ -95,11 +95,11 @@ export const NavLinks = ({
         );
 
         return isMobileNav ? (
-          <SheetClose asChild key={item.route}>
+          <SheetClose asChild key={item.href}>
             {LinkComponent}
           </SheetClose>
         ) : (
-          <React.Fragment key={item.route}>{LinkComponent}</React.Fragment>
+          <React.Fragment key={item.href}>{LinkComponent}</React.Fragment>
         );
       })}
     </>

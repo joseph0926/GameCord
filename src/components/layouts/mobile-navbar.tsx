@@ -15,7 +15,7 @@ export const MobileNavbar = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <HamburgerMenuIcon className="size-9 dark:invert sm:hidden" />
+        <HamburgerMenuIcon className="absolute left-4 top-4 size-8 dark:invert sm:hidden" />
       </SheetTrigger>
       <SheetContent
         side="left"
