@@ -2,6 +2,9 @@
 
 GameCord는 Reddit의 커뮤니티 중심 콘텐츠 구조와 Discord의 실시간 소통 기능을 결합한 새로운 형태의 게임 커뮤니티 플랫폼입니다. 게이머들이 좋아하는 게임에 대해 깊이 있는 토론을 나누고, 실시간으로 소통하며, 게임 관련 콘텐츠를 공유할 수 있는 통합 환경을 제공합니다.
 
+![game-cord-01](https://github.com/user-attachments/assets/20ede141-5b6a-451a-8ad5-d5a3413aee56)
+
+
 ## 🎮 주요 기능
 
 ### 커뮤니티 기능
