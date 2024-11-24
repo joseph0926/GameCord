@@ -4,7 +4,6 @@ GameCord는 Reddit의 커뮤니티 중심 콘텐츠 구조와 Discord의 실시�
 
 ![game-cord-01](https://github.com/user-attachments/assets/20ede141-5b6a-451a-8ad5-d5a3413aee56)
 
-
 ## 🎮 주요 기능
 
 ### 커뮤니티 기능
@@ -54,7 +53,7 @@ GameCord는 Reddit의 커뮤니티 중심 콘텐츠 구조와 Discord의 실시�
 ### 백엔드
 
 - **데이터베이스:** MongoDB
-- **ORM:** Prisma
+- **ORM:** Mongoose
 - **캐싱:** Redis
 
 ## 🎯 1차 개발 목표 (MVP)
@@ -102,16 +101,6 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-## 💾 데이터베이스 설정
-
-```bash
-# Prisma 클라이언트 생성
-pnpm prisma generate
-
-# 마이그레이션 실행
-pnpm prisma migrate dev
-```
-
 ## 📦 환경 변수
 
 ```sh
@@ -121,8 +110,6 @@ DATABASE_URL= # MongoDB 연결 문자열
 AUTH_SECRET=
 AUTH_GOOGLE_ID=
 AUTH_GOOGLE_SECRET=
-AUTH_GITHUB_ID=
-AUTH_GITHUB_SECRET=
 ```
 
 ## 🌟 주요 차별점
