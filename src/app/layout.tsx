@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
+import { QueryProvider } from '@/providers/query.provider';
 import { SessionProvider } from '@/providers/session.provider';
 
 const pretendard = localFont({
@@ -25,19 +26,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <SessionProvider>
-        <body className={cn(pretendard.className, 'antialiased')}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster richColors closeButton position="top-right" />
-          </ThemeProvider>
-        </body>
-      </SessionProvider>
+      <QueryProvider>
+        <SessionProvider>
+          <body className={cn(pretendard.className, 'antialiased')}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster richColors closeButton position="top-right" />
+            </ThemeProvider>
+          </body>
+        </SessionProvider>
+      </QueryProvider>
     </html>
   );
 }
