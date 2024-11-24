@@ -11,7 +11,7 @@ import { Button } from '../ui/button';
 
 export const SocialAuthForm = () => {
   const buttonClass =
-    'relative overflow-hidden min-h-12 flex-1 rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3.5 text-base font-medium text-zinc-700 shadow-sm transition-all hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700';
+    'relative w-full overflow-hidden min-h-12 flex-1 rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3.5 text-base font-medium text-zinc-700 shadow-sm transition-all hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700';
 
   const handleSignIn = async (provider: 'github' | 'google') => {
     try {
@@ -40,25 +40,6 @@ export const SocialAuthForm = () => {
         whileTap="tap"
         className="flex-1"
       >
-        <Button className={buttonClass} onClick={() => handleSignIn('github')}>
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-violet-600/10 opacity-0 transition-opacity duration-300 hover:opacity-100" />
-          <Image
-            src="/icons/github.svg"
-            alt="Github Logo"
-            width={20}
-            height={20}
-            className="mr-2.5 object-contain invert"
-          />
-          <span>GitHub 로그인</span>
-        </Button>
-      </motion.div>
-
-      <motion.div
-        variants={buttonVariants}
-        whileHover="hover"
-        whileTap="tap"
-        className="flex-1"
-      >
         <Button className={buttonClass} onClick={() => handleSignIn('google')}>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-violet-600/10 opacity-0 transition-opacity duration-300 hover:opacity-100" />
           <Image
@@ -66,7 +47,7 @@ export const SocialAuthForm = () => {
             alt="Google Logo"
             width={20}
             height={20}
-            className="mr-2.5 object-contain invert"
+            className="mr-2.5 object-contain invert-0 dark:invert"
           />
           <span>Google 로그인</span>
         </Button>
