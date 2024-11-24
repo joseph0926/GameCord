@@ -9,10 +9,15 @@ generator client {
 
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
+  name          String
+  username      String    @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
+  bio           String?
+  location      String?
+  portfolio     String?
+  reputation    Int       @default(0)
   accounts      Account[]
   sessions      Session[]
 
@@ -26,6 +31,9 @@ model Account {
   type              String
   provider          String
   providerAccountId String
+  name              String
+  image             String?
+  password          String?
   refresh_token     String? @db.String
   access_token      String? @db.String
   expires_at        Int?
