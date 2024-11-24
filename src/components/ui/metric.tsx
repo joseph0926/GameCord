@@ -13,6 +13,7 @@ interface MetricProps {
   textStyles: string;
   isAuthor?: boolean;
   iconStyles?: string;
+  titleComponent?: JSX.Element;
 }
 
 export const Metric = ({
@@ -24,6 +25,7 @@ export const Metric = ({
   textStyles,
   iconStyles,
   isAuthor,
+  titleComponent,
 }: MetricProps) => {
   const metricContent = (
     <>
@@ -52,6 +54,7 @@ export const Metric = ({
           )}
         >
           {title}
+          {titleComponent}
         </span>
       </p>
     </>

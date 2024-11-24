@@ -5,7 +5,6 @@ import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
 import { cn } from '@/lib/utils';
 import { QueryProvider } from '@/providers/query.provider';
-import { SessionProvider } from '@/providers/session.provider';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -26,21 +25,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <QueryProvider>
-        <SessionProvider>
-          <body className={cn(pretendard.className, 'antialiased')}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-              <Toaster richColors closeButton position="top-right" />
-            </ThemeProvider>
-          </body>
-        </SessionProvider>
-      </QueryProvider>
+      <body className={cn(pretendard.className, 'antialiased')}>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster richColors closeButton position="top-right" />
+          </ThemeProvider>
+        </QueryProvider>
+      </body>
     </html>
   );
 }

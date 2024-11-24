@@ -1,10 +1,10 @@
-import { Eye,MessageSquare, ThumbsUp } from 'lucide-react';
+import { Eye, MessageSquare, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { ROUTES } from '@/constants/routes';
-import { getTimeStamp } from '@/lib/utils';
 import { PostType, TagType } from '@/types/post.type';
 import { Metric } from '../ui/metric';
+import { PostTime } from './post-time';
 import { TagCard } from './tag-card';
 
 interface PostCardProps {
@@ -19,7 +19,7 @@ export const PostCard = ({
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
           <span className="line-clamp-1 flex text-sm text-gray-500 dark:text-gray-400 sm:hidden">
-            {getTimeStamp(createdAt)}
+            <PostTime date={createdAt} />
           </span>
 
           <Link href={ROUTES.POST(_id)}>
@@ -41,7 +41,8 @@ export const PostCard = ({
           Icon={author.image}
           alt={author.name}
           value={author.name}
-          title={`• asked ${getTimeStamp(createdAt)}`}
+          title={`• asked `}
+          titleComponent={<PostTime date={createdAt} />}
           href={ROUTES.PROFILE(author._id)}
           textStyles="text-sm text-gray-500 dark:text-gray-400"
           isAuthor
