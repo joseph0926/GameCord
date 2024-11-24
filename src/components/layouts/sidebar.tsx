@@ -4,11 +4,10 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, Gamepad2, LogIn, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Theme } from '@/components/ui/theme';
 import { sidebarLinks } from '@/constants/layout';
-import { useSidebarStore } from '@/hooks/use-sidebar';
 import { cn } from '@/lib/utils';
 import { MobileNavbar } from './mobile-navbar';
 import { NavItem } from './nav-item';
@@ -16,17 +15,7 @@ import { NavItem } from './nav-item';
 export const Sidebar = () => {
   const router = useRouter();
 
-  const { isCollapsed, toggleCollapse } = useSidebarStore();
-
-  useEffect(() => {
-    const body = document.body;
-    body.classList.toggle('sidebar-collapsed', isCollapsed);
-    body.classList.toggle('sidebar-expanded', !isCollapsed);
-
-    return () => {
-      body.classList.remove('sidebar-collapsed', 'sidebar-expanded');
-    };
-  }, [isCollapsed]);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
   const sidebarVariants = {
     expanded: {
@@ -56,7 +45,7 @@ export const Sidebar = () => {
         initial="expanded"
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         variants={sidebarVariants}
-        className="scrollbar-thin fixed left-0 top-0 z-40 hidden h-screen flex-col justify-between border-r border-gray-200 bg-white p-4 pt-20 shadow-lg dark:border-gray-700 dark:bg-gray-800 sm:flex"
+        className="scrollbar-thin relative z-40 hidden h-screen flex-col justify-between border-r border-gray-200 bg-white p-4 pt-20 shadow-lg dark:border-gray-700 dark:bg-gray-800 sm:flex"
       >
         <nav className="flex flex-1 flex-col gap-2">
           <div className="mb-8 flex items-center justify-center">
@@ -119,7 +108,7 @@ export const Sidebar = () => {
           initial="expanded"
           animate={isCollapsed ? 'collapsed' : 'expanded'}
           variants={toggleButtonVariants}
-          onClick={toggleCollapse}
+          onClick={() => setIsCollapsed((prevState) => !prevState)}
           className="absolute -right-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <ChevronLeft className="h-4 w-4" />
