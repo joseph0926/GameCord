@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AnimatePresence,motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
 import {
   DefaultValues,

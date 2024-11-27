@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { LucideIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';

@@ -26,7 +26,7 @@ import {
   toolbarPlugin,
   UndoRedo,
 } from '@mdxeditor/editor';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 import { Ref } from 'react';
 

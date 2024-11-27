@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { ChevronLeft, Gamepad2, LogIn, UserPlus } from 'lucide-react';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';

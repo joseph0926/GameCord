@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MDXEditorMethods } from '@mdxeditor/editor';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import dynamic from 'next/dynamic';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';

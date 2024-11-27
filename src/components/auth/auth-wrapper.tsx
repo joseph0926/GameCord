@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { containerVariants, itemVariants } from '@/constants/auth';
 import { SocialAuthForm } from './social-auth-form';
 
