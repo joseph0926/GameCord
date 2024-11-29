@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   DefaultValues,
   FieldValues,
@@ -10,6 +11,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z, ZodType } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,11 +24,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { ROUTES } from '@/constants/routes';
+import { ActionResponse } from '@/types/api.type';
 
 interface AuthFormProps<T extends FieldValues> {
   schema: ZodType<T>;
   defaultValues: T;
-  onSubmit: (data: T) => Promise<{ success: boolean }>;
+  onSubmit: (data: T) => Promise<ActionResponse>;
   formType: 'SIGN_IN' | 'SIGN_UP';
 }
 
@@ -34,13 +37,38 @@ export const AuthForm = <T extends FieldValues>({
   schema,
   defaultValues,
   formType,
+  onSubmit,
 }: AuthFormProps<T>) => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  const handleSubmit: SubmitHandler<T> = async () => {};
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    const result = await onSubmit(data);
+
+    if (result?.success) {
+      toast.success(
+        formType === 'SIGN_IN'
+          ? '로그인에 성공하였습니다.'
+          : '회원가입에 성공하였습니다.'
+      );
+
+      router.push(ROUTES.HOME);
+    } else {
+      if (result.error) {
+        toast.error(result.error?.message);
+      } else {
+        toast.error(
+          formType === 'SIGN_IN'
+            ? '로그인에 실패하였습니다.'
+            : '회원가입에 실패하였습니다.'
+        );
+      }
+    }
+  };
 
   const buttonText = formType === 'SIGN_IN' ? '로그인' : '회원가입';
 

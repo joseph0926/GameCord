@@ -7,20 +7,21 @@ import React from 'react';
 import { toast } from 'sonner';
 import { buttonVariants } from '@/constants/auth';
 import { ROUTES } from '@/constants/routes';
+import logger from '@/lib/logger';
 import { Button } from '../ui/button';
 
 export const SocialAuthForm = () => {
   const buttonClass =
     'relative w-full overflow-hidden min-h-12 flex-1 rounded-md border border-zinc-200 bg-zinc-50 px-4 py-3.5 text-base font-medium text-zinc-700 shadow-sm transition-all hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700';
 
-  const handleSignIn = async (provider: 'github' | 'google') => {
+  const handleSignIn = async (provider: 'google') => {
     try {
       await signIn(provider, {
         callbackUrl: ROUTES.HOME,
         redirect: false,
       });
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       toast.error(
         error instanceof Error ? error.message : '로그인 중 오류가 발생했습니다'
       );

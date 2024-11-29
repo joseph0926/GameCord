@@ -42,19 +42,47 @@ export async function fetchHandler<T>(
     clearTimeout(id);
 
     if (!response.ok) {
-      throw new RequestError(response.status, `HTTP error: ${response.status}`);
+      throw new RequestError(
+        response.status,
+        `HTTP 요청 실패: ${response.status} - ${getStatusMessage(response.status)}`
+      );
     }
 
     return await response.json();
   } catch (err) {
-    const error = isError(err) ? err : new Error('Unknown error');
+    const error = isError(err)
+      ? err
+      : new Error('알 수 없는 오류가 발생했습니다');
 
     if (error.name === 'AbortError') {
-      logger.warn(`Request to ${url} timed out`);
+      logger.warn(
+        `[요청 시간 초과] URL: ${url}, 제한 시간: ${timeout}ms를 초과하였습니다`
+      );
     } else {
-      logger.error(`Error fetching ${url}: ${error.message}`);
+      logger.error(
+        `[API 요청 실패] URL: ${url}, 오류 내용: ${error.message}, 요청 방식: ${
+          config.method || 'GET'
+        }`
+      );
     }
 
     return handleError(error) as ActionResponse<T>;
   }
+}
+
+function getStatusMessage(status: number): string {
+  const statusMessages: Record<number, string> = {
+    400: '잘못된 요청입니다',
+    401: '인증이 필요합니다',
+    403: '접근이 거부되었습니다',
+    404: '요청한 리소스를 찾을 수 없습니다',
+    408: '요청 시간이 초과되었습니다',
+    429: '너무 많은 요청이 발생했습니다',
+    500: '서버 내부 오류가 발생했습니다',
+    502: '게이트웨이 오류가 발생했습니다',
+    503: '서비스를 사용할 수 없습니다',
+    504: '게이트웨이 시간 초과가 발생했습니다',
+  };
+
+  return statusMessages[status] || '알 수 없는 오류가 발생했습니다';
 }

@@ -1,4 +1,4 @@
-import { type ClassValue,clsx } from 'clsx';
+import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { techMap } from '@/constants/tech';
 
@@ -35,4 +35,15 @@ export const getTimeStamp = (date: Date) => {
     }
   }
   return 'just now';
+};
+
+export const createUniqueUsername = (username: string): string => {
+  const base = username
+    .replace(/[^\w\s가-힣]/g, '')
+    .replace(/\s+/g, '_')
+    .toLowerCase()
+    .trim();
+
+  const randomSuffix = Math.random().toString(36).substring(2, 6);
+  return `${base}_${randomSuffix}`;
 };
