@@ -2,11 +2,14 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MDXEditorMethods } from '@mdxeditor/editor';
+import { Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import dynamic from 'next/dynamic';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { z } from 'zod';
+import { createPost } from '@/actions/post.action';
 import {
   Card,
   CardContent,
@@ -85,8 +88,16 @@ export const CreatePostForm = () => {
     }
   };
 
-  const handleCreateQuestion = (data: z.infer<typeof CreatePostSchema>) => {
-    console.log(data);
+  const handleCreatePost = async (data: z.infer<typeof CreatePostSchema>) => {
+    try {
+      await createPost(data);
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : '게시글 생성 중 오류가 발생했습니다'
+      );
+    }
   };
 
   return (
@@ -108,7 +119,7 @@ export const CreatePostForm = () => {
           <Form {...form}>
             <form
               className="flex w-full flex-col space-y-8"
-              onSubmit={form.handleSubmit(handleCreateQuestion)}
+              onSubmit={form.handleSubmit(handleCreatePost)}
             >
               <motion.div variants={itemAnimation}>
                 <FormField
@@ -229,7 +240,11 @@ export const CreatePostForm = () => {
                   size="lg"
                   className="bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
                 >
-                  게시글 작성
+                  {form.formState.isSubmitting ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    '게시글 작성'
+                  )}
                 </Button>
               </motion.div>
             </form>

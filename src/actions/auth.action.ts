@@ -8,7 +8,7 @@ import User from '@/database/user.model';
 import handleError from '@/lib/error-handler';
 import { NotFoundError } from '@/lib/http-errors';
 import { SignInSchema, SignUpSchema } from '@/schemas/auth.schema';
-import { ActionResponse, ErrorResponse } from '@/types/api.type';
+import { ActionResponse } from '@/types/api.type';
 import { AuthCredentials } from '@/types/auth.type';
 import action from './action.handler';
 
@@ -18,7 +18,7 @@ export async function signUpWithCredentials(
   const validationResult = await action({ params, schema: SignUpSchema });
 
   if (validationResult instanceof Error) {
-    return handleError(validationResult) as ErrorResponse;
+    return handleError(validationResult);
   }
 
   const { name, username, email, password } = validationResult.params!;
@@ -66,7 +66,7 @@ export async function signUpWithCredentials(
   } catch (error) {
     await session.abortTransaction();
 
-    return handleError(error) as ErrorResponse;
+    return handleError(error);
   } finally {
     await session.endSession();
   }
@@ -78,7 +78,7 @@ export async function signInWithCredentials(
   const validationResult = await action({ params, schema: SignInSchema });
 
   if (validationResult instanceof Error) {
-    return handleError(validationResult) as ErrorResponse;
+    return handleError(validationResult);
   }
 
   const { email, password } = validationResult.params!;
@@ -106,6 +106,6 @@ export async function signInWithCredentials(
 
     return { success: true };
   } catch (error) {
-    return handleError(error) as ErrorResponse;
+    return handleError(error);
   }
 }

@@ -19,3 +19,9 @@ export type PostType = {
   answers: number;
   views: number;
 };
+
+export type PostPayload = {
+  title: string;
+  content: string;
+  tags: string[];
+};

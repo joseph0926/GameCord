@@ -7,7 +7,6 @@ import React from 'react';
 import { toast } from 'sonner';
 import { buttonVariants } from '@/constants/auth';
 import { ROUTES } from '@/constants/routes';
-import logger from '@/lib/logger';
 import { Button } from '../ui/button';
 
 export const SocialAuthForm = () => {
@@ -21,7 +20,6 @@ export const SocialAuthForm = () => {
         redirect: false,
       });
     } catch (error) {
-      logger.error(error);
       toast.error(
         error instanceof Error ? error.message : '로그인 중 오류가 발생했습니다'
       );
