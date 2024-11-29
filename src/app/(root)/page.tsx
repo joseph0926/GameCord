@@ -25,14 +25,14 @@ export default async function Home({ searchParams }: SearchParams) {
       <div className="flex-1">
         <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            All Posts
+            게임 피드
           </h1>
           <Button
             variant="default"
             className="primary-gradient min-h-[46px] px-4 py-3"
             asChild
           >
-            <Link href={ROUTES.CREATE_POST}>Create Post</Link>
+            <Link href={ROUTES.CREATE_POST}>새 게시물 작성</Link>
           </Button>
         </section>
 

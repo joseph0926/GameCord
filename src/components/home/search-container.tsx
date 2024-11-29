@@ -1,6 +1,6 @@
 'use client';
 
-import { useDeferredValue, useMemo,useState } from 'react';
+import { useDeferredValue, useMemo, useState } from 'react';
 import { PostList } from '@/components/home/post-list';
 import type { PostType } from '@/types/post.type';
 import { HomeFilter } from './home-filter';
@@ -59,7 +59,7 @@ export function SearchContainer({
       <section className="mt-11">
         <LocalSearch
           route="/"
-          placeholder="Search posts..."
+          placeholder="검색"
           otherClasses="flex-1"
           onSearch={setSearchQuery}
         />

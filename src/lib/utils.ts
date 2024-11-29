@@ -1,17 +1,23 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { techMap } from '@/constants/tech';
+import { gameIconMap } from '@/constants/game-icon';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const getDeviconClassName = (techName: string) => {
-  const normalizedTechName = techName.replace(/[ .]/g, '').toLowerCase();
+export const getGameIconClassName = (gameName: string) => {
+  const normalizedName = gameName.toLowerCase().trim();
 
-  return techMap[normalizedTechName]
-    ? `${techMap[normalizedTechName]} colored`
-    : 'devicon-devicon-plain';
+  if (gameIconMap[normalizedName]) {
+    return gameIconMap[normalizedName];
+  }
+
+  const partialMatch = Object.keys(gameIconMap).find((key) =>
+    normalizedName.includes(key)
+  );
+
+  return partialMatch ? gameIconMap[partialMatch] : 'fa-solid fa-gamepad';
 };
 
 export const getTimeStamp = (date: Date) => {
@@ -19,22 +25,22 @@ export const getTimeStamp = (date: Date) => {
   const secondsAgo = Math.floor((now.getTime() - date.getTime()) / 1000);
 
   const units = [
-    { label: 'year', seconds: 31536000 },
-    { label: 'month', seconds: 2592000 },
-    { label: 'week', seconds: 604800 },
-    { label: 'day', seconds: 86400 },
-    { label: 'hour', seconds: 3600 },
-    { label: 'minute', seconds: 60 },
-    { label: 'second', seconds: 1 },
+    { label: '년', seconds: 31536000 },
+    { label: '개월', seconds: 2592000 },
+    { label: '주', seconds: 604800 },
+    { label: '일', seconds: 86400 },
+    { label: '시간', seconds: 3600 },
+    { label: '분', seconds: 60 },
+    { label: '초', seconds: 1 },
   ];
 
   for (const unit of units) {
     const interval = Math.floor(secondsAgo / unit.seconds);
     if (interval >= 1) {
-      return `${interval} ${unit.label}${interval > 1 ? 's' : ''} ago`;
+      return `${interval}${unit.label} 전`;
     }
   }
-  return 'just now';
+  return '방금 전';
 };
 
 export const createUniqueUsername = (username: string): string => {

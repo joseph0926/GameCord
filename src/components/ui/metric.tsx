@@ -28,7 +28,7 @@ export const Metric = ({
   titleComponent,
 }: MetricProps) => {
   const metricContent = (
-    <>
+    <div className="flex items-center gap-1">
       {typeof Icon === 'string' ? (
         <Image
           src={Icon}
@@ -43,10 +43,7 @@ export const Metric = ({
           className={cn('text-gray-500 dark:text-gray-400', iconStyles)}
         />
       )}
-
       <p className={cn(textStyles, 'flex items-center gap-1')}>
-        {value}
-
         <span
           className={cn(
             'line-clamp-1 text-sm font-normal',
@@ -56,8 +53,9 @@ export const Metric = ({
           {title}
           {titleComponent}
         </span>
+        {value}
       </p>
-    </>
+    </div>
   );
 
   return href ? (

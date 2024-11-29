@@ -45,7 +45,7 @@ export const Sidebar = () => {
         initial="expanded"
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         variants={sidebarVariants}
-        className="scrollbar-thin relative z-40 hidden h-screen flex-col justify-between border-r border-gray-200 bg-white p-4 pt-20 shadow-lg dark:border-gray-700 dark:bg-gray-800 sm:flex"
+        className="scrollbar-thin relative z-40 hidden h-screen flex-col justify-between border-r border-gray-200 bg-white p-4 pt-10 shadow-lg dark:border-gray-700 dark:bg-gray-800 sm:flex"
       >
         <nav className="flex flex-1 flex-col gap-2">
           <div className="mb-8 flex items-center justify-center">

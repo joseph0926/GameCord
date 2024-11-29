@@ -11,9 +11,11 @@ export function PostList({ posts, isFiltering }: PostListProps) {
   if (posts.length === 0) {
     return (
       <div className="mt-10 flex flex-col items-center gap-2">
-        <p className="text-gray-600 dark:text-gray-400">No posts found</p>
+        <p className="text-gray-600 dark:text-gray-400">
+          게시물을 찾을 수 없습니다
+        </p>
         <p className="text-sm text-gray-500 dark:text-gray-500">
-          Try different search terms or filters
+          다른 검색어나 필터를 시도해보세요
         </p>
       </div>
     );

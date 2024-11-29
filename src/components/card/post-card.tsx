@@ -41,7 +41,7 @@ export const PostCard = ({
           Icon={author.image}
           alt={author.name}
           value={author.name}
-          title={`• asked `}
+          title={``}
           titleComponent={<PostTime date={createdAt} />}
           href={ROUTES.PROFILE(author._id)}
           textStyles="text-sm text-gray-500 dark:text-gray-400"
@@ -53,21 +53,21 @@ export const PostCard = ({
             Icon={ThumbsUp}
             alt="like"
             value={upvotes}
-            title=" Votes"
+            title=" 좋아요"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
           <Metric
             Icon={MessageSquare}
-            alt="answers"
+            alt="comments"
             value={answers}
-            title=" Answers"
+            title=" 댓글"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
           <Metric
             Icon={Eye}
             alt="views"
             value={views}
-            title=" Views"
+            title=" 조회수"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
         </div>
