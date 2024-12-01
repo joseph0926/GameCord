@@ -55,6 +55,7 @@ GameCord는 Reddit의 커뮤니티 중심 콘텐츠 구조와 Discord의 실시�
 - **데이터베이스:** MongoDB
 - **ORM:** Mongoose
 - **캐싱:** Redis
+- **모니터링:** ELK(Elasticsearch, Logstash, Kibana)
 
 ## 🎯 1차 개발 목표 (MVP)
 
