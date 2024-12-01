@@ -4,8 +4,7 @@ export interface IPost {
   title: string;
   content: string;
   authorId: Types.ObjectId;
-  subcordId: Types.ObjectId;
-  tags: string[];
+  tags: Types.ObjectId[];
   upvotes: Types.ObjectId[];
   downvotes: Types.ObjectId[];
   media?: {
@@ -21,8 +20,7 @@ const PostSchema = new Schema<IPost>(
     title: { type: String, required: true },
     content: { type: String, required: true },
     authorId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    subcordId: { type: Schema.Types.ObjectId, ref: 'Subcord', required: true },
-    tags: [{ type: String }],
+    tags: [{ type: Schema.Types.ObjectId, ref: 'Tag', required: true }],
     upvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     downvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     media: [

@@ -5,6 +5,7 @@ import { MDXEditorMethods } from '@mdxeditor/editor';
 import { Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -38,6 +39,8 @@ const Editor = dynamic(() => import('@/components/editor'), {
 });
 
 export const CreatePostForm = () => {
+  const router = useRouter();
+
   const editorRef = useRef<MDXEditorMethods>(null);
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
@@ -90,8 +93,16 @@ export const CreatePostForm = () => {
 
   const handleCreatePost = async (data: z.infer<typeof CreatePostSchema>) => {
     try {
-      await createPost(data);
+      const response = await createPost(data);
+      if (!response.success) {
+        throw new Error(response.error?.message || 'Unknown error');
+      } else {
+        form.reset();
+        toast.success('게시글이 생성되었습니다.');
+        router.push('/');
+      }
     } catch (error) {
+      console.error('create post submit error:', error);
       toast.error(
         error instanceof Error
           ? error.message

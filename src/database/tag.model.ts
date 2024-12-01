@@ -1,10 +1,10 @@
-import { Document, model, models, Schema } from 'mongoose';
+import { Document, model, models, Schema, Types } from 'mongoose';
 
 export interface ITag {
   name: string;
   description?: string;
-  posts: number;
   followers: number;
+  posts: Types.ObjectId[];
 }
 
 export interface ITagDoc extends ITag, Document {}
@@ -13,8 +13,8 @@ const TagSchema = new Schema<ITag>(
   {
     name: { type: String, required: true, unique: true },
     description: { type: String },
-    posts: { type: Number, default: 0 },
     followers: { type: Number, default: 0 },
+    posts: [{ type: Schema.Types.ObjectId, ref: 'Post', required: true }],
   },
   { timestamps: true }
 );
