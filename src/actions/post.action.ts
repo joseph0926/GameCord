@@ -23,6 +23,7 @@ type SerializedPost = {
     type: 'image' | 'video' | 'clip';
     url: string;
   }[];
+  views: number;
   upvotes: string[];
   downvotes: string[];
 };
@@ -88,6 +89,7 @@ export async function createPost(
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
       media: post.media || [],
+      views: post.views,
       upvotes: post.upvotes.map((id: Types.ObjectId) => id.toString()),
       downvotes: post.downvotes.map((id: Types.ObjectId) => id.toString()),
     };

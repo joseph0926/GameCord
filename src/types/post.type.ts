@@ -20,6 +20,7 @@ export type PostType = {
   upvotes: string[];
   downvotes: string[];
   media: MediaType[];
+  views: number;
   createdAt: string;
   updatedAt: string;
   __v: number;

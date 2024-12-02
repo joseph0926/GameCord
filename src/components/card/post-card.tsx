@@ -1,4 +1,4 @@
-import { MessageSquare, ThumbsUp } from 'lucide-react';
+import { Eye, MessageSquare, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { ROUTES } from '@/constants/routes';
@@ -12,7 +12,7 @@ interface PostCardProps {
 }
 
 export const PostCard = ({
-  post: { _id, title, tags, author, createdAt, upvotes, comments },
+  post: { _id, title, tags, views, author, createdAt, upvotes, comments },
 }: PostCardProps) => {
   return (
     <div className="rounded-lg border bg-white p-9 shadow-sm dark:bg-gray-800 sm:px-11">
@@ -38,7 +38,7 @@ export const PostCard = ({
 
       <div className="mt-6 flex w-full flex-wrap justify-between gap-3">
         <Metric
-          Icon={author.image || ''}
+          Icon={author.image || 'https://github.com/shadcn.png'}
           alt={author.name}
           value={author.name}
           title={``}
@@ -63,13 +63,13 @@ export const PostCard = ({
             title=" 댓글"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
-          {/* <Metric
+          <Metric
             Icon={Eye}
             alt="views"
             value={views}
             title=" 조회수"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
-          /> */}
+          />
         </div>
       </div>
     </div>

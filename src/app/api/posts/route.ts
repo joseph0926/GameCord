@@ -10,6 +10,7 @@ export async function GET() {
     await dbConnect();
 
     const posts = await Post.find()
+      .sort({ createdAt: -1 })
       .populate({
         path: 'author',
         model: User,

@@ -7,6 +7,7 @@ export interface IPost {
   tags: Types.ObjectId[];
   upvotes: Types.ObjectId[];
   downvotes: Types.ObjectId[];
+  views: number;
   media?: {
     type: 'image' | 'video' | 'clip';
     url: string;
@@ -23,6 +24,7 @@ const PostSchema = new Schema<IPost>(
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag', required: true }],
     upvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     downvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    views: { type: Number, default: 0 },
     media: [
       {
         type: { type: String, enum: ['image', 'video', 'clip'] },

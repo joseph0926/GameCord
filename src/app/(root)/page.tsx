@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { SearchContainer } from '@/components/home/search-container';
 import { HomeWidgets } from '@/components/layouts/home-widgets';
+import { PostSkeleton } from '@/components/loading/post.loading';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { queryKeys } from '@/lib/query-keys';
@@ -32,7 +33,7 @@ export default async function Home({ searchParams }: SearchParams) {
   queryClient.prefetchQuery({
     queryKey: queryKeys.POSTS.DEFAULT,
     queryFn: api.posts.getAll,
-    staleTime: 10 * 1000,
+    staleTime: 3 * 60 * 1000,
   });
 
   return (
@@ -52,7 +53,7 @@ export default async function Home({ searchParams }: SearchParams) {
         </section>
 
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <Suspense fallback={null}>
+          <Suspense fallback={<PostSkeleton count={5} />}>
             <SearchContainer initialQuery={query} initialFilter={filter} />
           </Suspense>
         </HydrationBoundary>

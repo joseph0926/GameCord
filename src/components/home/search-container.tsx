@@ -1,95 +1,63 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useDeferredValue, useMemo, useState } from 'react';
-import { Suspense } from 'react';
+import { useCallback, useDeferredValue, useState } from 'react';
 import { ErrorBoundary } from '@/components/error/error-boundary';
 import { PostList } from '@/components/home/post-list';
 import { queryKeys } from '@/lib/query-keys';
 import { api } from '@/services/api';
+import { APIResponse } from '@/types/api.type';
 import { PostType } from '@/types/post.type';
 import { QueryErrorBoundary } from '../error/query-error';
-import { PostSkeleton } from '../loading/post.loading';
 import { HomeFilter } from './home-filter';
 import { LocalSearch } from './local-search';
+
+const filterPosts = (
+  posts: PostType[] | undefined,
+  query: string,
+  filter: string
+) => {
+  return posts?.filter((post) => {
+    const matchesQuery = post.title.toLowerCase().includes(query.toLowerCase());
+    const matchesFilter = filter
+      ? post.tags[0].name.toLowerCase() === filter.toLowerCase()
+      : true;
+    return matchesQuery && matchesFilter;
+  });
+};
 
 interface SearchContainerProps {
   initialQuery: string;
   initialFilter: string;
 }
 
-function SearchResults({
-  searchQuery,
-  filterQuery,
-  initialQuery,
-  initialFilter,
-}: {
-  searchQuery: string;
-  filterQuery: string;
-  initialQuery: string;
-  initialFilter: string;
-}) {
-  const deferredSearchQuery = useDeferredValue(searchQuery);
-  const deferredFilterQuery = useDeferredValue(filterQuery);
-
-  const { data: posts } = useSuspenseQuery({
-    queryKey: queryKeys.POSTS.DEFAULT,
-    queryFn: api.posts.getAll,
-    staleTime: 10 * 1000,
-    select: (data) => data.data,
-  });
-
-  const filterPosts = (
-    posts: PostType[] | undefined,
-    query: string,
-    filter: string
-  ) => {
-    return posts?.filter((post) => {
-      const matchesQuery = post.title
-        .toLowerCase()
-        .includes(query.toLowerCase());
-      const matchesFilter = filter
-        ? post.tags[0].name.toLowerCase() === filter.toLowerCase()
-        : true;
-      return matchesQuery && matchesFilter;
-    });
-  };
-
-  const initialFilteredPosts = useMemo(
-    () => filterPosts(posts, initialQuery, initialFilter),
-    [posts, initialQuery, initialFilter]
-  );
-
-  const filteredPosts = useMemo(() => {
-    if (
-      deferredSearchQuery === initialQuery &&
-      deferredFilterQuery === initialFilter
-    ) {
-      return initialFilteredPosts;
-    }
-
-    return filterPosts(posts, deferredSearchQuery, deferredFilterQuery);
-  }, [
-    posts,
-    deferredSearchQuery,
-    deferredFilterQuery,
-    initialFilteredPosts,
-    initialQuery,
-    initialFilter,
-  ]);
-
-  const isFiltering =
-    searchQuery !== deferredSearchQuery || filterQuery !== deferredFilterQuery;
-
-  return <PostList posts={filteredPosts || []} isFiltering={isFiltering} />;
-}
-
 export function SearchContainer({
   initialQuery,
   initialFilter,
 }: SearchContainerProps) {
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [filterQuery, setFilterQuery] = useState(initialFilter);
+  const [filters, setFilters] = useState({
+    search: initialQuery,
+    filter: initialFilter,
+  });
+  const deferredFilters = useDeferredValue(filters);
+
+  const { data: posts } = useSuspenseQuery({
+    queryKey: queryKeys.POSTS.DEFAULT,
+    queryFn: api.posts.getAll,
+    staleTime: 3 * 60 * 1000,
+    select: useCallback(
+      (data: APIResponse<PostType[]>) => {
+        return filterPosts(
+          data.data,
+          deferredFilters.search,
+          deferredFilters.filter
+        );
+      },
+      [deferredFilters]
+    ),
+  });
+
+  const isFiltering = filters !== deferredFilters;
 
   return (
     <ErrorBoundary
@@ -100,21 +68,16 @@ export function SearchContainer({
           route="/"
           placeholder="검색"
           otherClasses="flex-1"
-          onSearch={setSearchQuery}
+          onSearch={(search) => setFilters((prev) => ({ ...prev, search }))}
         />
       </section>
 
-      <HomeFilter onFilter={setFilterQuery} />
+      <HomeFilter
+        onFilter={(filter) => setFilters((prev) => ({ ...prev, filter }))}
+      />
 
       <QueryErrorBoundary>
-        <Suspense fallback={<PostSkeleton count={5} />}>
-          <SearchResults
-            searchQuery={searchQuery}
-            filterQuery={filterQuery}
-            initialQuery={initialQuery}
-            initialFilter={initialFilter}
-          />
-        </Suspense>
+        <PostList posts={posts || []} isFiltering={isFiltering} />
       </QueryErrorBoundary>
     </ErrorBoundary>
   );

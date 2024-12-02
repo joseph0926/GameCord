@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MDXEditorMethods } from '@mdxeditor/editor';
+import { useQueryClient } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import dynamic from 'next/dynamic';
@@ -19,6 +20,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { formAnimation, itemAnimation } from '@/constants/form';
+import { queryKeys } from '@/lib/query-keys';
 import { CreatePostSchema } from '@/schemas/post.schema';
 import { TagCard } from '../card/tag-card';
 import { Button } from '../ui/button';
@@ -41,6 +43,8 @@ const Editor = dynamic(() => import('@/components/editor'), {
 export const CreatePostForm = () => {
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
   const editorRef = useRef<MDXEditorMethods>(null);
 
   const form = useForm<z.infer<typeof CreatePostSchema>>({
@@ -52,6 +56,7 @@ export const CreatePostForm = () => {
     },
   });
 
+  // TODO: 태그에 한글 입력시 버그 존재
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     field: { value: string[] }
@@ -98,6 +103,9 @@ export const CreatePostForm = () => {
         throw new Error(response.error?.message || 'Unknown error');
       } else {
         form.reset();
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.POSTS.DEFAULT,
+        });
         toast.success('게시글이 생성되었습니다.');
         router.push('/');
       }
