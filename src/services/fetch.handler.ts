@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import handleError from '@/lib/error-handler';
 import { RequestError } from '@/lib/http-errors';
 import logger from '@/lib/logger';
@@ -67,7 +66,7 @@ export async function fetchHandler<T>(
       );
     }
 
-    return NextResponse.json(handleError(error));
+    return handleError(error);
   }
 }
 

@@ -1,5 +1,3 @@
-import { NextResponse } from 'next/server';
-
 export type ActionResponse<T = null> = {
   success: boolean;
   data?: T;
@@ -13,7 +11,5 @@ export type ActionResponse<T = null> = {
 export type SuccessResponse<T = null> = ActionResponse<T> & { success: true };
 export type ErrorResponse = ActionResponse<undefined> & { success: false };
 
-export type APIErrorResponse = NextResponse<ErrorResponse>;
-export type APIResponse<T = null> = NextResponse<
-  SuccessResponse<T> | ErrorResponse
->;
+export type APIErrorResponse = ErrorResponse;
+export type APIResponse<T = null> = SuccessResponse<T> | ErrorResponse;

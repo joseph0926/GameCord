@@ -1,4 +1,4 @@
-import { Eye, MessageSquare, ThumbsUp } from 'lucide-react';
+import { MessageSquare, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { ROUTES } from '@/constants/routes';
@@ -12,14 +12,14 @@ interface PostCardProps {
 }
 
 export const PostCard = ({
-  post: { _id, title, tags, author, createdAt, upvotes, answers, views },
+  post: { _id, title, tags, author, createdAt, upvotes, comments },
 }: PostCardProps) => {
   return (
     <div className="rounded-lg border bg-white p-9 shadow-sm dark:bg-gray-800 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
         <div>
           <span className="line-clamp-1 flex text-sm text-gray-500 dark:text-gray-400 sm:hidden">
-            <PostTime date={createdAt} />
+            <PostTime date={new Date(createdAt)} />
           </span>
 
           <Link href={ROUTES.POST(_id)}>
@@ -38,11 +38,11 @@ export const PostCard = ({
 
       <div className="mt-6 flex w-full flex-wrap justify-between gap-3">
         <Metric
-          Icon={author.image}
+          Icon={author.image || ''}
           alt={author.name}
           value={author.name}
           title={``}
-          titleComponent={<PostTime date={createdAt} />}
+          titleComponent={<PostTime date={new Date(createdAt)} />}
           href={ROUTES.PROFILE(author._id)}
           textStyles="text-sm text-gray-500 dark:text-gray-400"
           isAuthor
@@ -52,24 +52,24 @@ export const PostCard = ({
           <Metric
             Icon={ThumbsUp}
             alt="like"
-            value={upvotes}
+            value={upvotes.length}
             title=" 좋아요"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
           <Metric
             Icon={MessageSquare}
             alt="comments"
-            value={answers}
+            value={comments?.length}
             title=" 댓글"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
-          <Metric
+          {/* <Metric
             Icon={Eye}
             alt="views"
             value={views}
             title=" 조회수"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
-          />
+          /> */}
         </div>
       </div>
     </div>

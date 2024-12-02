@@ -20,7 +20,7 @@ const CommentSchema = new Schema<IComment>(
     upvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     downvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
-  { timestamps: true }
+  { timestamps: true, collection: 'comments' }
 );
 
 const Comment = models?.Comment || model<IComment>('Comment', CommentSchema);

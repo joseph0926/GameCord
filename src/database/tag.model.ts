@@ -16,7 +16,7 @@ const TagSchema = new Schema<ITag>(
     followers: { type: Number, default: 0 },
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post', required: true }],
   },
-  { timestamps: true }
+  { timestamps: true, collection: 'tags' }
 );
 
 const Tag = models?.Tag || model<ITag>('Tag', TagSchema);

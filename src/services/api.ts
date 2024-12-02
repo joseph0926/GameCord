@@ -1,8 +1,8 @@
 import { ROUTES } from '@/constants/routes';
 import { IAccount } from '@/database/account.model';
 import { IUser } from '@/database/user.model';
-import { APIResponse } from '@/types/api.type';
 import { SignInWithOAuthParams } from '@/types/auth.type';
+import { PostType } from '@/types/post.type';
 import { fetchHandler } from './fetch.handler';
 
 const API_BASE_URL =
@@ -63,6 +63,6 @@ export const api = {
       fetchHandler(`${API_BASE_URL}/accounts/${id}`, { method: 'DELETE' }),
   },
   posts: {
-    getAll: () => fetchHandler(`${API_BASE_URL}/posts`),
+    getAll: () => fetchHandler<PostType[]>(`${API_BASE_URL}/posts`),
   },
 };

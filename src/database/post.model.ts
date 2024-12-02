@@ -3,7 +3,7 @@ import { Document, model, models, Schema, Types } from 'mongoose';
 export interface IPost {
   title: string;
   content: string;
-  authorId: Types.ObjectId;
+  author: Types.ObjectId;
   tags: Types.ObjectId[];
   upvotes: Types.ObjectId[];
   downvotes: Types.ObjectId[];
@@ -19,7 +19,7 @@ const PostSchema = new Schema<IPost>(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
-    authorId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag', required: true }],
     upvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     downvotes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
@@ -30,7 +30,7 @@ const PostSchema = new Schema<IPost>(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, collection: 'posts' }
 );
 
 const Post = models?.Post || model<IPost>('Post', PostSchema);

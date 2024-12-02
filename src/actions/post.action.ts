@@ -16,7 +16,7 @@ type SerializedPost = {
   title: string;
   content: string;
   tags: string[];
-  authorId: string;
+  author: string;
   createdAt: Date;
   updatedAt: Date;
   media: {
@@ -66,7 +66,7 @@ export async function createPost(
         title,
         content,
         tags: tagIds,
-        authorId: session.user.id,
+        author: session.user.id,
       },
     ]);
 
@@ -84,7 +84,7 @@ export async function createPost(
       title: post.title,
       content: post.content,
       tags: post.tags.map((tag: ITagDoc) => tag.toString()),
-      authorId: post.authorId.toString(),
+      author: post.author.toString(),
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
       media: post.media || [],
