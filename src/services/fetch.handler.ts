@@ -1,7 +1,8 @@
+import { NextResponse } from 'next/server';
 import handleError from '@/lib/error-handler';
 import { RequestError } from '@/lib/http-errors';
 import logger from '@/lib/logger';
-import { ActionResponse } from '@/types/api.type';
+import { APIResponse } from '@/types/api.type';
 
 interface FetchOptions extends RequestInit {
   timeout?: number;
@@ -14,7 +15,7 @@ function isError(error: unknown): error is Error {
 export async function fetchHandler<T>(
   url: string,
   options: FetchOptions = {}
-): Promise<ActionResponse<T>> {
+): Promise<APIResponse<T>> {
   const {
     timeout = 5000,
     headers: customHeaders = {},
@@ -66,7 +67,7 @@ export async function fetchHandler<T>(
       );
     }
 
-    return handleError(error) as ActionResponse<T>;
+    return NextResponse.json(handleError(error));
   }
 }
 

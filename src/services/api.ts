@@ -1,6 +1,7 @@
 import { ROUTES } from '@/constants/routes';
 import { IAccount } from '@/database/account.model';
 import { IUser } from '@/database/user.model';
+import { APIResponse } from '@/types/api.type';
 import { SignInWithOAuthParams } from '@/types/auth.type';
 import { fetchHandler } from './fetch.handler';
 
@@ -60,5 +61,8 @@ export const api = {
       }),
     delete: (id: string) =>
       fetchHandler(`${API_BASE_URL}/accounts/${id}`, { method: 'DELETE' }),
+  },
+  posts: {
+    getAll: () => fetchHandler(`${API_BASE_URL}/posts`),
   },
 };

@@ -1,9 +1,17 @@
+import {
+  defaultShouldDehydrateQuery,
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { SearchContainer } from '@/components/home/search-container';
 import { HomeWidgets } from '@/components/layouts/home-widgets';
 import { Button } from '@/components/ui/button';
-import { posts } from '@/constants/layout';
 import { ROUTES } from '@/constants/routes';
+import { queryKeys } from '@/lib/query-keys';
+import { api } from '@/services/api';
 
 type SearchParams = {
   searchParams: Promise<{ [key: string]: string }>;
@@ -12,12 +20,19 @@ type SearchParams = {
 export default async function Home({ searchParams }: SearchParams) {
   const { query = '', filter = '' } = await searchParams;
 
-  const initialFilteredPosts = posts.filter((post) => {
-    const matchesQuery = post.title.toLowerCase().includes(query.toLowerCase());
-    const matchesFilter = filter
-      ? post.tags[0].name.toLowerCase() === filter.toLowerCase()
-      : true;
-    return matchesQuery && matchesFilter;
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      dehydrate: {
+        shouldDehydrateQuery: (query) =>
+          defaultShouldDehydrateQuery(query) ||
+          query.state.status === 'pending',
+      },
+    },
+  });
+  queryClient.prefetchQuery({
+    queryKey: queryKeys.POSTS.DEFAULT,
+    queryFn: api.posts.getAll,
+    staleTime: 10 * 1000,
   });
 
   return (
@@ -36,12 +51,11 @@ export default async function Home({ searchParams }: SearchParams) {
           </Button>
         </section>
 
-        <SearchContainer
-          initialPosts={posts}
-          initialFilteredPosts={initialFilteredPosts}
-          initialQuery={query}
-          initialFilter={filter}
-        />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Suspense fallback={null}>
+            <SearchContainer initialQuery={query} initialFilter={filter} />
+          </Suspense>
+        </HydrationBoundary>
       </div>
 
       <HomeWidgets />

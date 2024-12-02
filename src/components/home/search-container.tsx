@@ -5,17 +5,15 @@ import { PostList } from '@/components/home/post-list';
 import type { PostType } from '@/types/post.type';
 import { HomeFilter } from './home-filter';
 import { LocalSearch } from './local-search';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { api } from '@/services/api';
 
 interface SearchContainerProps {
-  initialPosts: PostType[];
-  initialFilteredPosts: PostType[];
   initialQuery: string;
   initialFilter: string;
 }
 
 export function SearchContainer({
-  initialPosts,
-  initialFilteredPosts,
   initialQuery,
   initialFilter,
 }: SearchContainerProps) {
@@ -24,6 +22,22 @@ export function SearchContainer({
 
   const deferredSearchQuery = useDeferredValue(searchQuery);
   const deferredFilterQuery = useDeferredValue(filterQuery);
+
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['repoData'],
+    queryFn: api.posts.getAll,
+    staleTime: 10 * 1000,
+    select: (data) =>
+  })
+
+
+  const initialFilteredPosts = posts.filter((post) => {
+    const matchesQuery = post.title.toLowerCase().includes(query.toLowerCase());
+    const matchesFilter = filter
+      ? post.tags[0].name.toLowerCase() === filter.toLowerCase()
+      : true;
+    return matchesQuery && matchesFilter;
+  });
 
   const filteredPosts = useMemo(() => {
     if (
