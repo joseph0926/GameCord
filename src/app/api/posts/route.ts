@@ -9,17 +9,25 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const posts = await Post.find()
-      .sort({ createdAt: -1 })
+    const posts = await Post.find({})
+      .select({
+        title: 1,
+        createdAt: 1,
+        views: 1,
+        upvotes: { $size: '$upvotes' },
+        // comments: { $size: '$comments' },
+      })
       .populate({
         path: 'author',
         model: User,
-        select: 'name username image reputation',
+        select: 'name username image',
       })
       .populate({
         path: 'tags',
         model: Tag,
+        select: 'name',
       })
+      .sort({ createdAt: -1 })
       .lean();
 
     // const postsWithComments = await Promise.all(

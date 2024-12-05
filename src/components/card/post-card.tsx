@@ -52,7 +52,7 @@ export const PostCard = ({
           <Metric
             Icon={ThumbsUp}
             alt="like"
-            value={upvotes.length}
+            value={upvotes?.length}
             title=" 좋아요"
             textStyles="text-sm text-gray-500 dark:text-gray-400"
           />
